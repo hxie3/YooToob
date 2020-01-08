@@ -4,62 +4,82 @@ class SessionForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            email: '',
-            password: ''
+            user: { 
+                username: '',
+                password: ''
+            },
+            formType: this.props.formType
         };
+        this.handleNewSubmit = this.handleNewSubmit.bind(this)
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleNewSubmit(e) {
+        e.preventDefault();
+        const user = Object.assign({}, this.state.user);
+        this.props.processForm(user);
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        const user = Object.assign({}, this.state);
-        this.props.processForm(user);
+        const user = Object.assign({}, this.state.user);
+        this.props.newProcessForm(user);
+        this.setState( { formType: "password" })
     }
 
     handleUsernameChange(e) {
-        this.setState({
-            username: e.target.value
-        })
-    }
-
-    handleEmailChange(e){
-        this.setState({
-            email: e.target.value
-        })
+        let user = {...this.state.user};
+        user.username = e.target.value;
+        this.setState({user});
     }
 
     handlePasswordChange(e){
-        this.setState({
-            password: e.target.value
-        })
+        let user = { ...this.state.user };
+        user.password = e.target.value;
+        this.setState({ user });
+    }
+
+    componentDidMount(){
+        document.getElementsByClassName("header")[0].classList.add("hidden")
+    }
+
+    componentWillUnmount(){
+        document.getElementsByClassName("header")[0].classList.remove("hidden")
     }
 
     render(){
-       
-        return (
-            <div className='session-form'>
-                <div>{this.props.formType} or {this.props.navLink}</div>
-                <br/>
-                <form className='session-form-inputs' onSubmit={this.handleSubmit}>
-                    <label> <div>Username:</div>
-                        <input type="text" value={this.state.username} onChange={this.handleUsernameChange}/>
+        let form;
+        if (this.state.formType === 'password') {
+            form = <div>
+                <span>Hi {this.state.username}</span>
+                <form onSubmit={this.handleNewSubmit}>
+                    <label>Password:
+                        <input type="password" value={this.state.user.password} onChange={this.handlePasswordChange}/>  
                     </label>
-                    <br/>
-                    {this.props.formType === "signup" ? (<label><div>Email:</div>
-                        <input type="text" value={this.state.email} onChange={this.handleEmailChange} />
-                    </label>) : '' }
-                    <br/>
-                    <label><div>Password:</div>
-                        <input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
-                    </label>
-                    <br/>
                     <input type="submit" value={this.props.formType}/>
                 </form>
             </div>
+        } else {
+            form = <div className='session-form'>
+                <span>{this.props.formType === 'signup' ? 'Sign Up' : 'Log In'}</span>
+                <span>to continue to YooToob</span>
+                <br/>
+                <form className='session-form-inputs' onSubmit={this.handleSubmit}>
+                    <label> <div>Username:</div>
+                        <input type="text" value={this.state.user.username} onChange={this.handleUsernameChange}/>
+                    </label>
+                    <br/>
+                    <div>
+                        {this.props.navLink}
+                        <input type="submit" value='Next'/>
+                    </div>
+                </form>
+            </div>
+        }
+        return (
+            form
         );
     }
 }

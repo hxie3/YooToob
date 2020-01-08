@@ -11,23 +11,13 @@ class App extends React.Component {
     }
 
     render() {
-        let greeting;
-        if (!!this.props.user){
-            greeting = <div>
-                Welcome {this.props.user.username}
-                <button onClick={this.handleLogout}>Log Out</button>
-            </div>;
-        } else {
-            greeting = <Route exact path='/' component={GreetingContainer} />
-        }
         return (
             <div>
                 <header className='header'>
                     <h1>YooToob</h1>
                     <div className='greeting'>
-                        {greeting}
+                        <Route exact path='/' component={GreetingContainer} />
                     </div>
-                        
                 </header>
 
                 <AuthRoute path="/login" component={LoginFormContainer} />

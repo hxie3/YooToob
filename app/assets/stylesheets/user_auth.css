@@ -21,9 +21,12 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: lightcoral;
 }
 
 .session-form label {
-    background-color: lightcoral;
+    
+}
+
+.hidden {
+    display: none;
 }

@@ -14,10 +14,17 @@ class Greeting extends React.Component {
     }
 
     render(){
+        console.log(this.props)
         return(
             <div>
-                <Link className='signup' to='/signup'>Sign Up</Link>
-                <Link className='login' to='/login'>Log In</Link>
+                {(!!this.props.user && !!this.props.user.password_digest) ? (
+                    <div>
+                        Welcome {this.props.user.username}
+                        <button onClick={this.handleLogout}>Log Out</button>
+                    </div>
+                ) : (
+                    <Link className='login' to='/login'>Log In</Link> 
+                )}
             </div>
         )
     }

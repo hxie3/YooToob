@@ -10,9 +10,14 @@ class Api::UsersController < ApplicationController
         end
     end
 
+    def index
+        @user = params[:user].permit[:username].to_h
+        render json: @user
+    end
+
     private
 
     def user_params
-        params.require(:user).permit(:username, :password, :email)
+        params.require(:user).permit(:username, :password)
     end
 end
