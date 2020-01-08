@@ -525,6 +525,7 @@ function (_React$Component) {
         username: '',
         password: ''
       },
+      errors: _this.props.errors,
       formType: _this.props.formType
     };
     _this.handleNewSubmit = _this.handleNewSubmit.bind(_assertThisInitialized(_this));
@@ -544,12 +545,18 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       var user = Object.assign({}, this.state.user);
       this.props.newProcessForm(user);
-      this.setState({
-        formType: "password"
-      });
+      setTimeout(function () {
+        if (_this2.props.errors.length === 0) {
+          _this2.setState({
+            formType: "password"
+          });
+        }
+      }, 50);
     }
   }, {
     key: "handleUsernameChange",
@@ -587,13 +594,13 @@ function (_React$Component) {
       var form;
 
       if (this.state.formType === 'password') {
-        form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Hi ", this.state.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Hi ", this.state.user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           onSubmit: this.handleNewSubmit
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "password",
           value: this.state.user.password,
           onChange: this.handlePasswordChange
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.errors)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "submit",
           value: this.props.formType
         })));
@@ -607,7 +614,7 @@ function (_React$Component) {
           type: "text",
           value: this.state.user.username,
           onChange: this.handleUsernameChange
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.navLink, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.errors)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.navLink, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "submit",
           value: "Next"
         }))));
@@ -822,6 +829,8 @@ __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+
+var _nullUser = Object.freeze({});
 
 var usersReducer = function usersReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};

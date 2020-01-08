@@ -6,13 +6,18 @@ class Api::UsersController < ApplicationController
             login(@user)
             render json: @user
         else
-            render json: @user.errors.full_messages
+            render json: @user.errors.full_messages, status: 400
         end
     end
 
     def index
-        @user = params[:user].permit[:username].to_h
-        render json: @user
+        @user = params[:user].permit(:username).to_h
+        user = User.find_by(username: @user[:username])
+        if user
+            render json: ["Username has already been taken"], status: 400
+        else
+            render json: @user
+        end
     end
 
     private

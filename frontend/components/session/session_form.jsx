@@ -8,6 +8,7 @@ class SessionForm extends React.Component {
                 username: '',
                 password: ''
             },
+            errors: this.props.errors,
             formType: this.props.formType
         };
         this.handleNewSubmit = this.handleNewSubmit.bind(this)
@@ -26,7 +27,11 @@ class SessionForm extends React.Component {
         e.preventDefault();
         const user = Object.assign({}, this.state.user);
         this.props.newProcessForm(user);
-        this.setState( { formType: "password" })
+        setTimeout(() => {
+            if(this.props.errors.length === 0) {
+                this.setState( { formType: "password" })
+            }
+        }, 50)
     }
 
     handleUsernameChange(e) {
@@ -53,10 +58,11 @@ class SessionForm extends React.Component {
         let form;
         if (this.state.formType === 'password') {
             form = <div>
-                <span>Hi {this.state.username}</span>
+                <span>Hi {this.state.user.username}</span>
                 <form onSubmit={this.handleNewSubmit}>
                     <label>Password:
                         <input type="password" value={this.state.user.password} onChange={this.handlePasswordChange}/>  
+                        <span>{this.props.errors}</span>
                     </label>
                     <input type="submit" value={this.props.formType}/>
                 </form>
@@ -69,6 +75,7 @@ class SessionForm extends React.Component {
                 <form className='session-form-inputs' onSubmit={this.handleSubmit}>
                     <label> <div>Username:</div>
                         <input type="text" value={this.state.user.username} onChange={this.handleUsernameChange}/>
+                        <span>{this.props.errors}</span>
                     </label>
                     <br/>
                     <div>
