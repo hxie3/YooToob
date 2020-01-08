@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.greeting {
+    margin: 10px;
+}
+
+.signup {
+    margin: 10px;
+}
+
+.login {
+    margin: 10px;
+}
+
+.session-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: lightcoral;
+}
+
+.session-form label {
+    background-color: lightcoral;
+}

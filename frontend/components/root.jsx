@@ -5,7 +5,7 @@ import { HashRouter } from "react-router-dom";
 
 class Root extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
     }
 
     render(){
