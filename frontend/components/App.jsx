@@ -16,7 +16,7 @@ class App extends React.Component {
                 <header className='header'>
                     <h1>YooToob</h1>
                     <div className='greeting'>
-                        <Route exact path='/' component={GreetingContainer} />
+                        <Route path='/' component={GreetingContainer} />
                     </div>
                 </header>
 

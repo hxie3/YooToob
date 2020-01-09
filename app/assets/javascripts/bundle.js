@@ -242,7 +242,6 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "YooToob"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "greeting"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        exact: true,
         path: "/",
         component: _greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"]
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["AuthRoute"], {
@@ -545,6 +544,7 @@ function (_React$Component) {
     _this.handleUsernameChange = _this.handleUsernameChange.bind(_assertThisInitialized(_this));
     _this.handlePasswordChange = _this.handlePasswordChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleShake = _this.handleShake.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -554,6 +554,20 @@ function (_React$Component) {
       e.preventDefault();
       var user = Object.assign({}, this.state.user);
       this.props.processForm(user);
+      this.handleShake(e);
+    }
+  }, {
+    key: "handleShake",
+    value: function handleShake(e) {
+      e.persist();
+
+      if (this.props.errors.length !== 0) {
+        $('form').addClass('ahashakeheartache');
+      }
+
+      $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
+        $('form').delay(200).removeClass('ahashakeheartache');
+      });
     }
   }, {
     key: "handleSubmit",
@@ -570,8 +584,10 @@ function (_React$Component) {
             _this2.setState({
               formType: "password"
             });
+          } else {
+            _this2.handleShake(e);
           }
-        }, 50);
+        }, 250);
       } else {
         // Auto Type for later
         // this.props.newProcessForm({ username: 'DemoUser123' });
@@ -652,12 +668,12 @@ function (_React$Component) {
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "back-or-signup"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "goback",
-          onClick: this.handleBack
-        }, "Back"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "next",
           onClick: this.handleNewSubmit
-        }, "Sign up")))));
+        }, this.props.formType === 'signup' ? 'Sign up' : 'Sign in'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "back",
+          onClick: this.handleBack
+        }, "Back")))));
       } else {
         form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "session-form"
@@ -677,7 +693,7 @@ function (_React$Component) {
           value: this.state.user.username,
           onChange: this.handleUsernameChange,
           placeholder: "Username"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), this.props.formType === 'signup' ? '' : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "demo-login-desc"
         }, "No time? Use Demo Login to check the site out."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "link-demo-login",

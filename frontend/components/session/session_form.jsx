@@ -15,15 +15,25 @@ class SessionForm extends React.Component {
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShake = this.handleShake.bind(this);
     }
 
     handleNewSubmit(e) {
         e.preventDefault();
         const user = Object.assign({}, this.state.user);
         this.props.processForm(user);
+        this.handleShake(e)
     }
 
-
+    handleShake(e) {
+        e.persist();
+        if (this.props.errors.length !== 0) {
+            $('form').addClass('ahashakeheartache');
+        }
+        $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', e => {
+            $('form').delay(200).removeClass('ahashakeheartache');
+        });
+    }
 
     handleSubmit(e) {
         e.preventDefault();
@@ -33,8 +43,10 @@ class SessionForm extends React.Component {
             setTimeout(() => {
                 if(this.props.errors.length === 0) {
                     this.setState( { formType: "password" })
+                } else {
+                    this.handleShake(e);
                 }
-            }, 50)
+            }, 250)
         } else {
             // Auto Type for later
             // this.props.newProcessForm({ username: 'DemoUser123' });
@@ -89,8 +101,8 @@ class SessionForm extends React.Component {
                         <input className='username' placeholder='Password' type="password" value={this.state.user.password} onChange={this.handlePasswordChange}/>
                         <br/>  
                         <div className='back-or-signup'>
-                            <button className='goback' onClick={this.handleBack}>Back</button>
-                            <button className="next" onClick={this.handleNewSubmit}>Sign up</button>
+                            <button className="next" onClick={this.handleNewSubmit}>{this.props.formType === 'signup' ? 'Sign up' : 'Sign in'}</button>
+                            <button className='back' onClick={this.handleBack}>Back</button>
                         </div>
                     </form>
                 </div>
@@ -107,11 +119,16 @@ class SessionForm extends React.Component {
                         <span className='input-errors'>{this.props.errors}</span>
                         <input className='username' type="text" value={this.state.user.username} onChange={this.handleUsernameChange} placeholder="Username"/>
                         <br/>
-                        <div>
-                            <span className='demo-login-desc'>No time? Use Demo Login to check the site out.</span>
-                            <br/>
-                            <Link className='link-demo-login' to='/' onClick={this.handleSubmit}>Demo Login</Link>
-                        </div>
+                        <br/>
+                        {
+                            this.props.formType === 'signup' ? '' : (
+                                <div>
+                                    <span className = 'demo-login-desc'>No time? Use Demo Login to check the site out.</span>
+                                    <br />
+                                    <Link className='link-demo-login' to='/' onClick={this.handleSubmit}>Demo Login</Link>
+                                </div>
+                            ) 
+                        }
                         <br/>
                         <div className='create-account-or-next'>
                             {this.props.navLink}
