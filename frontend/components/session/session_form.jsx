@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 
 class SessionForm extends React.Component {
     constructor(props) {
@@ -8,7 +9,6 @@ class SessionForm extends React.Component {
                 username: '',
                 password: ''
             },
-            errors: this.props.errors,
             formType: this.props.formType
         };
         this.handleNewSubmit = this.handleNewSubmit.bind(this)
@@ -23,15 +23,29 @@ class SessionForm extends React.Component {
         this.props.processForm(user);
     }
 
+
+
     handleSubmit(e) {
         e.preventDefault();
-        const user = Object.assign({}, this.state.user);
-        this.props.newProcessForm(user);
-        setTimeout(() => {
-            if(this.props.errors.length === 0) {
-                this.setState( { formType: "password" })
-            }
-        }, 50)
+        if (e.target.innerHTML === 'Next') {
+            const user = Object.assign({}, this.state.user);
+            this.props.newProcessForm(user);
+            setTimeout(() => {
+                if(this.props.errors.length === 0) {
+                    this.setState( { formType: "password" })
+                }
+            }, 50)
+        } else {
+            // Auto Type for later
+            // this.props.newProcessForm({ username: 'DemoUser123' });
+            // setTimeout(() => {
+            //     this.setState({ formType: "password" })
+            //     setTimeout(() => {
+            //         this.props.processForm({username: 'DemoUser123', password: 'DemoUser123'})
+            //     }, 50)
+            // }, 50)
+            this.props.processForm({ username: 'DemoUser123', password: 'DemoUser123' })
+        }
     }
 
     handleUsernameChange(e) {
@@ -46,43 +60,65 @@ class SessionForm extends React.Component {
         this.setState({ user });
     }
 
+    handleBack(e){
+        e.preventDefault();
+        history.back();
+    }
+
     componentDidMount(){
         document.getElementsByClassName("header")[0].classList.add("hidden")
     }
 
     componentWillUnmount(){
         document.getElementsByClassName("header")[0].classList.remove("hidden")
+        this.props.clearErrors()
     }
 
     render(){
         let form;
         if (this.state.formType === 'password') {
-            form = <div>
-                <span>Hi {this.state.user.username}</span>
-                <form onSubmit={this.handleNewSubmit}>
-                    <label>Password:
-                        <input type="password" value={this.state.user.password} onChange={this.handlePasswordChange}/>  
-                        <span>{this.props.errors}</span>
-                    </label>
-                    <input type="submit" value={this.props.formType}/>
-                </form>
+            form = 
+            <div className='session-form'>
+                <div className='inner-session-form-two'>
+                    <span className='signup-or-signin'>Welcome</span>
+                    <br/>
+                    <span className='signup-or-signin-followup'>{this.state.user.username}</span>
+                    <br/>
+                    <form className='session-form-form' onSubmit={this.handleNewSubmit}>
+                        <span className='input-errors'>{this.props.errors}</span>
+                        <input className='username' placeholder='Password' type="password" value={this.state.user.password} onChange={this.handlePasswordChange}/>
+                        <br/>  
+                        <div className='back-or-signup'>
+                            <button className='goback' onClick={this.handleBack}>Back</button>
+                            <button className="next" onClick={this.handleNewSubmit}>Sign up</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         } else {
-            form = <div className='session-form'>
-                <span>{this.props.formType === 'signup' ? 'Sign Up' : 'Log In'}</span>
-                <span>to continue to YooToob</span>
-                <br/>
-                <form className='session-form-inputs' onSubmit={this.handleSubmit}>
-                    <label> <div>Username:</div>
-                        <input type="text" value={this.state.user.username} onChange={this.handleUsernameChange}/>
-                        <span>{this.props.errors}</span>
-                    </label>
+            form = 
+            <div className='session-form'>
+                <div className='inner-session-form'>
+                    <span className='signup-or-signin'>{this.props.formType === 'signup' ? 'Sign up' : 'Sign in'}</span>
                     <br/>
-                    <div>
-                        {this.props.navLink}
-                        <input type="submit" value='Next'/>
-                    </div>
-                </form>
+                    <span className='signup-or-signin-followup'> to continue to YooToob</span>
+                    <br/>
+                    <form className='session-form-form'>
+                        <span className='input-errors'>{this.props.errors}</span>
+                        <input className='username' type="text" value={this.state.user.username} onChange={this.handleUsernameChange} placeholder="Username"/>
+                        <br/>
+                        <div>
+                            <span className='demo-login-desc'>No time? Use Demo Login to check the site out.</span>
+                            <br/>
+                            <Link className='link-demo-login' to='/' onClick={this.handleSubmit}>Demo Login</Link>
+                        </div>
+                        <br/>
+                        <div className='create-account-or-next'>
+                            {this.props.navLink}
+                            <button className='next' onClick={this.handleSubmit}>Next</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         }
         return (

@@ -17,7 +17,7 @@ class Greeting extends React.Component {
         console.log(this.props)
         return(
             <div>
-                {(!!this.props.user && !!this.props.user.password_digest) ? (
+                {(!!this.props.user) ? (
                     <div>
                         Welcome {this.props.user.username}
                         <button onClick={this.handleLogout}>Log Out</button>
