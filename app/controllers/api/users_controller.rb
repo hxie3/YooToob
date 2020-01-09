@@ -16,7 +16,11 @@ class Api::UsersController < ApplicationController
         if user
             render json: ["Username has already been taken"], status: 400
         else
-            render json: @user
+            if @user[:username] == ''
+                render json: ["Username can't be blank"], status: 400
+            else
+                render json: @user
+            end
         end
     end
 
