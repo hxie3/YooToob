@@ -1,15 +1,14 @@
 class Api::VideosController < ApplicationController
     def index
         @videos = Video.all
-
-        render json: @videos
+        render :index
     end
 
     def create
         @video = Video.new(video_params)
         
         if @video.save
-            render json: @video
+            render :create
         else
             render json: @video.errors.full_messages, status: 400
         end
@@ -19,7 +18,7 @@ class Api::VideosController < ApplicationController
         @video = Video.find_by(id: params[:id])
 
         if @video
-            render json: @video
+            render :show
         else
             render json: ["No video was found"], status: 404
         end
@@ -28,7 +27,7 @@ class Api::VideosController < ApplicationController
     def update
         @video = Video.find_by(id: params[:id])
         if @video.update(video_params)
-            render json: @video
+            render :update
         else
             render json: @video.errors.full_messages, status: 404
         end
@@ -37,8 +36,8 @@ class Api::VideosController < ApplicationController
     def destroy
         @video = Video.find_by(id: params[:id])
         if @video
+            render :destroy
             Video.delete(params[:id])
-            render json: @video
         else
             render json: ["No video was found"], status: 404
         end
@@ -47,6 +46,6 @@ class Api::VideosController < ApplicationController
     private
 
     def video_params
-        params.require(:video).permit(:title, :description, :user_id)
+        params.require(:video).permit(:title, :description, :user_id, :id)
     end
 end
