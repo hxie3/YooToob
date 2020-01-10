@@ -422,7 +422,10 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       console.log(this.props);
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, !!this.props.user ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Welcome ", this.props.user.username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "upload",
+        to: "/upload"
+      }, "Upload"), !!this.props.user ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Welcome ", this.props.user.username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleLogout
       }, "Log Out")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "login",
@@ -909,13 +912,9 @@ function (_React$Component) {
   _inherits(VideoIndex, _React$Component);
 
   function VideoIndex(props) {
-    var _this;
-
     _classCallCheck(this, VideoIndex);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(VideoIndex).call(this, props));
-    _this.state = _this.props.videos;
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(VideoIndex).call(this, props));
   }
 
   _createClass(VideoIndex, [{
@@ -926,9 +925,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var videos = this.state;
-      console.log(videos);
-      console.log('hi');
+      var videos = this.props.videos;
 
       if (Object.values(videos).length === 0) {
         return null;

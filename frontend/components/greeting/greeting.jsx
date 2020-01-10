@@ -17,6 +17,7 @@ class Greeting extends React.Component {
         console.log(this.props)
         return(
             <div>
+                <Link className='upload' to='/upload'>Upload</Link>
                 {(!!this.props.user) ? (
                     <div>
                         Welcome {this.props.user.username}

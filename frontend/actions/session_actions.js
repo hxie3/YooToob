@@ -23,6 +23,7 @@ export const clearErrors = () => ({
     type: CLEAR_ERRORS
 })
 
+
 export const signup = user => dispatch => (
     SessionAPIUtil.signup(user).then(user => (
         dispatch(receiveCurrentUser(user))

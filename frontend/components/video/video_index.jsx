@@ -4,8 +4,6 @@ import VideoIndexItem from './video_index_item'
 class VideoIndex extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = this.props.videos
     }
 
     componentDidMount() {
@@ -13,9 +11,7 @@ class VideoIndex extends React.Component {
     }
 
     render() {
-        let videos = this.state;
-        console.log(videos)
-        console.log('hi')
+        let videos = this.props.videos
         if (Object.values(videos).length === 0) {
             return null
         } else {
