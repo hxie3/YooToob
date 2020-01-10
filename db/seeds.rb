@@ -7,3 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create([{username: 'DemoUser123', password: 'DemoUser123'}])
+Video.create([{title: 'My First Video', description: 'This video sucks!', user_id: '1'}, {title: 'My Second Video', description: 'This video is a little better', user_id: 1}])
