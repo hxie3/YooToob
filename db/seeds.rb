@@ -7,4 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create([{username: 'DemoUser123', password: 'DemoUser123'}])
+User.first.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/images/signin.jpeg")), filename: "default_profile_pic.jpeg")
 Video.create([{title: 'My First Video', description: 'This video sucks!', user_id: '1'}, {title: 'My Second Video', description: 'This video is a little better', user_id: 1}])

@@ -1,13 +1,18 @@
 class Api::UsersController < ApplicationController
     def create
         @user = User.new(user_params)
-
         if @user.save
+            @user.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/images/signin.jpeg")), filename: "default_profile_pic.jpeg")
             login(@user)
-            render json: @user
+            render :create
         else
             render json: @user.errors.full_messages, status: 400
         end
+    end
+
+    def show
+        @user = User.find(params[:id])
+        render :show
     end
 
     def index
@@ -27,6 +32,6 @@ class Api::UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:username, :password)
+        params.require(:user).permit(:username, :password, :profile_picture)
     end
 end

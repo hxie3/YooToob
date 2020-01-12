@@ -21,10 +21,13 @@ class Greeting extends React.Component {
                 {(!!this.props.user) ? (
                     <div>
                         Welcome {this.props.user.username}
+                        <img src={this.props.user.profilePicture} alt="profile-picture"/>
                         <button onClick={this.handleLogout}>Log Out</button>
                     </div>
                 ) : (
-                    <Link className='login' to='/login'>Log In</Link> 
+                        <Link className='login' to='/login'>
+                            <span className='loginsignin'>SIGN IN</span>
+                        </Link> 
                 )}
             </div>
         )

@@ -8,7 +8,7 @@ const sessionReducer = (state = _nullUser, action) => {
     Object.freeze(state);
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
-            if(action.user.password_digest) {
+            if(action.user.profilePicture) {
                 return { id: action.user.id };
             } else {
                 return _nullUser;

@@ -8,7 +8,7 @@ class Api::SessionsController < ApplicationController
 
         if @user
             login(@user)
-            render json: @user
+            render :create
         else
             render json: ["Wrong password. Try again."], status: 401
         end
