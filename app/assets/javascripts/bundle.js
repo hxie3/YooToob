@@ -516,7 +516,7 @@ function (_React$Component) {
     key: "handleDropdown",
     value: function handleDropdown(e) {
       e.preventDefault();
-      document.getElementsByClassName('user-dropdown')[0].classList.toggle('hidden');
+      document.getElementsByClassName('dropdown')[0].classList.toggle('is-active');
     }
   }, {
     key: "componentDidMount",
@@ -530,6 +530,14 @@ function (_React$Component) {
       Array.from(videoIconIcon.node).map(function (n) {
         return document.getElementsByClassName('upload')[0].appendChild(n);
       });
+      var $menu = $('.dropdown');
+      $(document).mouseup(function (e) {
+        if (!$menu.is(e.target) // if the target of the click isn't the container...
+        && $menu.has(e.target).length === 0) // ... nor a descendant of the container
+          {
+            $menu.removeClass('is-active');
+          }
+      });
     }
   }, {
     key: "render",
@@ -539,13 +547,15 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
         className: "upload",
         to: "/upload"
-      }), !!this.props.user ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }), !!this.props.user ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         onClick: this.handleDropdown,
         className: "profile-pic",
         src: this.props.user.profilePicture,
         alt: "profile-picture"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "user-dropdown hidden"
+        className: "user-dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-user-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -1084,14 +1094,22 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "home-icon-text-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
         to: "/",
         className: "home-icon"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "home-text"
+      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "github-icon-text-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         target: "_blank",
         className: "github-icon",
         href: "https://github.com/hxie3"
-      }));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text"
+      }, "Github")));
     }
   }]);
 

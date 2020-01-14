@@ -18,8 +18,14 @@ class SideNav extends React.Component {
     render(){
         return(
             <div className='sidenav'>
-                <Link to="/" className='home-icon'></Link>
-                <a target='_blank' className='github-icon' href="https://github.com/hxie3"></a>
+                <div className='home-icon-text-container'>
+                    <Link to="/" className='home-icon'></Link>
+                    <span className='home-text'>Home</span>
+                </div>
+                <div className='github-icon-text-container'>
+                    <a target='_blank' className='github-icon' href="https://github.com/hxie3"></a>
+                    <span className='github-text'>Github</span>
+                </div>
             </div>
         )
     }

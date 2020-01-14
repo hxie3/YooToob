@@ -203,7 +203,7 @@
     width: 300px;
     border: 1px solid lightgray;
     border-top: none;
-    display: flex;
+    display: none;
     flex-direction: column;
     background: white;
 }
@@ -211,7 +211,7 @@
 .fa-bars {
     width: 24px;
     height: 24px;
-    margin: 8px;    
+    margin-left: 5px;
     font-size: 50px;
 }
 
@@ -297,6 +297,10 @@
 
 .hidden {
     display: none;
+}
+
+.is-active .user-dropdown {
+    display: flex;
 }
 /** Brian's CSS **/
 /* textarea:focus, input:focus{

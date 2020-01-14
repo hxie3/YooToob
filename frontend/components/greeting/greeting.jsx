@@ -19,7 +19,7 @@ class Greeting extends React.Component {
 
     handleDropdown(e){
         e.preventDefault();
-        document.getElementsByClassName('user-dropdown')[0].classList.toggle('hidden');
+        document.getElementsByClassName('dropdown')[0].classList.toggle('is-active');
     }
 
     componentDidMount(){
@@ -27,6 +27,14 @@ class Greeting extends React.Component {
         const videoIcon = findIconDefinition({ prefix: 'fas', iconName: 'video' });
         const videoIconIcon = icon(videoIcon);
         Array.from(videoIconIcon.node).map(n => document.getElementsByClassName('upload')[0].appendChild(n))
+        const $menu = $('.dropdown');
+        $(document).mouseup(e => {
+            if (!$menu.is(e.target) // if the target of the click isn't the container...
+                && ($menu.has(e.target).length === 0)) // ... nor a descendant of the container
+            {
+                $menu.removeClass('is-active');
+            }
+        });
     }
 
     render(){
@@ -34,9 +42,9 @@ class Greeting extends React.Component {
             <div className='greeting-container'>
                 <Link className='upload' to='/upload'></Link>
                 {(!!this.props.user) ? (
-                    <div>
+                    <div className='dropdown'>
                         <img onClick={this.handleDropdown} className='profile-pic' src={this.props.user.profilePicture} alt="profile-picture"/>
-                        <div className='user-dropdown hidden'>
+                        <div className='user-dropdown'>
                             <div className='dropdown-user-info'>
                                 <img className='profile-pic' src={this.props.user.profilePicture} alt="profile-picture"/>
                                 <span className='dropdown-user-username'>{this.props.user.username}</span>
