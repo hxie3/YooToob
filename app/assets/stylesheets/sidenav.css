@@ -1,0 +1,48 @@
+.sidenav-and-main-container {
+    display: flex;
+}
+
+.sidenav {
+    display: inline-block;
+    margin: 0px 16px;
+    width: 58px;
+    height: 100vh;
+}
+
+.home-icon {
+    width: 58px;
+    height: 44px;
+    padding: 16px 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.home-icon:visited {
+    color: black;
+}
+
+.home-icon:hover {
+    color: rgb(67, 224, 217);
+}
+
+.github-icon {
+    width: 58px;
+    height: 44px;
+    padding: 16px 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.github-icon:visited {
+    color: black;
+}
+
+.github-icon:hover {
+    color: rgb(67, 224, 217);
+}

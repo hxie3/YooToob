@@ -1,10 +1,24 @@
 .header {
     display: flex;
+    align-content: center;
+    align-items: center;
     justify-content: space-between;
+    margin: 0px 16px;
+    height: 56px;
 }
 
-.greeting {
-    margin: 10px;
+.fa-video {
+    color: gray;
+    width: 24px;
+    height: 24px;
+    padding: 8px;
+    padding-right: 20px;
+}
+
+.greeting-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .signup {
@@ -20,9 +34,6 @@
     box-sizing: border-box;
 }
 
-.hidden {
-    display: none;
-}
 
 .inner-session-form {
     border: 1px solid lightgray;
@@ -156,13 +167,136 @@
     border-radius: 2px;
     text-align: center;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 .loginsignin {
     margin-left: 8px;
-    font-weight: 500;
+    font-weight: bold;
     text-transform: uppercase;
     box-sizing: inherit;
+}
+
+.profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    margin: 1px 6px;
+}
+
+.signin-pic {
+    width: 24px;
+    height: 24px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.user-dropdown {
+    z-index: 2020;
+    position: fixed;
+    right: 20px;
+    top: 5vh;
+    outline: none;
+    box-sizing: border-box;
+    width: 300px;
+    border: 1px solid lightgray;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.fa-bars {
+    width: 24px;
+    height: 24px;
+    margin: 8px;    
+    font-size: 50px;
+}
+
+.hamburger-logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: bold;
+    height: 24px;
+    width: 80px;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.logo-icon {
+    padding-left: 30px;
+    color: rgb(67, 224, 217);
+}
+
+.searchbar {
+    height: 28px;
+    outline: none;
+    background-color: transparent;
+    font-family: 'Roboto','Noto',sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-left: 4px;
+    max-width: 100%;
+    border: none;
+    box-shadow: none;
+    width: 559px;
+}
+
+.searchbar-container {
+    border: 1px solid lightgray;
+}
+
+.searchbar-container-focus {
+    border: 1px solid #1c62b9;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.searchbar-container-button-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-button {
+    height: 32px;
+    width: 65px;
+    margin: 1px 6px;
+    margin-left: 0px;
+    border: 1px solid lightgray;
+    background-color: #ecf3f8;
+    cursor: pointer;
+}
+
+.dropdown-user-info {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-family: 'Roboto','Arial',sans-serif;
+    padding: 10px;
+}
+
+.dropdown-user-username {
+    margin-left: 10px;
+}
+
+.not-header-or-sidenav {  
+    background-color: #ecf3f8;
+    width: 100vw;
+}
+
+.hidden {
+    display: none;
 }
 /** Brian's CSS **/
 /* textarea:focus, input:focus{
