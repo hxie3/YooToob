@@ -1164,6 +1164,7 @@ var mapStateToProps = function mapStateToProps(state) {
     errors: state.errors.session,
     formType: 'signup',
     navLink: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      className: "login-link",
       to: "/login"
     }, "Sign in")
   };

@@ -25,6 +25,36 @@
     margin: 10px;
 }
 
+.link-demo-login {
+    color: blue;
+    font-weight: bold;
+}
+
+.link-demo-login:visited {
+    font-weight: bold;
+    color: blue;
+}
+
+.login-link {
+    font-weight: bold;
+    color: blue;
+}
+
+.login-link:visited {
+    font-weight: bold;
+    color: blue;
+}
+
+.create-account {
+    font-weight: bold;
+    color: blue;
+}
+
+.create-account:visited {
+    font-weight: bold;
+    color: blue;
+}
+
 .session-form {
     display: flex;
     flex-direction: column;
