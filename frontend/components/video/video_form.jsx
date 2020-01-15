@@ -95,15 +95,67 @@ class VideoForm extends React.Component {
                                                         Title (required)
                                                     </div>
                                                     <div className='inner-title-outer'>
-                                                        <input placeHolder='Add a title that describes your video' className='title-input' type="text"/>
+                                                        <input placeholder='Add a title that describes your video' className='title-input' type="text"/>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div className='description-textarea'>
+                                            <div className='description-container'>
+                                                <div className='inside-description-outer'>
+                                                    <div className='description-label'>
+                                                        Description
+                                                    </div>
+                                                    <div className='inside-description-input-container'>
+                                                        <div className='description-style-scope'>
+                                                            <textarea placeholder='Tell viewers about your video' className='description-content'></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='video-file-preview'>
+                                        <div className='video-file-container'>
+                                            <div className='video-file-player'>
+                                                <div className='video-player'>
+                                                    <div className='player-wrapper'>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='row-scope'>
+                                                <div className='video-link'>
+                                                    <div className='title-label'>
+                                                        Video Link
+                                                    </div>
+                                                    <div className='video-link-value'>
+                                                        <span className='video-url'>
+                                                            <a className="anchor-video-url" target="_blank" href="/">{/* Video Url */}</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='title-label'>
+                                                Filename
+                                            </div>
+                                            <div id='original-filename' className='video-link-value'>
+                                                {/* Original Filename */}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             ) 
                         }
+                    </div>
+                    <div className="video-file-upload-button-container">
+                        <div className='inner-button-area'>
+                            <div className='upload-button-container'>
+                                <button className='select-files-button more'>
+                                    <div className='upload-button-submit-value'>Upload</div>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {/* <h3>{this.props.formType}</h3>
