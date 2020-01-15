@@ -284,6 +284,7 @@
     font-weight: 500;
     font-family: 'Roboto','Arial',sans-serif;
     padding: 10px;
+    border-bottom: 1px solid lightgray;
 }
 
 .dropdown-user-username {
@@ -293,6 +294,25 @@
 .not-header-or-sidenav {  
     background-color: #ecf3f8;
     width: 100vw;
+}
+
+.hamburger {
+    cursor: pointer;
+}
+
+.sign-out-dropdown {
+    padding: 8px 16px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.sign-out-dropdown-container {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
 }
 
 .hidden {

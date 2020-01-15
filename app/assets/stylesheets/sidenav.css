@@ -18,11 +18,6 @@
     font-size: 25px;
 }
 
-.home-icon:visited {
-    color: black;
-}
-
-
 .github-icon {
     width: 100%;
     height: 44px;
@@ -32,11 +27,6 @@
     cursor: pointer;
     font-size: 25px;
 }
-
-.github-icon:visited {
-    color: black;
-}
-
 
 .home-icon-text-container {
     display: flex;
@@ -78,6 +68,105 @@
 }
 
 .github-icon-text-container:hover {
+    color: rgb(67, 224, 217);
+    background-color: lightgray;
+}
+
+.sidenav2 {
+    display: inline-block;
+    width: 192px;
+    height: 100vh;
+}
+
+.home-icon2 {
+    width: 24px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    margin-right: 24px;
+    padding-left: 9px;
+    padding-bottom: 12px
+}
+
+.github-icon2 {
+    width: 24px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    margin-right: 24px;
+    padding-left: 9px;
+    padding-bottom: 12px
+}
+
+
+.home-icon-text-container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 24px;
+    padding-bottom: 15px;
+    height: 40px;
+}
+
+.github-icon-text-container2 {
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 24px;
+    padding-right: 24px;
+    align-items: center;
+}
+
+.home-text2 {
+    cursor: pointer;
+}
+
+.github-text2 {
+    cursor: pointer;
+}
+
+.home-icon-text-container:visited {
+    color: black;
+}
+
+.home-icon-text-container2:visited {
+    color: black;
+}
+
+.github-icon-text-container:visited {
+    color: black;
+}
+
+.github-icon-text-container2:visited {
+    color: black;
+}
+
+.home-icon-text-container:hover {
+    color: rgb(67, 224, 217);
+    background-color: lightgrey;
+}
+
+.home-icon-text-container2:hover {
+    color: rgb(67, 224, 217);
+    background-color: lightgrey;
+}
+
+.github-icon-text-container:hover {
+    color: rgb(67, 224, 217);
+    background-color: lightgray;
+}
+
+.github-icon-text-container2:hover {
     color: rgb(67, 224, 217);
     background-color: lightgray;
 }

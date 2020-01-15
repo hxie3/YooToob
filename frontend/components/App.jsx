@@ -12,10 +12,14 @@ import SignupFormContainer from "./session/signup_form_container"
 import VideoIndexContainer from "./video/video_index_container"
 import CreateVideoFormContainer from "./video/create_video_form_container"
 import SideNav from "./sidenav/sidenav"
+import Modal from "./modal/modal"
 
 class App extends React.Component {
     constructor(props) {
         super(props);
+
+        this.handleSearchFocus = this.handleSearchFocus.bind(this);
+        this.handleHamburger = this.handleHamburger.bind(this)
     }
 
     componentDidMount(){
@@ -36,12 +40,23 @@ class App extends React.Component {
         document.getElementsByClassName('searchbar-container')[0].classList.toggle('searchbar-container-focus')
     }
 
+    handleHamburger(e){
+        e.preventDefault();
+        if (window.location.hash === '#/') {
+            document.getElementsByClassName('sidenav')[0].classList.toggle('hidden')
+            document.getElementsByClassName('sidenav2')[0].classList.toggle('hidden')
+        } else {
+            document.getElementsByClassName('sidenav3')[0].classList.toggle('hidden')
+        }
+    }
+
     render() {
         return (
             <div>
+                <Modal />
                 <header className='header'>
                     <div className='hamburger-logo'>
-                        <div className='hamburger'></div>
+                        <div className='hamburger' onClick={this.handleHamburger}></div>
                         <Link to='/' className='logo'><div className='logo-icon'></div>YooToob</Link>
                     </div>
                     <div className='searchbar-container-button-container'>
@@ -54,18 +69,13 @@ class App extends React.Component {
                         <GreetingContainer />
                     </div>
                 </header>
-                <div className='sidenav-and-main-container'>
-                    <SideNav />
-                    <div className='not-header-or-sidenav'>
-                        <Switch>
-                            <AuthRoute exact path="/login" component={LoginFormContainer} />
-                            <AuthRoute exact path="/signup" component={SignupFormContainer} />
-                            <ProtectedRoute exact path="/upload" component={CreateVideoFormContainer} />
-                            <Route exact path='/' component={VideoIndexContainer} />
-                            <Route render={() => <Redirect to={{pathname: "/"}} />} />
-                        </Switch>
-                    </div>
-                </div>
+                    <Switch>
+                        <AuthRoute exact path="/login" component={LoginFormContainer} />
+                        <AuthRoute exact path="/signup" component={SignupFormContainer} />
+                        <Route exact path='/' component={VideoIndexContainer} />
+                        <Route render={() => <Redirect to={{pathname: "/"}} />} />
+                    </Switch>
+                
             </div>
         )
     }

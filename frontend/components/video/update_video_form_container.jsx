@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import VideoForm from './video_form';
 import { updateVideo, fetchVideo } from '../../actions/video_actions'
+import { closeModal } from '../../actions/modal_actions'
 
 class UpdateVideoForm extends React.Component {
     componentDidMount() {
@@ -26,8 +27,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchVideo = videoId => dispatch(fetchVideo(videoId)),
-    processForm = video => dispatch(updateVideo(video))
+    fetchVideo: videoId => dispatch(fetchVideo(videoId)),
+    closeModal: () => dispatch(closeModal()),
+    processForm: video => dispatch(updateVideo(video))
 })
 
 export default connect (

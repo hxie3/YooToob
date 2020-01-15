@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import VideoForm from './video_form';
-import { createVideo } from '../../actions/video_actions'
+import { createVideo } from '../../actions/video_actions';
+import { closeModal } from '../../actions/modal_actions'
 
 const mapStateToProps = (state) => ({
     video: {
@@ -12,7 +13,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    processForm : (video) => dispatch(createVideo(video))
+    processForm : (video) => dispatch(createVideo(video)),
+    closeModal: () => dispatch(closeModal()),
 })
 
 export default connect(
