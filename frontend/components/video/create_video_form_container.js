@@ -7,7 +7,9 @@ const mapStateToProps = (state) => ({
     video: {
         title: '',
         description: '',
-        user_id: state.session.id
+        user_id: state.session.id,
+        videoUrl: '',
+        videoFile: null,
     },
     formType: 'Create Video'
 })

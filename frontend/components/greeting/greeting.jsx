@@ -1,6 +1,4 @@
 import React from "react";
-import LoginFormContainer from '../session/login_form_container'
-import { Redirect } from 'react-router-dom'
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
