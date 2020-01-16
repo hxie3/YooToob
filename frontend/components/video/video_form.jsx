@@ -1,51 +1,75 @@
 import React from 'react';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
 
 class VideoForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             video: this.props.video,
-            formData: null
+            formData: null,
+            form: 'file'
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleVideo = this.handleVideo.bind(this);
+        this.handleInputFile = this.handleInputFile.bind(this);
+        this.handleDrop = this.handleDrop.bind(this);
+        this.updateTitle = this.updateTitle.bind(this);
+        this.updateDescription = this.updateDescription.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
     }
 
-    handleSubmit(e) {
+    updateTitle(e) {
+        let newvideostate = Object.assign({}, this.state.video);
+        newvideostate.title = e.currentTarget.value;
+        this.setState({ video: newvideostate })
+    }
+
+    updateDescription(e) {
+        let newvideostate = Object.assign({}, this.state.video);
+        newvideostate.description = e.currentTarget.value;
+        this.setState({ video: newvideostate })
+    }
+
+    handleInputFile(e){
         e.preventDefault();
-        this.props.processForm(this.state.video);
-    }
-
-    update(field) {
-        return e => this.setState({ [field]: e.currentTarget.value });
+        $('#video-file-holder').trigger('click');
     }
 
     handleVideo(e){
         e.preventDefault();
         const reader = new FileReader();
         const file = e.currentTarget.files[0];
-        reader.onloadend = () =>
-            this.setState({ videoUrl: reader.result, videoFile: file });
+        let newvideostate = Object.assign({}, this.state.video)
+
+        reader.onloadend = () => {
+            console.log(reader.result, 'hi')
+            newvideostate.videoFile = file;
+            newvideostate.videoUrl = reader.result;
+            this.setState({ video: newvideostate });
+        }
 
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            this.setState({ videoUrl: "", videoFile: null });
+            newvideostate.videoFile = null
+            newvideostate.videoUrl = ''
+            this.setState({ video: newvideostate });
         }
         
+        if (file) {
+            this.setState({ form: 'details' })
+        }
+    }
+
+    handleUpload(e){
+        e.preventDefault();
         const formData = new FormData();
-        formData.append('video[video]', this.state.videoFile);
-        $.ajax({
-            url: '/api/videos',
-            method: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-        })  
+        formData.append('video[video]', this.state.video.videoFile);
+        formData.append('video[title]', this.state.video.title)
+        formData.append('video[description]', this.state.video.description)
+        formData.append('video[user_id]', this.state.video.user_id)
+        this.props.processForm(formData);
     }
 
     componentDidMount(){
@@ -53,12 +77,27 @@ class VideoForm extends React.Component {
         const exit = findIconDefinition({ prefix: 'fas', iconName: 'times' });
         const exitIcon = icon(exit);
         Array.from(exitIcon.node).map(n => document.getElementsByClassName('video-form-close-button-content')[0].appendChild(n))
-        // const upload = findIconDefinition({ prefix: 'fas', iconName: 'upload'} )
-        // const uploadIcon =icon(upload);
-        // Array.from(uploadIcon.node).map(n => document.getElementsByClassName('video-file-picker-circle')[0].appendChild(n))
+        const upload = findIconDefinition({ prefix: 'fas', iconName: 'upload'} )
+        const uploadIcon =icon(upload);
+        Array.from(uploadIcon.node).map(n => document.getElementsByClassName('video-file-picker-circle')[0].appendChild(n))
+        let dropZone = document.getElementsByClassName('video-file-picker-container')[0];
+        dropZone.addEventListener('drop', this.handleDrop)
+    }
+
+    handleDrop(e){
+        e.preventDefault();
+        let dt = e.dataTransfer;
+        let file = dt.files[0];
+        this.setState({ videoFile: file })
     }
 
     render() {
+        console.log(this.state.video.videoFile, "render")
+        const preview = !!this.state.video.videoUrl ? (
+            <video width='304' height='171' controls>
+                <source src={this.state.video.videoUrl} type='video/mp4'/>
+            </video>
+        ) : (null)
         return (
             <div className='video-form-container'>
                 <div className='video-form-container-content'>
@@ -68,21 +107,21 @@ class VideoForm extends React.Component {
                                 Upload Video
                             </div>
                             <div className='video-form-close-button'>
-                                <div className='video-form-close-button-content'></div>
+                                <div onClick={this.props.closeModal} className='video-form-close-button-content'></div>
                             </div>
                         </div>
                     </div>
                     <div className='video-file-picker-container'>
                         { 
-                            (!!this.state.formData) ? (
+                            (this.state.form === 'file') ? (
                                 <div className='video-file-picker-style-scope'>
                                     <div className='video-file-picker-icon'>
-                                        <div className='video-file-picker-circle'></div>
+                                        <div onClick={this.handleInputFile} className='video-file-picker-circle'></div>
                                         <p className='video-file-picker-label'>Drag and drop a file you want to upload</p>
                                         <p className='video-file-picker-sublabel'>Your video will be public when you upload it</p>
                                     </div>
-                                    <button className='select-files-button'>SELECT FILE</button>
-                                    <input onChange={this.handleVideo} className='hidden video-file-holder' type="file" name='video-file-data'/>
+                                    <button onClick={this.handleInputFile} className='select-files-button'>SELECT FILE</button>
+                                    <input onChange={this.handleVideo} id='video-file-holder' className='hidden video-file-holder' type="file" name='video-file-data'/>
                                 </div>
                             ) : (
                                 <div className='video-file-details'>
@@ -95,7 +134,7 @@ class VideoForm extends React.Component {
                                                         Title (required)
                                                     </div>
                                                     <div className='inner-title-outer'>
-                                                        <input placeholder='Add a title that describes your video' className='title-input' type="text"/>
+                                                        <input onChange={this.updateTitle} value={this.state.video.title} placeholder='Add a title that describes your video' className='title-input' type="text"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,7 +147,7 @@ class VideoForm extends React.Component {
                                                     </div>
                                                     <div className='inside-description-input-container'>
                                                         <div className='description-style-scope'>
-                                                            <textarea placeholder='Tell viewers about your video' className='description-content'></textarea>
+                                                            <textarea onChange={this.updateDescription} value={this.state.video.description} placeholder='Tell viewers about your video' className='description-content'></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -120,7 +159,7 @@ class VideoForm extends React.Component {
                                             <div className='video-file-player'>
                                                 <div className='video-player'>
                                                     <div className='player-wrapper'>
-                                                        
+                                                        {preview}
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,7 +170,7 @@ class VideoForm extends React.Component {
                                                     </div>
                                                     <div className='video-link-value'>
                                                         <span className='video-url'>
-                                                            <a className="anchor-video-url" target="_blank" href="/">{/* Video Url */}</a>
+                                                            <a className="anchor-video-url" target="_blank" href={this.state.video.videoUrl}>{this.state.video.videoUrl}</a>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -139,8 +178,8 @@ class VideoForm extends React.Component {
                                             <div className='title-label'>
                                                 Filename
                                             </div>
-                                            <div id='original-filename' className='video-link-value'>
-                                                {/* Original Filename */}
+                                            <div id='original-filename' className='video-link-value'>   
+                                                {this.state.video.videoFile ? this.state.video.videoFile.name : null}
                                             </div>
                                         </div>
                                     </div>
@@ -148,35 +187,20 @@ class VideoForm extends React.Component {
                             ) 
                         }
                     </div>
-                    <div className="video-file-upload-button-container">
-                        <div className='inner-button-area'>
-                            <div className='upload-button-container'>
-                                <button className='select-files-button more'>
-                                    <div className='upload-button-submit-value'>Upload</div>
-                                </button>
+                    {
+                        (this.state.form === 'details') ? (
+                            <div className="video-file-upload-button-container">
+                                <div className='inner-button-area'>
+                                    <div className='upload-button-container'>
+                                        <button onClick={this.handleUpload} className='select-files-button more'>
+                                            <div className='upload-button-submit-value'>Upload</div>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        ) : ''
+                    }
                 </div>
-                {/* <h3>{this.props.formType}</h3>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Title
-                        <input
-                            type='text'
-                            value={this.state.title}
-                            onChange={this.update('title')}
-                        />
-                    </label>
-                    <label>
-                        Description
-                        <textarea
-                            value={this.state.description}
-                            onChange={this.update('description')}
-                        />
-                    </label>
-                    <button type='submit'>{this.props.formType}</button>
-                </form> */}
             </div>
         );
     }

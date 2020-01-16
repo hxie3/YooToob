@@ -5,14 +5,34 @@ import SideNav from '../sidenav/sidenav'
 class VideoIndex extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            videos: this.props.videos
+        }
     }
 
     componentDidMount() {
-        this.props.fetchVideos();
+        this.props.fetchVideos().then(
+            (res) => this.setState({ videos: res.videos })
+        )
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.videos !== prevState.videos) {
+            return { videos: nextProps.videos };
+        }
+        else return null;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.videos !== this.props.videos) {
+            //Perform some operation here
+            this.setState({ videos: this.props.videos });
+        }
     }
 
     render() {
-        let videos = this.props.videos
+        let videos = this.state.videos
         if (Object.values(videos).length === 0) {
             return null
         } else {
