@@ -747,7 +747,14 @@ function Modal(_ref) {
   switch (modal) {
     case 'create-video':
       component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_create_video_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
-      break;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-background"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-child",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
+      }, component));
 
     case 'update-video':
       component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_update_video_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
@@ -1730,20 +1737,6 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "player-wrapper"
       }, preview))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row-scope"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "video-link"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "title-label"
-      }, "Video Link"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "video-link-value"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "video-url"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "anchor-video-url",
-        target: "_blank",
-        href: this.state.video.videoUrl
-      }, this.state.video.videoUrl))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title-label"
       }, "Filename"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "original-filename",
@@ -1855,12 +1848,22 @@ function (_React$Component) {
           className: "sidenav-and-main-container"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "not-header-or-sidenav"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, Object.values(videos).map(function (video) {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "index-videos-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "margin"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "grid-header"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "recommended"
+        }, "Recommended")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "index-contents"
+        }, Object.values(videos).map(function (video) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             video: video,
             key: video.id
           });
-        }))));
+        }))))));
       }
     }
   }], [{
@@ -1926,6 +1929,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1943,6 +1947,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1967,8 +1972,19 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var video = this.props.video;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, video.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, video.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, video.views), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, video.published_at));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "index-item-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "thumbnail-link",
+        to: "/watch/".concat(this.props.video.id)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        className: "clip-thumbnail"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: this.props.video.video,
+        type: "video/mp4"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "index-item-video-details"
+      }));
     }
   }]);
 

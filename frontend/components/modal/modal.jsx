@@ -12,7 +12,13 @@ function Modal({ modal, closeModal }) {
     switch (modal) {
         case 'create-video':
             component = <CreateVideoFormContainer />;
-            break;
+            return (
+                <div className="modal-background">
+                    <div className="modal-child" onClick={e => e.stopPropagation()}>
+                        {component}
+                    </div>
+                </div>
+            )
         case 'update-video':
             component = <UpdateVideoFormContainer />;
             break;

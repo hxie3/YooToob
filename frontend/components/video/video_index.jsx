@@ -40,11 +40,20 @@ class VideoIndex extends React.Component {
                 <div className='sidenav-and-main-container'>
                     <SideNav/>
                     <div className='not-header-or-sidenav'>
-                        <ul>
-                            { Object.values(videos).map(video => {
-                                return <VideoIndexItem video={video} key={video.id}/>
-                            })}
-                        </ul>
+                        <div className='index-videos-container'>
+                            <div className='margin'>
+                                <div className='grid-header'>
+                                    <span className='recommended'>
+                                        Recommended
+                                    </span>
+                                </div>
+                                <div className='index-contents'>
+                                    { Object.values(videos).map(video => {
+                                        return <VideoIndexItem video={video} key={video.id}/>
+                                    })}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )

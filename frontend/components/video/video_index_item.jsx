@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 
 class VideoIndexItem extends React.Component {
@@ -12,14 +13,17 @@ class VideoIndexItem extends React.Component {
     }
 
     render() {
-        let video = this.props.video;
         return (
-            <li>
-                <span>{video.title}</span>
-                <span>{video.username}</span>
-                <span>{video.views}</span>
-                <span>{video.published_at}</span>
-            </li>
+            <div className='index-item-container'>
+                <Link className='thumbnail-link' to={`/watch/${this.props.video.id}`}>
+                    <video className='clip-thumbnail'>
+                        <source src={this.props.video.video} type='video/mp4' />
+                    </video>
+                </Link>
+                <div className='index-item-video-details'>
+
+                </div>
+            </div>
         );
     }
 }

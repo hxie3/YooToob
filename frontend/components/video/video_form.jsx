@@ -163,7 +163,8 @@ class VideoForm extends React.Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='row-scope'>
+                                            {/* Implement a URL shortener if you want to use below code */}
+                                            {/* <div className='row-scope'>
                                                 <div className='video-link'>
                                                     <div className='title-label'>
                                                         Video Link
@@ -174,7 +175,7 @@ class VideoForm extends React.Component {
                                                         </span>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className='title-label'>
                                                 Filename
                                             </div>
