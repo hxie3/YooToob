@@ -15,7 +15,6 @@ class ShowVideo extends React.Component {
         this.props.fetchVideo(this.props.match.params.id).then(
             (res) => this.setState({ video: res.video } )
         )
-        debugger
     }
 
     // static getDerivedStateFromProps(nextProps, prevState) {
@@ -33,7 +32,6 @@ class ShowVideo extends React.Component {
     // }
 
     render() {
-        console.log(this.state)
         let video = this.state.video;
         if (!video) return null
         return (
