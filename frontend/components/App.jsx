@@ -1,18 +1,16 @@
 import React from "react";
 import GreetingContainer from "./greeting/greeting_container";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { AuthRoute } from "../util/route_util"
-import { ProtectedRoute } from "../util/protected_route_util"
+import { AuthRoute } from "../util/route_util";
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { Link } from 'react-router-dom'
-import LoginFormContainer from "./session/login_form_container"
-import SignupFormContainer from "./session/signup_form_container"
-import VideoIndexContainer from "./video/video_index_container"
-import CreateVideoFormContainer from "./video/create_video_form_container"
-import SideNav from "./sidenav/sidenav"
-import Modal from "./modal/modal"
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { Link } from 'react-router-dom';
+import LoginFormContainer from "./session/login_form_container";
+import SignupFormContainer from "./session/signup_form_container";
+import VideoIndexContainer from "./video/video_index_container";
+import Modal from "./modal/modal";
+import ShowVideoContainer from "./video/show_video_container";
 
 class App extends React.Component {
     constructor(props) {
@@ -73,6 +71,7 @@ class App extends React.Component {
                         <AuthRoute exact path="/login" component={LoginFormContainer} />
                         <AuthRoute exact path="/signup" component={SignupFormContainer} />
                         <Route exact path='/' component={VideoIndexContainer} />
+                        <Route exact path='/watch/:id' component={ShowVideoContainer} />
                         <Route render={() => <Redirect to={{pathname: "/"}} />} />
                     </Switch>
                 

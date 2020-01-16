@@ -1,0 +1,54 @@
+.show-body {
+    overflow-x: auto;
+    margin-top: 56px;
+    display: flex;
+    flex: 1;
+    flex-basis: 1e-9px;
+    overflow-y: auto;
+}
+
+.show-body-left {
+    max-width: calc((100vh-(56px+24px+136px)) * (16/9));
+    min-width: calc(480px * (16/9));
+    padding-top: 24px;
+    padding-right: 24px;
+    margin-left: 24px;
+}
+
+.show-body-right {
+    padding-top: 24px;
+    min-width: 300px;
+    padding-right: 24px;
+    width: 402px;
+}
+
+.player-outer {
+    position: relative;
+}
+
+.player-container-outer {
+    max-width: calc((16/9) * (100vh-216px));
+    min-width: calc(480px * (16/9));
+    margin: 0 auto;
+}
+
+.player-container-inner {
+    height: 0;
+    padding-top: 56.5%;
+    position: relative;
+    width: 100%;
+}
+
+.player-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.player {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

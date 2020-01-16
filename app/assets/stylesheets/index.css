@@ -50,13 +50,11 @@
     margin-bottom: 40px;
     --width: calc(25% - 16px - 0.1px);
     width: var(--width);
-    height: 250px;
+    height: 263px;
 }
 
 .thumbnail-link {
     width: 100%;
-    --height: 153px;
-    height: var(--height);
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -65,11 +63,129 @@
 }
 
 .clip-thumbnail {
-    height: var(--height);
+    height: 0;
+    padding-top: 56.5%;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
     width: 100%;
 }
 /* id detail */
 .index-item-video-details {
     margin: 0px;
     position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+}
+
+.video-profile-pic {
+    margin-top: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 18px !important;
+}
+
+.index-video-details {
+    overflow-x: hidden;
+    padding-right: 24px;
+    width: 100%;
+}
+
+.index-video-title-style {
+    color: #0d0d0d;
+    margin-bottom: 12px 0 6px;
+}
+
+.index-click-title {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    color: #0d0d0d;
+}
+
+.index-title-string {
+    font-size: 18px;
+    line-height: 24px;
+    color: #0d0d0d;
+    display: flex;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Roboto' 'Arial' sans-serif;
+}
+
+.grid-style-scope {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.style-scope {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.byline-container {
+    max-width: 100%;
+    max-height: 1.8rem;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-transform: none;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.channel-name {
+    color: #606060;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    overflow: hidden;
+    --webkit-box-orient: vertical;
+}
+
+.metadata-line {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #606060;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.bottom-metadata {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #606060;
+    overflow: hidden;
+}
+
+.views {
+    display: inline-block;
+}
+
+.data {
+    display: inline-block;
+}
+
+.video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0px;
 }
