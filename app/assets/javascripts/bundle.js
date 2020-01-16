@@ -659,7 +659,7 @@ function (_React$Component) {
         to: "/login"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "signin-pic",
-        src: "/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--536ca0d8d32d5254e190ef80e6c32bb3e61b6c32/default_profile_pic.jpeg",
+        src: window.defaultURL,
         alt: "default-pic"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "loginsignin"

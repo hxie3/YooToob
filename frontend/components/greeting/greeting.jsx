@@ -88,7 +88,7 @@ class Greeting extends React.Component {
                     </div>
                 ) : (
                     <Link className='login' to='/login'>
-                        <img className='signin-pic' src="/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--536ca0d8d32d5254e190ef80e6c32bb3e61b6c32/default_profile_pic.jpeg" alt="default-pic"/>
+                        <img className='signin-pic' src={window.defaultURL} alt="default-pic"/>
                         <span className='loginsignin'>SIGN IN</span>
                     </Link> 
                 )}
