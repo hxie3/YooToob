@@ -43,7 +43,6 @@ class VideoForm extends React.Component {
         let newvideostate = Object.assign({}, this.state.video)
 
         reader.onloadend = () => {
-            console.log(reader.result, 'hi')
             newvideostate.videoFile = file;
             newvideostate.videoUrl = reader.result;
             this.setState({ video: newvideostate });
@@ -92,7 +91,6 @@ class VideoForm extends React.Component {
     }
 
     render() {
-        console.log(this.state.video.videoFile, "render")
         const preview = !!this.state.video.videoUrl ? (
             <video width='304' height='171' controls>
                 <source src={this.state.video.videoUrl} type='video/mp4'/>

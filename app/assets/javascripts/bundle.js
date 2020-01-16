@@ -1437,7 +1437,6 @@ function (_React$Component) {
           video: res.video
         });
       });
-      debugger;
     } // static getDerivedStateFromProps(nextProps, prevState) {
     //     if (nextProps.video !== prevState.video) {
     //         return { video: nextProps.video };
@@ -1454,7 +1453,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state);
       var video = this.state.video;
       if (!video) return null;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1717,7 +1715,6 @@ function (_React$Component) {
       var newvideostate = Object.assign({}, this.state.video);
 
       reader.onloadend = function () {
-        console.log(reader.result, 'hi');
         newvideostate.videoFile = file;
         newvideostate.videoUrl = reader.result;
 
@@ -1789,7 +1786,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state.video.videoFile, "render");
       var preview = !!this.state.video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         width: "304",
         height: "171",
@@ -2698,10 +2694,7 @@ __webpack_require__.r(__webpack_exports__);
 var fetchVideos = function fetchVideos() {
   return $.ajax({
     url: '/api/videos',
-    method: 'GET',
-    error: function error(err) {
-      return console.log(err);
-    }
+    method: 'GET'
   });
 };
 var createVideo = function createVideo(formData) {
