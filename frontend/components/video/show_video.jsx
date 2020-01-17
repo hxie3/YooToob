@@ -110,7 +110,7 @@ class ShowVideo extends React.Component {
                                                     <div className='no-long-names'>
                                                         <div className='only-block'>
                                                             <div className='display-uploader'>
-                                                                {this.props.videos}
+                                                                {this.props.video.username}
                                                             </div>
                                                         </div>
                                                     </div>
