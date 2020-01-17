@@ -83,4 +83,41 @@ All the user has to do after inputting a title and description is press the uplo
 
 ## User Authentication
 
-User authentication used the same form for sign up and log in. The render method of the form uses conditional logic based on the form state to change between submitting data to create a user or create a session.
+User authentication used the same form for sign up and log in. The render method of the form uses conditional logic based on the `formType` to change between submitting data to create a user or create a session.
+```javascript
+this.state = {
+   user: { 
+       username: '',
+       password: ''
+   },
+   formType: this.props.formType
+};
+```
+The user authentication process is split into two parts: the username form, and the password form. When the user submits a username by pressing the `Next` button, the state changes to store the submitted username only if no errors is detected. If the user clicks `Demo Login` instead, then the form will process both the username and password with a delegated demo user's information.
+
+```javascript
+handleSubmit(e) {
+  e.preventDefault();
+  if (e.target.innerHTML === 'Next') {
+      const user = Object.assign({}, this.state.user);
+      this.props.newProcessForm(user);
+      setTimeout(() => {
+          if(this.props.errors.length === 0) {
+              this.setState( { formType: "password" })
+          } else {
+              this.handleShake(e);
+          }
+      }, 250)
+  } else {
+      this.props.processForm({ username: 'DemoUser123', password: 'DemoUser123' })
+  }
+}
+```
+When the `formType` changes to `"password"`, the form rerenders to take in a password. Once the password is submitted the form is submitted with the combined state to pass into the user create/session create.
+
+## Future Features
+* Add a loadstate
+* Allow users to comment on videos
+* Implement likes on videos and comments
+* Subscriptions and channels
+* Increment views when video is played
