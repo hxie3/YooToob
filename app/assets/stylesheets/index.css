@@ -69,6 +69,7 @@
     flex-wrap: wrap;
     position: relative;
     width: 100%;
+    background-color: white;
 }
 /* id detail */
 .index-item-video-details {
