@@ -67,6 +67,7 @@ class App extends React.Component {
                         <GreetingContainer />
                     </div>
                 </header>
+                <br/>
                     <Switch>
                         <AuthRoute exact path="/login" component={LoginFormContainer} />
                         <AuthRoute exact path="/signup" component={SignupFormContainer} />

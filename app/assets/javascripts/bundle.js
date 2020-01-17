@@ -457,7 +457,7 @@ function (_React$Component) {
         className: "search-button"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "greeting"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["AuthRoute"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["AuthRoute"], {
         exact: true,
         path: "/login",
         component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -1462,6 +1462,10 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "show-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "something"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "columns"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "primary",
         className: "show-body-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1495,11 +1499,45 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "count-value"
       }, this.props.video.views, " views"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "    "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "date"
-      }, month, "/", day, "/", year))))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "below-title-date"
+      }, month, "/", day, "/", year))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "bottom-border-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "top-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "top-row-renderer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "owner-icon"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "icon-margin",
+        src: this.props.video.profilePicture,
+        alt: "profile-pic"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "upload-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uploader-name"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "no-long-names"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "only-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "display-uploader"
+      }, this.props.video.username))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collapser collapsed"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collapser-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collapser-description"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "description-format"
+      }, this.props.video.description))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "show-more"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "show-more-string"
+      }, "Show more")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "secondary",
         className: "show-body-right"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi")));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi")))));
     }
   }]);
 
