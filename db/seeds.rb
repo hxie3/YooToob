@@ -19,7 +19,7 @@ video.video.attach(io: file, filename: "maplestory.mp4")
 
 user = User.create(username: 'The Dodo', password: 'The Dodo')
 user.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/images/signin.jpeg")), filename: "default_profile_pic.jpeg")
-video = Video.create(title: "can I get a bowl of that chili", description: 'wake up cole', user_id: 3)
+video = Video.create(title: "Guy Helps Wolf Spider Untangle His Feet", description: 'No Description', user_id: 3)
 file = open("https://yootoob-seeds.s3-us-west-1.amazonaws.com/Guy+Helps+Wolf+Spider+Untangle+His+Feet+_+The+Dodo.mp4")
 video.video.attach(io: file, filename: "spider.mp4")
 
