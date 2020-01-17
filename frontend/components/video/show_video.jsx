@@ -19,25 +19,11 @@ class ShowVideo extends React.Component {
         )
         // this.props.fetchVideos().then(
         //     (res) => this.setState({videos: res.videos})
-        // )
     }
-
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (nextProps.videos !== prevState.videos) {
-    //         return { videos: nextProps.videos };
-    //     }
-    //     else return null;
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (prevProps.videos !== this.props.videos) {
-    //         //Perform some operation here
-    //         this.setState({ video: this.props.videos });
-    //     }
-    // }
 
     render() {
         let video = this.state.video;
+        // let videos = this.state.videos;
         if (!video) return null
         // if (!videos) return null
         let date = new Date(this.props.video.created_at);
