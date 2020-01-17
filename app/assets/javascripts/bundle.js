@@ -1439,8 +1439,7 @@ function (_React$Component) {
         return _this2.setState({
           video: res.video
         });
-      });
-      debugger; // this.props.fetchVideos().then(
+      }); // this.props.fetchVideos().then(
       //     (res) => this.setState({videos: res.videos})
       // )
     } // static getDerivedStateFromProps(nextProps, prevState) {
@@ -2574,11 +2573,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
-/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/video_actions */ "./frontend/actions/video_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 
 
 
@@ -2601,19 +2596,8 @@ document.addEventListener("DOMContentLoaded", function () {
     delete window.user;
   } else {
     store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  } // Testing
+  }
 
-
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
-  window.login = _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__["login"];
-  window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__["logout"];
-  window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__["signup"];
-  window.fetchVideos = _actions_video_actions__WEBPACK_IMPORTED_MODULE_4__["fetchVideos"];
-  window.fetchVideo = _actions_video_actions__WEBPACK_IMPORTED_MODULE_4__["fetchVideo"];
-  window.updateVideo = _actions_video_actions__WEBPACK_IMPORTED_MODULE_4__["updateVideo"];
-  window.deleteVideo = _actions_video_actions__WEBPACK_IMPORTED_MODULE_4__["deleteVideo"];
-  window.createVideo = _actions_video_actions__WEBPACK_IMPORTED_MODULE_4__["createVideo"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);

@@ -17,7 +17,6 @@ class ShowVideo extends React.Component {
         this.props.fetchVideo(this.props.match.params.id).then(
             (res) => this.setState({ video: res.video } )
         )
-        debugger
         // this.props.fetchVideos().then(
         //     (res) => this.setState({videos: res.videos})
         // )
