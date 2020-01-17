@@ -44,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
     closeModal: () => dispatch(closeModal()),
 })
 ```
-![Upload Form](https://aayootoob.github.com/images/upload.png)
+![Upload Form](https://github.com/hxie3/YooToob/blob/master/app/assets/images/upload.png)
 
 After a file is selected the form state changes from prompting a file selection to preview the file selected and prompt for additional information such as the title and description. I was able to change the state of the form by listening to the onChange event that triggers when a file is submitted to an `<input type='file'/>`. I made a helper method that then took the inputted file and stored it to the local state as well as change the state of the form.
 
@@ -77,7 +77,7 @@ handleVideo(e){
 
 Now that the form state changed to `'details'`, the form will rerender to its second form using conditional logic in the render method.
 
-![Upload2 Form](https://aayootoob.github.com/images/upload2.png)
+![Upload2 Form](https://github.com/hxie3/YooToob/blob/master/app/assets/images/upload2.png)
 
 All the user has to do after inputting a title and description is press the upload button which will update the last required fields to create a video object.
 
