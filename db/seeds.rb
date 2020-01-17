@@ -28,7 +28,7 @@ video = Video.create(title: "can I get a bowl of that chili", description: 'wake
 file = open("https://yootoob-seeds.s3-us-west-1.amazonaws.com/can+i+get+a+bowl+of+that+chili.mp4")
 video.video.attach(io: file, filename: "can i get a bowl of that chili.mp4")
 
-user = User.create(username: 'IGN', password: 'IGN')
+user = User.create(username: 'IGN', password: 'IGNIGN')
 user.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/images/signin.jpeg")), filename: "default_profile_pic.jpeg")
 video = Video.create(title: "Weathering With You Official Subbed Trailer", description: "Weathering With You follows Hodaka, a high school runaway alone in Tokyo. Not long after finding work as a writer for an occult magazine, he meets Hina, a girl who has the ability to clear away the seemingly neverending rain. Makoto Shinkai's (Your Name) next movie hits theaters in North America beginning January 17.", user_id: 6)
 file = open("https://yootoob-seeds.s3-us-west-1.amazonaws.com/Weathering+With+You+Official+Subbed+Trailer.mp4")
