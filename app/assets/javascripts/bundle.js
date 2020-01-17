@@ -1455,9 +1455,14 @@ function (_React$Component) {
     value: function render() {
       var video = this.state.video;
       if (!video) return null;
+      var date = new Date(this.props.video.created_at);
+      var month = date.getMonth() + 1;
+      var day = date.getDay();
+      var year = date.getFullYear();
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "show-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "primary",
         className: "show-body-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "player-outer"
@@ -1469,12 +1474,32 @@ function (_React$Component) {
         className: "player-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         className: "player",
-        controls: true
+        controls: true,
+        autoPlay: true
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: this.state.video.video
-      })))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        src: this.props.video.video
+      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "info-contents"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "title-show"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "title-show-content"
+      }, this.props.video.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "below-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "info-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "count"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "count-value"
+      }, this.props.video.views, " views"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "    "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "date"
+      }, month, "/", day, "/", year))))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "secondary",
         className: "show-body-right"
-      }));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi")));
     }
   }]);
 
