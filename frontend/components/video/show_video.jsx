@@ -1,13 +1,15 @@
 import React from 'react';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
 
 class ShowVideo extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            video: this.props.video
+            video: this.props.video,
+            // videos: null
         }
     }
 
@@ -15,28 +17,33 @@ class ShowVideo extends React.Component {
         this.props.fetchVideo(this.props.match.params.id).then(
             (res) => this.setState({ video: res.video } )
         )
+        debugger
+        // this.props.fetchVideos().then(
+        //     (res) => this.setState({videos: res.videos})
+        // )
     }
 
     // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (nextProps.video !== prevState.video) {
-    //         return { video: nextProps.video };
+    //     if (nextProps.videos !== prevState.videos) {
+    //         return { videos: nextProps.videos };
     //     }
     //     else return null;
     // }
 
     // componentDidUpdate(prevProps, prevState) {
-    //     if (prevProps.video !== this.props.video) {
+    //     if (prevProps.videos !== this.props.videos) {
     //         //Perform some operation here
-    //         this.setState({ video: this.props.video });
+    //         this.setState({ video: this.props.videos });
     //     }
     // }
 
     render() {
         let video = this.state.video;
         if (!video) return null
+        // if (!videos) return null
         let date = new Date(this.props.video.created_at);
         let month = date.getMonth() + 1;
-        let day = date.getDay();
+        let day = date.getDate();
         let year = date.getFullYear();
         return (
             <div className='show-body'>
@@ -104,7 +111,7 @@ class ShowVideo extends React.Component {
                                                     <div className='no-long-names'>
                                                         <div className='only-block'>
                                                             <div className='display-uploader'>
-                                                                {this.props.video.username}
+                                                                {this.props.videos}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -128,8 +135,28 @@ class ShowVideo extends React.Component {
                             </div>
                         </div>
                         <div id='secondary' className='show-body-right'>
-                            <div>
-                                Hi
+                            <div className='items'>
+                                {/* {(videos).map((videoItem) => {
+                                    if (videoItem.id === this.props.video.id) return null
+                                    return (
+                                        <div className='index-show-list'>
+                                            <div className='dismissable'>
+                                                <div className='video-item-show'>
+                                                    <Link className='thumbnail-show' to={`/watch/${video.id}`}>
+                                                        <div className='after-thumbnail'>
+                                                            <video>
+                                                                <source src={this.props.video.video}/>
+                                                            </video>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                                <div className='video-item-details-show'>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })} */}
                             </div>
                         </div>
                     </div>

@@ -13,7 +13,7 @@ class VideoIndexItem extends React.Component {
     render() {
         let date = new Date(this.props.video.created_at);
         let month = date.getMonth() + 1;
-        let day = date.getDay();
+        let day = date.getDate();
         let year = date.getFullYear();
         return (
             <div className='index-item-container'>

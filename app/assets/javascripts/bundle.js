@@ -1388,6 +1388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1410,6 +1411,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var ShowVideo =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1422,7 +1424,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowVideo).call(this, props));
     _this.state = {
-      video: _this.props.video
+      video: _this.props.video // videos: null
+
     };
     return _this;
   }
@@ -1437,16 +1440,19 @@ function (_React$Component) {
           video: res.video
         });
       });
+      debugger; // this.props.fetchVideos().then(
+      //     (res) => this.setState({videos: res.videos})
+      // )
     } // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (nextProps.video !== prevState.video) {
-    //         return { video: nextProps.video };
+    //     if (nextProps.videos !== prevState.videos) {
+    //         return { videos: nextProps.videos };
     //     }
     //     else return null;
     // }
     // componentDidUpdate(prevProps, prevState) {
-    //     if (prevProps.video !== this.props.video) {
+    //     if (prevProps.videos !== this.props.videos) {
     //         //Perform some operation here
-    //         this.setState({ video: this.props.video });
+    //         this.setState({ video: this.props.videos });
     //     }
     // }
 
@@ -1454,10 +1460,11 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var video = this.state.video;
-      if (!video) return null;
+      if (!video) return null; // if (!videos) return null
+
       var date = new Date(this.props.video.created_at);
       var month = date.getMonth() + 1;
-      var day = date.getDay();
+      var day = date.getDate();
       var year = date.getFullYear();
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "show-body"
@@ -1522,7 +1529,7 @@ function (_React$Component) {
         className: "only-block"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "display-uploader"
-      }, this.props.video.username))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.videos))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collapser collapsed"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collapser-content"
@@ -1537,7 +1544,9 @@ function (_React$Component) {
       }, "Show more")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "secondary",
         className: "show-body-right"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hi")))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "items"
+      })))));
     }
   }]);
 
@@ -1567,8 +1576,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+  // const videos = Object.values(state.entities.videos)
   return {
-    video: state.entities.videos[ownProps.match.params.id]
+    video: state.entities.videos[ownProps.match.params.id] // videos: videos
+
   };
 };
 
@@ -1576,7 +1587,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchVideo: function fetchVideo(videoId) {
       return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["fetchVideo"])(videoId));
-    }
+    } // fetchVideos: () => dispatch((fetchVideos()))
+
   };
 };
 
@@ -2182,7 +2194,7 @@ function (_React$Component) {
     value: function render() {
       var date = new Date(this.props.video.created_at);
       var month = date.getMonth() + 1;
-      var day = date.getDay();
+      var day = date.getDate();
       var year = date.getFullYear();
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "index-item-container"
