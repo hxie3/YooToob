@@ -8,11 +8,14 @@
 }
 
 .show-body-left {
-    max-width: calc((100vh-(56px+24px+136px)) * (16/9));
+    /* max-width doesnt work like this */
+    max-width: calc((100vh - 56px + 24px + 136px) * (16/9));
     min-width: calc(480px * (16/9));
     padding-top: 24px;
     padding-right: 24px;
     margin-left: 24px;
+    flex: 1;
+    flex-basis: 0.00000001px;
 }
 
 .show-body-right {
@@ -27,7 +30,8 @@
 }
 
 .player-container-outer {
-    max-width: calc((16/9) * (100vh-216px));
+    /* max-width doesnt work like this */
+    max-width: calc((100vh - 56px + 24px + 136px) * (16/9));
     min-width: calc(480px * (16/9));
     margin: 0 auto;
 }
@@ -98,5 +102,208 @@
 
 .count-value {
     color: #606060;
+}
 
+.below-title-date {
+    color: #606060;
+}
+
+.something {
+    flex: 1;
+    flex-basis: 1e-9px;
+}
+
+.columns {
+    min-width: 1012px;
+    justify-content: center;
+    max-width: 1754px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.menu {
+    position: relative;
+    top: 4px;
+}
+
+.menu-renderer {
+    position: relative;
+}
+
+.top-level-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.like-button {
+    color: #909090;
+}
+
+.like-button-active {
+    color: lightskyblue;
+}
+
+.like-button-toggle {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.like-button-button {
+    color: #909090;
+    background-color: transparent;
+}
+
+.bottom-border-info {
+    display: block;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    height: 145px;
+}
+
+.top-row {
+    margin-bottom: 12px;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: row;
+}
+
+.collapser {
+    margin-left: 64px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    display: block;
+}
+
+.collapsed {
+    /* and this */
+    height: 60px;
+}
+
+.collapser-content {
+    /* Take class out to uncollapse */
+    overflow: hidden;
+    max-height: 60px;
+    height: 60px;
+}
+
+.collapser-description {
+    display: block;
+    max-width: 615px;
+    height: auto;
+}
+
+.description-format {
+    color: #0d0d0d;
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    font-family: 'Roboto', Arial, sans-serif;
+    height: inherit;
+}
+
+.top-row-renderer {
+    flex: 1;
+    flex-basis: 1e-9px;
+    display: flex;
+    flex-direction: row;
+}
+
+.owner-icon {
+    display: inline-block;
+    text-decoration: none;
+    /* When user show page is done */
+    /* cursor: pointer; */
+}
+
+.icon-margin {
+    background-color: transparent;
+    margin-right: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.upload-info {
+    flex: 1;
+    flex-basis: 1e-9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.uploader-name {
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    align-self: flex-start;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+.no-long-names {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.only-block {
+    display: block;
+}
+
+.display-uploader {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0d0d0d;
+}
+
+.show-more {
+    margin: 0px;
+    padding: 0;
+    align-self: flex-start;
+    display: block;
+    text-align: center;
+    font-family: inherit;
+    word-wrap: break-word;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    background: transparent;
+    font: inherit;
+    outline-width: 0px;
+    border-radius: 3px;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    color: #909090;
+    width: 90px;
+    text-transform: uppercase;
+    height: 21px;
+    border: none;
+}
+
+.show-more-string {
+    color: #909090;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.007px;
+    text-transform: uppercase;
+    word-break: break-word;
+    text-align: center;
+    font-family: 'Roboto', Arial, sans-serif;
 }
