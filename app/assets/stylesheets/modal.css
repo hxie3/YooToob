@@ -178,6 +178,11 @@
   font-size: 14px;
 }
 
+.select-files-button:disabled {
+  background-color: gray;
+  cursor: default;
+}
+
 /* Video Details CSS */
 
 .video-file-details {

@@ -22,7 +22,7 @@ class UpdateVideoForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    video: state.entities.videos[ownProps.mathch.params.videoId],
+    video: state.entities.videos[ownProps.match.params.videoId],
     formType: 'Update Video'
 })
 

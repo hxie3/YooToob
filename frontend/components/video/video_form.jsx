@@ -8,7 +8,8 @@ class VideoForm extends React.Component {
         this.state = {
             video: this.props.video,
             formData: null,
-            form: 'file'
+            form: 'file',
+            uploading: false,
         }
 
         this.handleVideo = this.handleVideo.bind(this);
@@ -63,12 +64,30 @@ class VideoForm extends React.Component {
 
     handleUpload(e){
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('video[video]', this.state.video.videoFile);
-        formData.append('video[title]', this.state.video.title)
-        formData.append('video[description]', this.state.video.description)
-        formData.append('video[user_id]', this.state.video.user_id)
-        this.props.processForm(formData);
+        e.persist();
+        if (e.currentTarget.disabled === false) {
+            e.currentTarget.disabled = true;
+            this.setState({ loading: true })
+            const formData = new FormData();
+            formData.append('video[video]', this.state.video.videoFile);
+            formData.append('video[title]', this.state.video.title)
+            formData.append('video[description]', this.state.video.description)
+            formData.append('video[user_id]', this.state.video.user_id)
+            this.props.processForm(formData)
+                .then(() => {
+                    let ele = document.getElementsByClassName("select-files-button")[0];
+                    if (!!ele) {
+                        ele.disabled = false;
+                        this.setState({ loading: false })
+                    }
+                }, () => {
+                    let ele = document.getElementsByClassName("select-files-button")[0];
+                    if (!!ele) {
+                        ele.disabled = false;
+                        this.setState({ loading: false })
+                    }
+                })
+        }
     }
 
     componentDidMount(){
@@ -192,7 +211,13 @@ class VideoForm extends React.Component {
                                 <div className='inner-button-area'>
                                     <div className='upload-button-container'>
                                         <button onClick={this.handleUpload} className='select-files-button more'>
-                                            <div className='upload-button-submit-value'>Upload</div>
+                                            {
+                                                document.getElementsByClassName("select-files-button")[0].disabled ? (
+                                                    <div className='upload-button-submit-value'>Uploading...</div>
+                                                ) : (
+                                                    <div className='upload-button-submit-value'>Upload</div>
+                                                )
+                                            }
                                         </button>
                                     </div>
                                 </div>

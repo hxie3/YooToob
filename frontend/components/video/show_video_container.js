@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => {
     return (
         {
             video: state.entities.videos[ownProps.match.params.id],
-            // videos: videos
+            videos: state.entities.videos,
+            videoId: ownProps.match.params.id
         }
     )
 }
@@ -17,7 +18,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     fetchVideo: (videoId) => dispatch(fetchVideo(videoId)),
-    // fetchVideos: () => dispatch((fetchVideos()))
+    fetchVideos: () => dispatch((fetchVideos()))
 })
 
 export default withRouter(connect(

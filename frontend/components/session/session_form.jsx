@@ -21,8 +21,14 @@ class SessionForm extends React.Component {
     handleNewSubmit(e) {
         e.preventDefault();
         const user = Object.assign({}, this.state.user);
-        this.props.processForm(user);
-        this.handleShake(e)
+        this.props.processForm(user)
+            .then(() => {
+                if (this.props.errors.length === 0) {
+                    return
+                }
+            }, () => {
+                this.handleShake(e)
+            })
     }
 
     handleShake(e) {
@@ -39,14 +45,12 @@ class SessionForm extends React.Component {
         e.preventDefault();
         if (e.target.innerHTML === 'Next') {
             const user = Object.assign({}, this.state.user);
-            this.props.newProcessForm(user);
-            setTimeout(() => {
-                if(this.props.errors.length === 0) {
-                    this.setState( { formType: "password" })
-                } else {
-                    this.handleShake(e);
-                }
-            }, 250)
+            this.props.newProcessForm(user)
+                .then(() => {
+                    this.setState({ formType: "password" })
+                }, () => {
+                    this.handleShake(e)
+                })
         } else {
             // Auto Type for later
             // this.props.newProcessForm({ username: 'DemoUser123' });
@@ -97,7 +101,7 @@ class SessionForm extends React.Component {
                     <span className='signup-or-signin-followup'>{this.state.user.username}</span>
                     <br/>
                     <form className='session-form-form' onSubmit={this.handleNewSubmit}>
-                        <span className='input-errors'>{this.props.errors}</span>
+                        <span className='input-errors'>{this.props.errors[0]}</span>
                         <input className='username' placeholder='Password' type="password" value={this.state.user.password} onChange={this.handlePasswordChange}/>
                         <br/>  
                         <div className='back-or-signup'>

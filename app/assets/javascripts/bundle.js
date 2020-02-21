@@ -284,9 +284,11 @@ var fetchVideo = function fetchVideo(videoId) {
 var createVideo = function createVideo(video) {
   return function (dispatch) {
     return _util_video_api_util__WEBPACK_IMPORTED_MODULE_0__["createVideo"](video).then(function (video) {
-      return dispatch(receiveVideo(video));
-    }, function (err) {
-      return dispatch(receiveErrors(err.responseJSON));
+      if (!!video.errors) {
+        dispatch(receiveErrors(err.responseJSON));
+      } else {
+        dispatch(receiveVideo(video));
+      }
     });
   };
 };
@@ -975,10 +977,17 @@ function (_React$Component) {
   _createClass(SessionForm, [{
     key: "handleNewSubmit",
     value: function handleNewSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       var user = Object.assign({}, this.state.user);
-      this.props.processForm(user);
-      this.handleShake(e);
+      this.props.processForm(user).then(function () {
+        if (_this2.props.errors.length === 0) {
+          return;
+        }
+      }, function () {
+        _this2.handleShake(e);
+      });
     }
   }, {
     key: "handleShake",
@@ -996,22 +1005,19 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       e.preventDefault();
 
       if (e.target.innerHTML === 'Next') {
         var user = Object.assign({}, this.state.user);
-        this.props.newProcessForm(user);
-        setTimeout(function () {
-          if (_this2.props.errors.length === 0) {
-            _this2.setState({
-              formType: "password"
-            });
-          } else {
-            _this2.handleShake(e);
-          }
-        }, 250);
+        this.props.newProcessForm(user).then(function () {
+          _this3.setState({
+            formType: "password"
+          });
+        }, function () {
+          _this3.handleShake(e);
+        });
       } else {
         // Auto Type for later
         // this.props.newProcessForm({ username: 'DemoUser123' });
@@ -1083,7 +1089,7 @@ function (_React$Component) {
           onSubmit: this.handleNewSubmit
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "input-errors"
-        }, this.props.errors), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, this.props.errors[0]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "username",
           placeholder: "Password",
           type: "password",
@@ -1424,7 +1430,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowVideo).call(this, props));
     _this.state = {
-      video: _this.props.video // videos: null
+      video: _this.props.video,
+      videoId: _this.props.videoId // videos: this.props.videos
 
     };
     return _this;
@@ -1439,28 +1446,36 @@ function (_React$Component) {
         return _this2.setState({
           video: res.video
         });
-      }); // this.props.fetchVideos().then(
-      //     (res) => this.setState({videos: res.videos})
-      // )
-    } // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (nextProps.videos !== prevState.videos) {
-    //         return { videos: nextProps.videos };
-    //     }
-    //     else return null;
-    // }
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (prevProps.videos !== this.props.videos) {
-    //         //Perform some operation here
-    //         this.setState({ video: this.props.videos });
-    //     }
-    // }
-
+      });
+      this.props.fetchVideos().then(function (res) {
+        return _this2.setState({
+          videos: res.videos
+        });
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.match.params.id !== this.props.match.params.id) {
+        //Perform some operation here
+        this.props.fetchVideo(this.props.videoId);
+        this.setState({
+          videoId: this.props.videoId
+        });
+      }
+    }
   }, {
     key: "render",
     value: function render() {
-      var video = this.state.video;
-      if (!video) return null; // if (!videos) return null
+      var _this3 = this;
 
+      var _this$props = this.props,
+          video = _this$props.video,
+          videos = _this$props.videos,
+          videoId = _this$props.videoId;
+      if (!video) return null;
+      if (!videos) return null;
+      if (!videoId) return null;
       var date = new Date(this.props.video.created_at);
       var month = date.getMonth() + 1;
       var day = date.getDate();
@@ -1487,7 +1502,7 @@ function (_React$Component) {
         controls: true,
         autoPlay: true
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: this.props.video.video
+        src: this.state.video.video
       })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1528,7 +1543,7 @@ function (_React$Component) {
         className: "only-block"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "display-uploader"
-      }, this.props.videos))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.video.username))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collapser collapsed"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "collapser-content"
@@ -1545,7 +1560,33 @@ function (_React$Component) {
         className: "show-body-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "items"
-      })))));
+      }, Object.values(videos).map(function (videoItem, index) {
+        if (videoItem.id === _this3.state.videoId) return null;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: index,
+          className: "index-show-list"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "dismissable"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "video-item-show"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+          className: "thumbnail-show",
+          to: "/watch/".concat(videoItem.id)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "after-thumbnail"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+          src: videoItem.video
+        })))))));
+      }))))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      if (nextProps.video !== prevState.video) {
+        return {
+          video: nextProps.video
+        };
+      } else return null;
     }
   }]);
 
@@ -1577,8 +1618,9 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   // const videos = Object.values(state.entities.videos)
   return {
-    video: state.entities.videos[ownProps.match.params.id] // videos: videos
-
+    video: state.entities.videos[ownProps.match.params.id],
+    videos: state.entities.videos,
+    videoId: ownProps.match.params.id
   };
 };
 
@@ -1586,8 +1628,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchVideo: function fetchVideo(videoId) {
       return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["fetchVideo"])(videoId));
-    } // fetchVideos: () => dispatch((fetchVideos()))
-
+    },
+    fetchVideos: function fetchVideos() {
+      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["fetchVideos"])());
+    }
   };
 };
 
@@ -1671,7 +1715,7 @@ function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    video: state.entities.videos[ownProps.mathch.params.videoId],
+    video: state.entities.videos[ownProps.match.params.videoId],
     formType: 'Update Video'
   };
 };
@@ -1743,7 +1787,8 @@ function (_React$Component) {
     _this.state = {
       video: _this.props.video,
       formData: null,
-      form: 'file'
+      form: 'file',
+      uploading: false
     };
     _this.handleVideo = _this.handleVideo.bind(_assertThisInitialized(_this));
     _this.handleInputFile = _this.handleInputFile.bind(_assertThisInitialized(_this));
@@ -1816,13 +1861,43 @@ function (_React$Component) {
   }, {
     key: "handleUpload",
     value: function handleUpload(e) {
+      var _this3 = this;
+
       e.preventDefault();
-      var formData = new FormData();
-      formData.append('video[video]', this.state.video.videoFile);
-      formData.append('video[title]', this.state.video.title);
-      formData.append('video[description]', this.state.video.description);
-      formData.append('video[user_id]', this.state.video.user_id);
-      this.props.processForm(formData);
+      e.persist();
+
+      if (e.currentTarget.disabled === false) {
+        e.currentTarget.disabled = true;
+        this.setState({
+          loading: true
+        });
+        var formData = new FormData();
+        formData.append('video[video]', this.state.video.videoFile);
+        formData.append('video[title]', this.state.video.title);
+        formData.append('video[description]', this.state.video.description);
+        formData.append('video[user_id]', this.state.video.user_id);
+        this.props.processForm(formData).then(function () {
+          var ele = document.getElementsByClassName("select-files-button")[0];
+
+          if (!!ele) {
+            ele.disabled = false;
+
+            _this3.setState({
+              loading: false
+            });
+          }
+        }, function () {
+          var ele = document.getElementsByClassName("select-files-button")[0];
+
+          if (!!ele) {
+            ele.disabled = false;
+
+            _this3.setState({
+              loading: false
+            });
+          }
+        });
+      }
     }
   }, {
     key: "componentDidMount",
@@ -1968,7 +2043,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleUpload,
         className: "select-files-button more"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, document.getElementsByClassName("select-files-button")[0].disabled ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "upload-button-submit-value"
+      }, "Uploading...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "upload-button-submit-value"
       }, "Upload"))))) : ''));
     }
@@ -2623,10 +2700,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var middlewares = [redux_thunk__WEBPACK_IMPORTED_MODULE_2__["default"]];
+
+if (true) {
+  // must use 'require' (import only allowed at top of file)
+  var _require = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js"),
+      _logger = _require.logger;
+
+  middlewares.push(_logger);
+}
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_2__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_1___default.a));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middlewares));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
