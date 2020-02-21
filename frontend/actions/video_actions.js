@@ -43,13 +43,17 @@ export const fetchVideo = (videoId) => dispatch => (
     ))
 );
 
-export const createVideo = (video) => dispatch => (
-    VideoAPIUtil.createVideo(video).then(video => (
-        dispatch(receiveVideo(video))
-    ), err => (
-        dispatch(receiveErrors(err.responseJSON))
-    ))
-);
+export const createVideo = (video) => dispatch => {
+    return (
+        VideoAPIUtil.createVideo(video).then(video => {
+            if (!!video.errors) {
+                dispatch(receiveErrors(err.responseJSON))
+            } else {
+                dispatch(receiveVideo(video));
+            }
+        })
+    )
+};
 
 export const updateVideo = (video) => dispatch => (
     VideoAPIUtil.updateVideo(video).then(video => (

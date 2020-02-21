@@ -1,7 +1,7 @@
 import React from 'react';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 class ShowVideo extends React.Component {
     constructor(props) {
@@ -9,23 +9,42 @@ class ShowVideo extends React.Component {
 
         this.state = {
             video: this.props.video,
-            // videos: null
+            videoId: this.props.videoId
+            // videos: this.props.videos
         }
     }
 
     componentDidMount(){
-        this.props.fetchVideo(this.props.match.params.id).then(
+        this.props.fetchVideo(this.props.match.params.id)
+        .then(
             (res) => this.setState({ video: res.video } )
         )
-        // this.props.fetchVideos().then(
-        //     (res) => this.setState({videos: res.videos})
+        this.props.fetchVideos()
+        .then(
+            (res) => this.setState({videos: res.videos})
+        )
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.video !== prevState.video) {
+            return { video: nextProps.video };
+        }
+        else return null;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+            //Perform some operation here
+            this.props.fetchVideo(this.props.videoId)
+            this.setState({ videoId: this.props.videoId});
+        }
     }
 
     render() {
-        let video = this.state.video;
-        // let videos = this.state.videos;
+        let { video, videos, videoId } = this.props
         if (!video) return null
-        // if (!videos) return null
+        if (!videos) return null
+        if (!videoId) return null
         let date = new Date(this.props.video.created_at);
         let month = date.getMonth() + 1;
         let day = date.getDate();
@@ -41,7 +60,7 @@ class ShowVideo extends React.Component {
                                         <div className='player-container-inner'>
                                             <div className='player-container'>
                                                 <video className='player' controls autoPlay>
-                                                    <source src={this.props.video.video} />
+                                                    <source src={this.state.video.video} />
                                                 </video>
                                             </div>
                                         </div>
@@ -121,27 +140,27 @@ class ShowVideo extends React.Component {
                         </div>
                         <div id='secondary' className='show-body-right'>
                             <div className='items'>
-                                {/* {(videos).map((videoItem) => {
-                                    if (videoItem.id === this.props.video.id) return null
+                                {(Object.values(videos)).map((videoItem, index) => {
+                                    if (videoItem.id === this.state.videoId) return null
                                     return (
-                                        <div className='index-show-list'>
+                                        <div key={index} className='index-show-list'>
                                             <div className='dismissable'>
                                                 <div className='video-item-show'>
-                                                    <Link className='thumbnail-show' to={`/watch/${video.id}`}>
+                                                    <Link className='thumbnail-show' to={`/watch/${videoItem.id}`}>
                                                         <div className='after-thumbnail'>
                                                             <video>
-                                                                <source src={this.props.video.video}/>
+                                                                <source src={videoItem.video}/>
                                                             </video>
                                                         </div>
                                                     </Link>
                                                 </div>
-                                                <div className='video-item-details-show'>
+                                                {/* <div className='video-item-details-show'>
 
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     )
-                                })} */}
+                                })}
                             </div>
                         </div>
                     </div>
