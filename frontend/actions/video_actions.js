@@ -4,6 +4,7 @@ export const RECEIVE_VIDEOS = 'RECEIVE_VIDEOS'
 export const RECEIVE_VIDEO = 'RECEIVE_VIDEO'
 export const DELETE_VIDEO = 'DELETE_VIDEO'
 export const RECEIVE_VIDEO_ERRORS = 'RECEIVE_VIDEO_ERRORS'
+export const CLEAR_VIDEO_ERRORS = 'CLEAR_VIDEO_ERRORS'
 
 export const receiveVideos = videos => ({
     type: RECEIVE_VIDEOS,
@@ -25,6 +26,10 @@ export const receiveErrors = (errors) => ({
     errors
 })
 
+export const clearErrors = () => ({
+    type: CLEAR_VIDEO_ERRORS
+})
+
 export const fetchVideos = () => dispatch => {
     return (
         VideoAPIUtil.fetchVideos().then(videos => (
@@ -36,9 +41,9 @@ export const fetchVideos = () => dispatch => {
 };
 
 export const fetchVideo = (videoId) => dispatch => (
-    VideoAPIUtil.fetchVideo(videoId).then(video => (
-        dispatch(receiveVideo(video))
-    ), err => (
+    VideoAPIUtil.fetchVideo(videoId).then(video => {
+        dispatch(receiveVideo(video));
+    }, err => (
         dispatch(receiveErrors(err.responseJSON))
     ))
 );
@@ -46,12 +51,10 @@ export const fetchVideo = (videoId) => dispatch => (
 export const createVideo = (video) => dispatch => {
     return (
         VideoAPIUtil.createVideo(video).then(video => {
-            if (!!video.errors) {
-                dispatch(receiveErrors(err.responseJSON))
-            } else {
-                dispatch(receiveVideo(video));
-            }
-        })
+            dispatch(receiveVideo(video))
+        }, err => (
+            dispatch(receiveErrors(err.responseJSON))
+        ))
     )
 };
 

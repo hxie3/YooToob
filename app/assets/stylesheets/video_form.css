@@ -1,3 +1,11 @@
 .upload {
     cursor: pointer;
 }
+
+.highlight {
+    background-color: #e2e2e2;
+}
+
+.video-errors {
+    color: red;
+}

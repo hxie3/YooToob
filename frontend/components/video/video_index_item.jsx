@@ -19,7 +19,7 @@ class VideoIndexItem extends React.Component {
             <div className='index-item-container'>
                 <Link className='thumbnail-link' to={`/watch/${this.props.video.id}`}>
                     <div className='clip-thumbnail'>
-                        <video className='video'>
+                        <video key={this.props.video.video} className='video'>
                             <source src={this.props.video.video} type='video/mp4' />
                         </video>
                     </div>
