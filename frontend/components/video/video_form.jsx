@@ -79,15 +79,21 @@ class VideoForm extends React.Component {
                     if (!!ele) {
                         ele.disabled = false;
                         this.setState({ loading: false })
+                        this.props.closeModal();
                     }
                 }, () => {
                     let ele = document.getElementsByClassName("select-files-button")[0];
+
                     if (!!ele) {
                         ele.disabled = false;
                         this.setState({ loading: false })
                     }
                 })
         }
+    }
+
+    componentWillUnmount() {
+        this.props.clearErrors();
     }
 
     componentDidMount(){
@@ -98,20 +104,66 @@ class VideoForm extends React.Component {
         const upload = findIconDefinition({ prefix: 'fas', iconName: 'upload'} )
         const uploadIcon =icon(upload);
         Array.from(uploadIcon.node).map(n => document.getElementsByClassName('video-file-picker-circle')[0].appendChild(n))
-        let dropZone = document.getElementsByClassName('video-file-picker-container')[0];
-        dropZone.addEventListener('drop', this.handleDrop)
+        let dropArea = document.getElementsByClassName('video-file-picker-container')[0];
+        dropArea.addEventListener('dragenter', this.highlight.bind(this), false);
+        dropArea.addEventListener('dragover', this.highlight.bind(this), false);
+        dropArea.addEventListener('dragleave', this.unhighlight.bind(this), false);
+        dropArea.addEventListener('drop', this.unhighlight.bind(this), false);
+        dropArea.addEventListener('drop', this.handleDrop, false);
     }
 
-    handleDrop(e){
+    // handleFiles(files) {
+    //     ([...files]).forEach(this.uploadVideo)
+    // }
+
+    // uploadVideo(file) {
+    //     let url = 
+    // }
+    
+    handleDrop(e) {
         e.preventDefault();
-        let dt = e.dataTransfer;
-        let file = dt.files[0];
-        this.setState({ videoFile: file })
+        e.stopPropagation();
+        const dt = e.dataTransfer
+        const file = dt.files[0]
+        const reader = new FileReader();
+        let newvideostate = Object.assign({}, this.state.video)
+
+        reader.onloadend = () => {
+            newvideostate.videoFile = file;
+            newvideostate.videoUrl = reader.result;
+            this.setState({ video: newvideostate });
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            newvideostate.videoFile = null
+            newvideostate.videoUrl = ''
+            this.setState({ video: newvideostate });
+        }
+
+        if (file) {
+            this.setState({ form: 'details' })
+        }
+    }
+
+    highlight(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
+        dropCircle.classList.add("highlight")
+    }
+
+    unhighlight(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
+        dropCircle.classList.remove("highlight")
     }
 
     render() {
         const preview = !!this.state.video.videoUrl ? (
-            <video width='304' height='171' controls>
+            <video key={this.state.video.videoUrl} width='304' height='171' controls>
                 <source src={this.state.video.videoUrl} type='video/mp4'/>
             </video>
         ) : (null)
@@ -144,6 +196,9 @@ class VideoForm extends React.Component {
                                 <div className='video-file-details'>
                                     <div className='left-col'>
                                         <h1 className='video-file-details-title'>Details</h1>
+                                        <div className="video-errors">
+                                            {this.props.errors.includes("Title can't be blank") ? ("Title can't be blank") : ("")}  
+                                        </div>
                                         <div className='video-file-title-container'>
                                             <div className='title-outer-outer'>
                                                 <div className='title-outer'>
@@ -156,11 +211,14 @@ class VideoForm extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className="video-errors">
+                                            {this.props.errors.includes("Description can't be blank") ? ("Description can't be blank") : ("")}
+                                        </div>
                                         <div className='description-textarea'>
                                             <div className='description-container'>
                                                 <div className='inside-description-outer'>
                                                     <div className='description-label'>
-                                                        Description
+                                                        Description (required)
                                                     </div>
                                                     <div className='inside-description-input-container'>
                                                         <div className='description-style-scope'>

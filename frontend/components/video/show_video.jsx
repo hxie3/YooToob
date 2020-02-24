@@ -9,20 +9,16 @@ class ShowVideo extends React.Component {
 
         this.state = {
             video: this.props.video,
-            videoId: this.props.videoId
-            // videos: this.props.videos
+            videoId: this.props.videoId,
+            videos: this.props.videos
         }
+
+        this.handleShow = this.handleShow.bind(this);
     }
 
     componentDidMount(){
         this.props.fetchVideo(this.props.match.params.id)
-        .then(
-            (res) => this.setState({ video: res.video } )
-        )
-        this.props.fetchVideos()
-        .then(
-            (res) => this.setState({videos: res.videos})
-        )
+        this.props.fetchVideos() 
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -38,6 +34,17 @@ class ShowVideo extends React.Component {
             this.props.fetchVideo(this.props.videoId)
             this.setState({ videoId: this.props.videoId});
         }
+        document.getElementsByClassName("show-more")[0].classList.remove("hidden")
+        if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
+            document.getElementsByClassName("show-more")[0].classList.add("hidden")
+        }
+    }
+
+    handleShow(e) {
+        e.preventDefault();
+        const collapserContent = document.getElementsByClassName("collapser-content2")[0];
+        collapserContent.classList.toggle("collapser-content");
+        document.getElementsByClassName("show-more-string")[0].innerHTML === "Show less" ? (document.getElementsByClassName("show-more-string")[0].innerHTML = "Show more") : (document.getElementsByClassName("show-more-string")[0].innerHTML = "Show less");
     }
 
     render() {
@@ -59,7 +66,7 @@ class ShowVideo extends React.Component {
                                     <div className='player-container-outer'>
                                         <div className='player-container-inner'>
                                             <div className='player-container'>
-                                                <video className='player' controls autoPlay>
+                                                <video key={this.state.video.video} className='player' controls autoPlay>
                                                     <source src={this.state.video.video} />
                                                 </video>
                                             </div>
@@ -123,15 +130,15 @@ class ShowVideo extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='collapser collapsed'>
-                                        <div className='collapser-content'>
+                                    <div className='collapser'>
+                                        <div className='collapser-content collapser-content2'>
                                             <div className='collapser-description'>
                                                 <div className='description-format'>
                                                     {this.props.video.description}
                                                 </div>
                                             </div>
                                         </div>
-                                        <button className='show-more'>
+                                        <button onClick={this.handleShow} className='show-more'>
                                             <span className='show-more-string'>Show more</span>
                                         </button>
                                     </div>
@@ -141,14 +148,14 @@ class ShowVideo extends React.Component {
                         <div id='secondary' className='show-body-right'>
                             <div className='items'>
                                 {(Object.values(videos)).map((videoItem, index) => {
-                                    if (videoItem.id === this.state.videoId) return null
+                                    if (videoItem.id === parseInt(this.state.videoId)) return
                                     return (
                                         <div key={index} className='index-show-list'>
                                             <div className='dismissable'>
                                                 <div className='video-item-show'>
                                                     <Link className='thumbnail-show' to={`/watch/${videoItem.id}`}>
                                                         <div className='after-thumbnail'>
-                                                            <video>
+                                                            <video source={videoItem.video} className="show-video-index">
                                                                 <source src={videoItem.video}/>
                                                             </video>
                                                         </div>

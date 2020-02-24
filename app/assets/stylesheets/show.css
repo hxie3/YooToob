@@ -26,6 +26,7 @@
 }
 
 .player-outer {
+    background-color: black;
     position: relative;
 }
 
@@ -165,8 +166,7 @@
     display: block;
     border-bottom: 1px solid lightgray;
     margin-bottom: 24px;
-    padding-bottom: 16px;
-    height: 145px;
+    padding-bottom: 9px;
 }
 
 .top-row {
@@ -184,16 +184,10 @@
     display: block;
 }
 
-.collapsed {
-    /* and this */
-    height: 60px;
-}
-
 .collapser-content {
     /* Take class out to uncollapse */
     overflow: hidden;
     max-height: 60px;
-    height: 60px;
 }
 
 .collapser-description {
@@ -273,7 +267,7 @@
 
 .show-more {
     margin: 0px;
-    padding: 0;
+    padding-top: 7px;
     align-self: flex-start;
     display: block;
     text-align: center;
@@ -362,4 +356,13 @@
     left: 0;
     width: 100%;
     cursor: pointer;
+    background-color: black;
+}
+
+.show-video-index {
+    width: 100%;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    height: -webkit-fill-available;
 }
