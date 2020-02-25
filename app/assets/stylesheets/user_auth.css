@@ -273,7 +273,7 @@
     text-decoration: none;
 }
 
-.logo-icon {
+.logo-icon, .logo-icon2 {
     margin-left: 30px;
     color: rgb(67, 224, 217);
 }
@@ -336,7 +336,7 @@
     width: 100vw;
 }
 
-.hamburger {
+.hamburger, .hamburger2 {
     cursor: pointer;
 }
 

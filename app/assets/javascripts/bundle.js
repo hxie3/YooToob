@@ -1397,6 +1397,9 @@ function (_React$Component) {
       Array.from(homeIcon.node).map(function (n) {
         return document.getElementsByClassName('home-icon2')[0].appendChild(n);
       });
+      Array.from(homeIcon.node).map(function (n) {
+        return document.getElementsByClassName('home-icon3')[0].appendChild(n);
+      });
       var github = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
         prefix: 'fab',
         iconName: 'github'
@@ -1407,6 +1410,9 @@ function (_React$Component) {
       });
       Array.from(githubIcon.node).map(function (n) {
         return document.getElementsByClassName('github-icon2')[0].appendChild(n);
+      });
+      Array.from(githubIcon.node).map(function (n) {
+        return document.getElementsByClassName('github-icon3')[0].appendChild(n);
       });
       var linkedin = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
         prefix: 'fab',
@@ -1419,6 +1425,9 @@ function (_React$Component) {
       Array.from(linkedinIcon.node).map(function (n) {
         return document.getElementsByClassName('linkedin-icon2')[0].appendChild(n);
       });
+      Array.from(linkedinIcon.node).map(function (n) {
+        return document.getElementsByClassName('linkedin-icon3')[0].appendChild(n);
+      });
       var angellist = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
         prefix: 'fab',
         iconName: 'angellist'
@@ -1429,6 +1438,25 @@ function (_React$Component) {
       });
       Array.from(angellistIcon.node).map(function (n) {
         return document.getElementsByClassName('angellist-icon2')[0].appendChild(n);
+      });
+      Array.from(angellistIcon.node).map(function (n) {
+        return document.getElementsByClassName('angellist-icon3')[0].appendChild(n);
+      });
+      var hamburger = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fas',
+        iconName: 'bars'
+      });
+      var hamburgerIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(hamburger);
+      Array.from(hamburgerIcon.node).map(function (n) {
+        return document.getElementsByClassName('hamburger2')[0].appendChild(n);
+      });
+      var yootoob = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fab',
+        iconName: 'youtube'
+      });
+      var yootoobIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(yootoob);
+      Array.from(yootoobIcon.node).map(function (n) {
+        return document.getElementsByClassName('logo-icon2')[0].appendChild(n);
       });
       var sidenav = document.getElementsByClassName('sidenav')[0];
       var sidenav2 = document.getElementsByClassName('sidenav2')[0];
@@ -1519,11 +1547,23 @@ function (_React$Component) {
         className: "github-text2"
       }, "AngelList"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav3 hidden"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "hamburger-icon-text-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "hamburger2",
+        onClick: this.props.closeModal
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+        onClick: this.props.closeModal,
+        to: "/",
+        className: "logo"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "logo-icon2"
+      }), "YooToob")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+        onClick: this.props.closeModal,
         to: "/",
         className: "home-icon-text-container2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "home-icon2"
+        className: "home-icon3"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "home-text2"
       }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1531,7 +1571,7 @@ function (_React$Component) {
         className: "github-icon-text-container2",
         href: "https://github.com/hxie3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "github-icon2"
+        className: "github-icon3"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "github-text2"
       }, "Github")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1539,7 +1579,7 @@ function (_React$Component) {
         className: "github-icon-text-container2",
         href: "https://www.linkedin.com/in/herman-xie-178571164/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "linkedin-icon2"
+        className: "linkedin-icon3"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "github-text2"
       }, "LinkedIn")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1547,7 +1587,7 @@ function (_React$Component) {
         className: "github-icon-text-container2",
         href: "https://angel.co/herman-xie"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "angellist-icon2"
+        className: "angellist-icon3"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "github-text2"
       }, "AngelList"))));
@@ -1850,7 +1890,17 @@ function (_React$Component) {
           className: "show-video-index"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
           src: videoItem.video
-        })))))));
+        }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "video-item-details-show"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+          to: "/watch/".concat(videoItem.id)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-title-string"
+        }, videoItem.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-username-string"
+        }, videoItem.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-username-string"
+        }, videoItem.views, " views")))));
       }))))));
     }
   }], [{

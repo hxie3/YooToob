@@ -31,13 +31,13 @@
     cursor: pointer;
 }
 
-.sidenav2 {
+.sidenav2, .sidenav3 {
     display: inline-block;
     width: 192px;
     height: 100vh;
 }
 
-.home-icon2, .github-icon2, .linkedin-icon2, .angellist-icon2 {
+.home-icon2, .github-icon2, .linkedin-icon2, .angellist-icon2, .home-icon3, .github-icon3, .linkedin-icon3, .angellist-icon3 {
     width: 24px;
     height: 44px;
     display: flex;
@@ -60,7 +60,7 @@
     height: 40px;
 }
 
-.github-icon-text-container2 {
+.github-icon-text-container2, .hamburger-icon-text-container {
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -70,6 +70,12 @@
     padding-left: 24px;
     padding-right: 24px;
     align-items: center;
+}
+
+.hamburger-icon-text-container {
+    padding-bottom: 6px;
+    padding-left: 16px;
+    border-bottom: 1px solid #ecf3f8;
 }
 
 .home-text2, .github-text2 {
