@@ -112,14 +112,6 @@ class VideoForm extends React.Component {
         dropArea.addEventListener('drop', this.handleDrop, false);
     }
 
-    // handleFiles(files) {
-    //     ([...files]).forEach(this.uploadVideo)
-    // }
-
-    // uploadVideo(file) {
-    //     let url = 
-    // }
-    
     handleDrop(e) {
         e.preventDefault();
         e.stopPropagation();

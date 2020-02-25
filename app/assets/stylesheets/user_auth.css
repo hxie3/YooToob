@@ -1,5 +1,5 @@
 .header {
-    opacity: 0.99;
+    background: rgb(255, 255, 255, 0.99);
     z-index: 1;
     bottom: 0;
     position: fixed;
@@ -10,11 +10,10 @@
     align-content: center;
     align-items: center;
     justify-content: space-between;
-    margin: 0px 16px;
+    padding: 0px 16px;
     height: 56px;
     transform: translateY(0);
     transition: transform 0.3s ease;
-    background: white;
 }
 
 .fa-video {
@@ -275,7 +274,7 @@
 }
 
 .logo-icon {
-    padding-left: 30px;
+    margin-left: 30px;
     color: rgb(67, 224, 217);
 }
 
@@ -295,6 +294,7 @@
 }
 
 .searchbar-container {
+    background: rgb(255, 255, 255);
     border: 1px solid lightgray;
 }
 
@@ -314,8 +314,8 @@
     margin: 1px 6px;
     margin-left: 0px;
     border: 1px solid lightgray;
-    background-color: #ecf3f8;
     cursor: pointer;
+    background: #ecf3f8;
 }
 
 .dropdown-user-info {

@@ -1,6 +1,6 @@
 .show-body {
     overflow-x: auto;
-    margin-top: 56px;
+    margin-top: 40px;
     display: flex;
     flex: 1;
     flex-basis: 1e-9px;
@@ -8,7 +8,6 @@
 }
 
 .show-body-left {
-    /* max-width doesnt work like this */
     max-width: calc((100vh - 56px + 24px + 136px) * (16/9));
     min-width: calc(480px * (16/9));
     padding-top: 24px;
@@ -115,12 +114,14 @@
 }
 
 .columns {
+    background-color: #ecf3f8;
     min-width: 1012px;
     justify-content: center;
     max-width: 1754px;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
+    height: 100vh;
 }
 
 .menu-container {
