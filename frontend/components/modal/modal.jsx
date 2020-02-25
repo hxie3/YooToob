@@ -3,6 +3,7 @@ import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
 import CreateVideoFormContainer from '../video/create_video_form_container';
 import UpdateVideoFormContainer from '../video/update_video_form_container';
+import SideNavContainer from '../sidenav/sidenav_container';
 
 function Modal({ modal, closeModal }) {
     if (!modal) {
@@ -22,6 +23,15 @@ function Modal({ modal, closeModal }) {
         case 'update-video':
             component = <UpdateVideoFormContainer />;
             break;
+        case 'sidenav':
+            component = <SideNavContainer/>;
+            return (
+                <div className="modal-background" onClick={closeModal}>
+                    <div className="sidenav-modal-child" onClick={e => e.stopPropagation()}>
+                        {component}
+                    </div>
+                </div>
+            )
         default:
             return null;
     }

@@ -15,6 +15,15 @@
   transform: translate(-50%, -50%);
 }
 
+.sidenav-modal-child {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transition: ease-in;
+  background-color: white;
+  height: 100vh;
+}
+
 /* Video Form Modal */
 
 .video-form-container {

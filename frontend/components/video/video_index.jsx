@@ -1,6 +1,6 @@
 import React from 'react';
 import VideoIndexItem from './video_index_item'
-import SideNav from '../sidenav/sidenav'
+import SideNavContainer from '../sidenav/sidenav_container';
 
 class VideoIndex extends React.Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class VideoIndex extends React.Component {
         } else {
             return (
                 <div className='sidenav-and-main-container'>
-                    <SideNav/>
+                    <SideNavContainer/>
                     <div className='not-header-or-sidenav'>
                         <div className='index-videos-container'>
                             <div className='margin'>

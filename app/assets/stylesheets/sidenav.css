@@ -9,7 +9,7 @@
     height: 100vh;
 }
 
-.home-icon {
+.home-icon, .github-icon, .linkedin-icon, .angellist-icon {
     width: 100%;
     height: 44px;
     display: flex;
@@ -19,17 +19,7 @@
     font-size: 25px;
 }
 
-.github-icon {
-    width: 100%;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 25px;
-}
-
-.home-icon-text-container {
+.home-icon-text-container, .github-icon-text-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,40 +27,8 @@
     padding: 16px 0 14px;
 }
 
-.github-icon-text-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 0 14px;
-}
-
-.home-text {
+.home-text, .github-text {
     cursor: pointer;
-}
-
-.github-text {
-    cursor: pointer;
-}
-
-.home-icon-text-container:hover .home-icon {
-    color: rgb(67, 224, 217);
-    background-color: lightgrey;
-}
-
-.home-icon-text-container:hover {
-    color: rgb(67, 224, 217);
-    background-color: lightgrey;
-}
-
-.github-icon-text-container:hover .github-icon {
-    color: rgb(67, 224, 217);
-    background-color: lightgray;
-}
-
-.github-icon-text-container:hover {
-    color: rgb(67, 224, 217);
-    background-color: lightgray;
 }
 
 .sidenav2 {
@@ -79,7 +37,7 @@
     height: 100vh;
 }
 
-.home-icon2 {
+.home-icon2, .github-icon2, .linkedin-icon2, .angellist-icon2 {
     width: 24px;
     height: 44px;
     display: flex;
@@ -91,20 +49,6 @@
     padding-left: 9px;
     padding-bottom: 12px
 }
-
-.github-icon2 {
-    width: 24px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 25px;
-    margin-right: 24px;
-    padding-left: 9px;
-    padding-bottom: 12px
-}
-
 
 .home-icon-text-container2 {
     display: flex;
@@ -128,46 +72,15 @@
     align-items: center;
 }
 
-.home-text2 {
+.home-text2, .github-text2 {
     cursor: pointer;
 }
 
-.github-text2 {
-    cursor: pointer;
-}
-
-.home-icon-text-container:visited {
+.home-icon-text-container:visited, .home-icon-text-container2, .github-icon-text-container:visited, .github-icon-text-container2:visited {
     color: black;
 }
 
-.home-icon-text-container2:visited {
-    color: black;
-}
-
-.github-icon-text-container:visited {
-    color: black;
-}
-
-.github-icon-text-container2:visited {
-    color: black;
-}
-
-.home-icon-text-container:hover {
+.home-icon-text-container:hover, .home-icon-text-container2:hover, .github-icon-text-container:hover, .github-icon-text-container2:hover {
     color: rgb(67, 224, 217);
     background-color: lightgrey;
-}
-
-.home-icon-text-container2:hover {
-    color: rgb(67, 224, 217);
-    background-color: lightgrey;
-}
-
-.github-icon-text-container:hover {
-    color: rgb(67, 224, 217);
-    background-color: lightgray;
-}
-
-.github-icon-text-container2:hover {
-    color: rgb(67, 224, 217);
-    background-color: lightgray;
 }

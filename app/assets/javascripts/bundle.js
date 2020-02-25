@@ -331,16 +331,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./greeting/greeting_container */ "./frontend/components/greeting/greeting_container.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
-/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
-/* harmony import */ var _session_login_form_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./session/login_form_container */ "./frontend/components/session/login_form_container.jsx");
-/* harmony import */ var _session_signup_form_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./session/signup_form_container */ "./frontend/components/session/signup_form_container.jsx");
-/* harmony import */ var _video_video_index_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./video/video_index_container */ "./frontend/components/video/video_index_container.js");
-/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
-/* harmony import */ var _video_show_video_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./video/show_video_container */ "./frontend/components/video/show_video_container.js");
+/* harmony import */ var _hamburger_hamburger_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hamburger/hamburger_container */ "./frontend/components/hamburger/hamburger_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
+/* harmony import */ var _session_login_form_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./session/login_form_container */ "./frontend/components/session/login_form_container.jsx");
+/* harmony import */ var _session_signup_form_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./session/signup_form_container */ "./frontend/components/session/signup_form_container.jsx");
+/* harmony import */ var _video_video_index_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./video/video_index_container */ "./frontend/components/video/video_index_container.js");
+/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
+/* harmony import */ var _video_show_video_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./video/show_video_container */ "./frontend/components/video/show_video_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -373,6 +374,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var App =
 /*#__PURE__*/
 function (_React$Component) {
@@ -385,35 +387,18 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.handleSearchFocus = _this.handleSearchFocus.bind(_assertThisInitialized(_this));
-    _this.handleHamburger = _this.handleHamburger.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(App, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__["fas"], _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_6__["fab"]);
-      var hamburger = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["findIconDefinition"])({
-        prefix: 'fas',
-        iconName: 'bars'
-      });
-      var hamburgerIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["icon"])(hamburger);
-      Array.from(hamburgerIcon.node).map(function (n) {
-        return document.getElementsByClassName('hamburger')[0].appendChild(n);
-      });
-      var yootoob = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["findIconDefinition"])({
-        prefix: 'fab',
-        iconName: 'youtube'
-      });
-      var yootoobIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["icon"])(yootoob);
-      Array.from(yootoobIcon.node).map(function (n) {
-        return document.getElementsByClassName('logo-icon')[0].appendChild(n);
-      });
-      var search = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["findIconDefinition"])({
+      _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_5__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__["fas"], _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_7__["fab"]);
+      var search = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_5__["findIconDefinition"])({
         prefix: 'fas',
         iconName: 'search'
       });
-      var searchIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["icon"])(search);
+      var searchIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_5__["icon"])(search);
       Array.from(searchIcon.node).map(function (n) {
         return document.getElementsByClassName('search-button')[0].appendChild(n);
       });
@@ -425,33 +410,11 @@ function (_React$Component) {
       document.getElementsByClassName('searchbar-container')[0].classList.toggle('searchbar-container-focus');
     }
   }, {
-    key: "handleHamburger",
-    value: function handleHamburger(e) {
-      e.preventDefault();
-
-      if (window.location.hash === '#/') {
-        document.getElementsByClassName('sidenav')[0].classList.toggle('hidden');
-        document.getElementsByClassName('sidenav2')[0].classList.toggle('hidden');
-      } else {
-        document.getElementsByClassName('sidenav3')[0].classList.toggle('hidden');
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_10__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_11__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
         className: "header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "hamburger-logo"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "hamburger",
-        onClick: this.handleHamburger
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-        to: "/",
-        className: "logo"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "logo-icon"
-      }), "YooToob")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_hamburger_hamburger_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "searchbar-container-button-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "searchbar-container"
@@ -465,25 +428,25 @@ function (_React$Component) {
         className: "search-button"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "greeting"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["AuthRoute"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["AuthRoute"], {
         exact: true,
         path: "/login",
-        component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_3__["AuthRoute"], {
+        component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_8__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["AuthRoute"], {
         exact: true,
         path: "/signup",
-        component: _session_signup_form_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        component: _session_signup_form_container__WEBPACK_IMPORTED_MODULE_9__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Route"], {
         exact: true,
         path: "/",
-        component: _video_video_index_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        component: _video_video_index_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Route"], {
         exact: true,
         path: "/watch/:id",
-        component: _video_show_video_container__WEBPACK_IMPORTED_MODULE_11__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        component: _video_show_video_container__WEBPACK_IMPORTED_MODULE_12__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Route"], {
         render: function render() {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Redirect"], {
             to: {
               pathname: "/"
             }
@@ -721,6 +684,151 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/hamburger/hamburger.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/hamburger/hamburger.jsx ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var Hamburger =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Hamburger, _React$Component);
+
+  function Hamburger(props) {
+    var _this;
+
+    _classCallCheck(this, Hamburger);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Hamburger).call(this, props));
+    _this.handleHamburger = _this.handleHamburger.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Hamburger, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["fas"], _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__["fab"]);
+      var hamburger = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fas',
+        iconName: 'bars'
+      });
+      var hamburgerIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(hamburger);
+      Array.from(hamburgerIcon.node).map(function (n) {
+        return document.getElementsByClassName('hamburger')[0].appendChild(n);
+      });
+      var yootoob = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fab',
+        iconName: 'youtube'
+      });
+      var yootoobIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(yootoob);
+      Array.from(yootoobIcon.node).map(function (n) {
+        return document.getElementsByClassName('logo-icon')[0].appendChild(n);
+      });
+    }
+  }, {
+    key: "handleHamburger",
+    value: function handleHamburger(e) {
+      e.preventDefault();
+
+      if (window.location.hash === '#/') {
+        document.getElementsByClassName('sidenav')[0].classList.toggle('hidden');
+        document.getElementsByClassName('sidenav2')[0].classList.toggle('hidden');
+      } else {
+        this.props.openModal('sidenav'); // document.getElementsByClassName('sidenav3')[0].classList.toggle('hidden')
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "hamburger-logo"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "hamburger",
+        onClick: this.handleHamburger
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+        to: "/",
+        className: "logo"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "logo-icon"
+      }), "YooToob"));
+    }
+  }]);
+
+  return Hamburger;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Hamburger);
+
+/***/ }),
+
+/***/ "./frontend/components/hamburger/hamburger_container.js":
+/*!**************************************************************!*\
+  !*** ./frontend/components/hamburger/hamburger_container.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _hamburger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hamburger */ "./frontend/components/hamburger/hamburger.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.entities.users[state.session.id]
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    openModal: function openModal(modal) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["openModal"])(modal));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_hamburger__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/modal/modal.jsx":
 /*!*********************************************!*\
   !*** ./frontend/components/modal/modal.jsx ***!
@@ -736,6 +844,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _video_create_video_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../video/create_video_form_container */ "./frontend/components/video/create_video_form_container.js");
 /* harmony import */ var _video_update_video_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../video/update_video_form_container */ "./frontend/components/video/update_video_form_container.jsx");
+/* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
+
 
 
 
@@ -767,6 +877,18 @@ function Modal(_ref) {
     case 'update-video':
       component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_update_video_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
       break;
+
+    case 'sidenav':
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-background",
+        onClick: closeModal
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "sidenav-modal-child",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
+      }, component));
 
     default:
       return null;
@@ -1249,9 +1371,15 @@ function (_React$Component) {
   _inherits(SideNav, _React$Component);
 
   function SideNav(props) {
+    var _this;
+
     _classCallCheck(this, SideNav);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SideNav).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SideNav).call(this, props));
+    _this.state = {
+      modal: _this.props.modal
+    };
+    return _this;
   }
 
   _createClass(SideNav, [{
@@ -1280,10 +1408,33 @@ function (_React$Component) {
       Array.from(githubIcon.node).map(function (n) {
         return document.getElementsByClassName('github-icon2')[0].appendChild(n);
       });
+      var linkedin = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fab',
+        iconName: 'linkedin'
+      });
+      var linkedinIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(linkedin);
+      Array.from(linkedinIcon.node).map(function (n) {
+        return document.getElementsByClassName('linkedin-icon')[0].appendChild(n);
+      });
+      Array.from(linkedinIcon.node).map(function (n) {
+        return document.getElementsByClassName('linkedin-icon2')[0].appendChild(n);
+      });
+      var angellist = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fab',
+        iconName: 'angellist'
+      });
+      var angellistIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(angellist);
+      Array.from(angellistIcon.node).map(function (n) {
+        return document.getElementsByClassName('angellist-icon')[0].appendChild(n);
+      });
+      Array.from(angellistIcon.node).map(function (n) {
+        return document.getElementsByClassName('angellist-icon2')[0].appendChild(n);
+      });
       var sidenav = document.getElementsByClassName('sidenav')[0];
       var sidenav2 = document.getElementsByClassName('sidenav2')[0];
+      var sidenav3 = document.getElementsByClassName('sidenav3')[0];
 
-      if (window.location.hash !== '#/') {
+      if (window.location.hash === 'login' || window.location.hash === 'signup' || window.location.hash.split('/')[1] === 'watch') {
         sidenav.classList.add('hidden');
         sidenav2.classList.add('hidden');
       } else {
@@ -1291,6 +1442,10 @@ function (_React$Component) {
           sidenav.classList.remove('hidden');
           sidenav2.classList.add('hidden');
         }
+      }
+
+      if (this.props.modal === 'sidenav') {
+        sidenav3.classList.remove('hidden');
       }
     }
   }, {
@@ -1313,7 +1468,23 @@ function (_React$Component) {
         className: "github-icon"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "github-text"
-      }, "Github"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Github")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "github-icon-text-container",
+        href: "https://www.linkedin.com/in/herman-xie-178571164/",
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "linkedin-icon"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text"
+      }, "LinkedIn")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "github-icon-text-container",
+        href: "https://angel.co/herman-xie",
+        target: "_blank"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "angellist-icon"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text"
+      }, "AngelList"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sidenav2 hidden"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
         to: "/",
@@ -1330,7 +1501,56 @@ function (_React$Component) {
         className: "github-icon2"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "github-text2"
-      }, "Github"))));
+      }, "Github")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        target: "_blank",
+        className: "github-icon-text-container2",
+        href: "https://www.linkedin.com/in/herman-xie-178571164/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "linkedin-icon2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text2"
+      }, "LinkedIn")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        target: "_blank",
+        className: "github-icon-text-container2",
+        href: "https://angel.co/herman-xie"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "angellist-icon2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text2"
+      }, "AngelList"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "sidenav3 hidden"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+        to: "/",
+        className: "home-icon-text-container2"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "home-icon2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "home-text2"
+      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        target: "_blank",
+        className: "github-icon-text-container2",
+        href: "https://github.com/hxie3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "github-icon2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text2"
+      }, "Github")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        target: "_blank",
+        className: "github-icon-text-container2",
+        href: "https://www.linkedin.com/in/herman-xie-178571164/"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "linkedin-icon2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text2"
+      }, "LinkedIn")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        target: "_blank",
+        className: "github-icon-text-container2",
+        href: "https://angel.co/herman-xie"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "angellist-icon2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "github-text2"
+      }, "AngelList"))));
     }
   }]);
 
@@ -1338,6 +1558,40 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (SideNav);
+
+/***/ }),
+
+/***/ "./frontend/components/sidenav/sidenav_container.js":
+/*!**********************************************************!*\
+  !*** ./frontend/components/sidenav/sidenav_container.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _sidenav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidenav */ "./frontend/components/sidenav/sidenav.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modal: state.ui.modal
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["closeModal"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sidenav__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -1952,13 +2206,7 @@ function (_React$Component) {
       dropArea.addEventListener('dragleave', this.unhighlight.bind(this), false);
       dropArea.addEventListener('drop', this.unhighlight.bind(this), false);
       dropArea.addEventListener('drop', this.handleDrop, false);
-    } // handleFiles(files) {
-    //     ([...files]).forEach(this.uploadVideo)
-    // }
-    // uploadVideo(file) {
-    //     let url = 
-    // }
-
+    }
   }, {
     key: "handleDrop",
     value: function handleDrop(e) {
@@ -2155,7 +2403,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _video_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./video_index_item */ "./frontend/components/video/video_index_item.jsx");
-/* harmony import */ var _sidenav_sidenav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sidenav/sidenav */ "./frontend/components/sidenav/sidenav.jsx");
+/* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2226,7 +2474,7 @@ function (_React$Component) {
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "sidenav-and-main-container"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "not-header-or-sidenav"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "index-videos-container"

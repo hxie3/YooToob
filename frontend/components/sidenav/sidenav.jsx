@@ -7,6 +7,10 @@ import { Link } from "react-router-dom"
 class SideNav extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            modal: this.props.modal
+        }
     }
 
     componentDidMount() {
@@ -19,9 +23,18 @@ class SideNav extends React.Component {
         const githubIcon = icon(github);
         Array.from(githubIcon.node).map(n => document.getElementsByClassName('github-icon')[0].appendChild(n))
         Array.from(githubIcon.node).map(n => document.getElementsByClassName('github-icon2')[0].appendChild(n))
+        const linkedin = findIconDefinition({ prefix: 'fab', iconName: 'linkedin' });
+        const linkedinIcon = icon(linkedin);
+        Array.from(linkedinIcon.node).map(n => document.getElementsByClassName('linkedin-icon')[0].appendChild(n))
+        Array.from(linkedinIcon.node).map(n => document.getElementsByClassName('linkedin-icon2')[0].appendChild(n))
+        const angellist = findIconDefinition({ prefix: 'fab', iconName: 'angellist' });
+        const angellistIcon = icon(angellist);
+        Array.from(angellistIcon.node).map(n => document.getElementsByClassName('angellist-icon')[0].appendChild(n))
+        Array.from(angellistIcon.node).map(n => document.getElementsByClassName('angellist-icon2')[0].appendChild(n))
         const sidenav = document.getElementsByClassName('sidenav')[0];
         const sidenav2 = document.getElementsByClassName('sidenav2')[0];
-        if (window.location.hash !== '#/') {
+        const sidenav3 = document.getElementsByClassName('sidenav3')[0];
+        if (window.location.hash === 'login' || window.location.hash === 'signup' || window.location.hash.split('/')[1] === 'watch' ) {
             sidenav.classList.add('hidden')
             sidenav2.classList.add('hidden')
         } else {
@@ -29,6 +42,9 @@ class SideNav extends React.Component {
                 sidenav.classList.remove('hidden')
                 sidenav2.classList.add('hidden')
             }
+        }
+        if (this.props.modal === 'sidenav') {
+            sidenav3.classList.remove('hidden')
         }
     }
 
@@ -44,6 +60,14 @@ class SideNav extends React.Component {
                         <div className='github-icon'></div>
                         <span className='github-text'>Github</span>
                     </a>
+                    <a className='github-icon-text-container' href="https://www.linkedin.com/in/herman-xie-178571164/" target='_blank'>
+                        <div className='linkedin-icon'></div>
+                        <span className='github-text'>LinkedIn</span>
+                    </a>
+                    <a className='github-icon-text-container' href="https://angel.co/herman-xie" target='_blank'>
+                        <div className='angellist-icon'></div>
+                        <span className='github-text'>AngelList</span>
+                    </a>
                 </div>
                 <div className='sidenav2 hidden'>
                     <Link to='/' className='home-icon-text-container2'>
@@ -53,6 +77,32 @@ class SideNav extends React.Component {
                     <a target='_blank' className='github-icon-text-container2' href="https://github.com/hxie3">
                         <div className='github-icon2'></div>
                         <span className='github-text2'>Github</span>
+                    </a>
+                    <a target='_blank' className='github-icon-text-container2' href="https://www.linkedin.com/in/herman-xie-178571164/">
+                        <div className='linkedin-icon2'></div>
+                        <span className='github-text2'>LinkedIn</span>
+                    </a>
+                    <a target='_blank' className='github-icon-text-container2' href="https://angel.co/herman-xie">
+                        <div className='angellist-icon2'></div>
+                        <span className='github-text2'>AngelList</span>
+                    </a>
+                </div>
+                <div className='sidenav3 hidden'>
+                    <Link to='/' className='home-icon-text-container2'>
+                        <div className='home-icon2'></div>
+                        <span className='home-text2'>Home</span>
+                    </Link>
+                    <a target='_blank' className='github-icon-text-container2' href="https://github.com/hxie3">
+                        <div className='github-icon2'></div>
+                        <span className='github-text2'>Github</span>
+                    </a>
+                    <a target='_blank' className='github-icon-text-container2' href="https://www.linkedin.com/in/herman-xie-178571164/">
+                        <div className='linkedin-icon2'></div>
+                        <span className='github-text2'>LinkedIn</span>
+                    </a>
+                    <a target='_blank' className='github-icon-text-container2' href="https://angel.co/herman-xie">
+                        <div className='angellist-icon2'></div>
+                        <span className='github-text2'>AngelList</span>
                     </a>
                 </div>
             </div>
