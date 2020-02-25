@@ -161,9 +161,19 @@ class ShowVideo extends React.Component {
                                                         </div>
                                                     </Link>
                                                 </div>
-                                                {/* <div className='video-item-details-show'>
-
-                                                </div> */}
+                                                <div className='video-item-details-show'>
+                                                    <Link to={`/watch/${videoItem.id}`}>
+                                                        <div className="show-title-string">
+                                                            {videoItem.title}
+                                                        </div>
+                                                        <div className="show-username-string">
+                                                            {videoItem.username}
+                                                        </div>
+                                                        <div className="show-username-string">
+                                                            {videoItem.views} views
+                                                        </div>
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </div>
                                     )

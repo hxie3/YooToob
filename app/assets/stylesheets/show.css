@@ -1,10 +1,11 @@
 .show-body {
-    overflow-x: auto;
+    overflow-x: hidden;
     margin-top: 40px;
     display: flex;
     flex: 1;
     flex-basis: 1e-9px;
-    overflow-y: auto;
+    overflow-y: hidden;
+    background-color: #ecf3f8;
 }
 
 .show-body-left {
@@ -114,7 +115,6 @@
 }
 
 .columns {
-    background-color: #ecf3f8;
     min-width: 1012px;
     justify-content: center;
     max-width: 1754px;
@@ -366,4 +366,28 @@
     align-self: center;
     justify-self: center;
     height: -webkit-fill-available;
+}
+
+.show-title-string {
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    font-weight: 600;
+    max-height: 32px;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    color: #0d0d0d;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-size: 14px;
+}
+
+.show-username-string {
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: hidden;
+    color: dimgray;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-size: 13px;
 }
