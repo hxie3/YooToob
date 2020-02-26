@@ -117,25 +117,27 @@ class VideoForm extends React.Component {
         e.stopPropagation();
         const dt = e.dataTransfer
         const file = dt.files[0]
-        const reader = new FileReader();
-        let newvideostate = Object.assign({}, this.state.video)
-
-        reader.onloadend = () => {
-            newvideostate.videoFile = file;
-            newvideostate.videoUrl = reader.result;
-            this.setState({ video: newvideostate });
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            newvideostate.videoFile = null
-            newvideostate.videoUrl = ''
-            this.setState({ video: newvideostate });
-        }
-
-        if (file) {
-            this.setState({ form: 'details' })
+        if (file.type.split("/")[0] === "video") {
+            const reader = new FileReader();
+            let newvideostate = Object.assign({}, this.state.video)
+    
+            reader.onloadend = () => {
+                newvideostate.videoFile = file;
+                newvideostate.videoUrl = reader.result;
+                this.setState({ video: newvideostate });
+            }
+    
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                newvideostate.videoFile = null
+                newvideostate.videoUrl = ''
+                this.setState({ video: newvideostate });
+            }
+    
+            if (file) {
+                this.setState({ form: 'details' })
+            }
         }
     }
 
@@ -182,7 +184,7 @@ class VideoForm extends React.Component {
                                         <p className='video-file-picker-sublabel'>Your video will be public when you upload it</p>
                                     </div>
                                     <button onClick={this.handleInputFile} className='select-files-button'>SELECT FILE</button>
-                                    <input onChange={this.handleVideo} id='video-file-holder' className='hidden video-file-holder' type="file" name='video-file-data'/>
+                                    <input onChange={this.handleVideo} id='video-file-holder' accept="video/*" className='hidden video-file-holder' type="file" name='video-file-data'/>
                                 </div>
                             ) : (
                                 <div className='video-file-details'>
