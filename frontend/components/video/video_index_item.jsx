@@ -14,30 +14,54 @@ class VideoIndexItem extends React.Component {
         let date = new Date(this.props.video.created_at);
         let now = new Date(Date.now());
         let diffInSeconds = Math.floor((now - date) / 1000);
+        let num;
         let when;
         if (diffInSeconds < 60) {
-            when = <span className="date">
-                {diffInSeconds} seconds ago
-            </span>
+            if (diffInSeconds === 1) {
+                when = <span className="date">
+                    {diffInSeconds} second ago
+                </span>
+            } else {
+                when = <span className="date">
+                    {diffInSeconds} seconds ago
+                </span>
+            }
         } else if (diffInSeconds/60 < 60) {
-            when = <span className="date">
-                {Math.floor(diffInSeconds/60)} minutes ago
-            </span>
+            num = Math.floor(diffInSeconds / 60)
+            if (num === 1) {
+                when = <span className="date">
+                    {num} minute ago
+                </span>
+            } else {
+                when = <span className="date">
+                    {num} minutes ago
+                </span>
+            }
         } else if (diffInSeconds/60/60 < 24) {
-            when = <span className="date">
-                {Math.floor(diffInSeconds/60/60)} hours ago
-            </span>
+            num = Math.floor(diffInSeconds / 60 / 60);
+            if (num === 1) {
+                when = <span className="date">
+                    {num} hour ago
+                </span>
+            } else {
+                when = <span className="date">
+                    {num} hours ago
+                </span>
+            }
         } else if (diffInSeconds/60/60/24 < 30) {
+            num = Math.floor(diffInSeconds / 60 / 60 / 24)
             when = <span className="date">
-                {Math.floor(diffInSeconds/60/60/24)} days ago
+                {num} {num === 1 ? ("day") : ("days")} ago
             </span>
         } else if (diffInSeconds/60/60/24/30 < 12) {
+            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30)
             when = <span className="date">
-                {Math.floor(diffInSeconds / 60 / 60 / 24 / 30)} months ago
+                {num} {num === 1 ? ("month") : ("months")} ago
             </span>
         } else {
+            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30 / 12);
             when = <span className="date">
-                {Math.floor(diffInSeconds / 60 / 60 / 24 / 30 / 12)} years ago
+                {num} {num === 1 ? ("year") : ("years")} ago
             </span>
         }
         return (
