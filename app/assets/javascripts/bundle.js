@@ -3050,32 +3050,58 @@ function (_React$Component) {
       var date = new Date(this.props.video.created_at);
       var now = new Date(Date.now());
       var diffInSeconds = Math.floor((now - date) / 1000);
+      var num;
       var when;
 
       if (diffInSeconds < 60) {
-        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "date"
-        }, diffInSeconds, " seconds ago");
+        if (diffInSeconds === 1) {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, diffInSeconds, " second ago");
+        } else {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, diffInSeconds, " seconds ago");
+        }
       } else if (diffInSeconds / 60 < 60) {
-        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "date"
-        }, Math.floor(diffInSeconds / 60), " minutes ago");
+        num = Math.floor(diffInSeconds / 60);
+
+        if (num === 1) {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " minute ago");
+        } else {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " minutes ago");
+        }
       } else if (diffInSeconds / 60 / 60 < 24) {
-        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "date"
-        }, Math.floor(diffInSeconds / 60 / 60), " hours ago");
+        num = Math.floor(diffInSeconds / 60 / 60);
+
+        if (num === 1) {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " hour ago");
+        } else {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " hours ago");
+        }
       } else if (diffInSeconds / 60 / 60 / 24 < 30) {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24);
         when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "date"
-        }, Math.floor(diffInSeconds / 60 / 60 / 24), " days ago");
+        }, num, " ", num === 1 ? "day" : "days", " ago");
       } else if (diffInSeconds / 60 / 60 / 24 / 30 < 12) {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30);
         when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "date"
-        }, Math.floor(diffInSeconds / 60 / 60 / 24 / 30), " months ago");
+        }, num, " ", num === 1 ? "month" : "months", " ago");
       } else {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30 / 12);
         when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "date"
-        }, Math.floor(diffInSeconds / 60 / 60 / 24 / 30 / 12), " years ago");
+        }, num, " ", num === 1 ? "year" : "years", " ago");
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
