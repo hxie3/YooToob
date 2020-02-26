@@ -10,6 +10,15 @@ class Api::UsersController < ApplicationController
         end
     end
 
+    def update
+        @user = User.find_by(username: user_params[:username])
+        if @user.update(user_params)
+            render :update
+        else
+            render json: @user.errors.full_messages, status: 400
+        end
+    end
+
     def show
         @user = User.find(params[:id])
         render :show

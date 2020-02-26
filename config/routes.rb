@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :update, :destroy]
     resources :users, only: [:create, :show, :index]
     resources :videos, only: [:index, :create, :show, :update, :destroy]
+    match 'users' => 'users#update', :via => :patch
   end
   root 'static_pages#root'
 end

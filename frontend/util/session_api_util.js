@@ -36,3 +36,15 @@ export const logout = () => (
         method: 'DELETE'
     })
 )
+
+export const update = (formData) => {
+    return (
+        $.ajax({
+            url: '/api/users',
+            method: 'PATCH',
+            data: formData,
+            contentType: false,
+            processData: false
+        })
+    )
+}

@@ -375,6 +375,12 @@
   height: 285px;
 }
 
+.photo-file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .video-file-container {
   border-radius: 4px;
   background-color: #f4f4f4;
