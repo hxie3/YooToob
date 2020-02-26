@@ -119,7 +119,7 @@ var closeModal = function closeModal() {
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, clearErrors, signup, newsignup, login, newlogin, logout */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, clearErrors, signup, newsignup, login, newlogin, logout, updateUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -137,6 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newlogin", function() { return newlogin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
 
 var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
@@ -205,6 +206,15 @@ var logout = function logout() {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logout"]().then(function (user) {
       return dispatch(logoutCurrentUser());
+    });
+  };
+};
+var updateUser = function updateUser(user) {
+  return function (dispatch) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["update"](user).then(function (user) {
+      return dispatch(receiveCurrentUser(user));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
     });
   };
 };
@@ -516,6 +526,7 @@ function (_React$Component) {
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     _this.handleDropdown = _this.handleDropdown.bind(_assertThisInitialized(_this));
     _this.handleUpload = _this.handleUpload.bind(_assertThisInitialized(_this));
+    _this.handleProfilePicture = _this.handleProfilePicture.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -594,6 +605,12 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "handleProfilePicture",
+    value: function handleProfilePicture(e) {
+      e.preventDefault();
+      this.props.openModal('profile-picture');
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -613,6 +630,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-user-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        onClick: this.handleProfilePicture,
         className: "profile-pic",
         src: this.props.user.profilePicture,
         alt: "profile-picture"
@@ -843,8 +861,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _video_create_video_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../video/create_video_form_container */ "./frontend/components/video/create_video_form_container.js");
-/* harmony import */ var _video_update_video_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../video/update_video_form_container */ "./frontend/components/video/update_video_form_container.jsx");
-/* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
+/* harmony import */ var _profile_profile_picture_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../profile/profile_picture_container */ "./frontend/components/profile/profile_picture_container.js");
+/* harmony import */ var _video_update_video_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../video/update_video_form_container */ "./frontend/components/video/update_video_form_container.jsx");
+/* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
+
 
 
 
@@ -874,12 +894,23 @@ function Modal(_ref) {
         }
       }, component));
 
+    case 'profile-picture':
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_profile_profile_picture_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-background"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-child",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
+      }, component));
+
     case 'update-video':
-      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_update_video_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_update_video_form_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
       break;
 
     case 'sidenav':
-      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_6__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background",
         onClick: closeModal
@@ -920,6 +951,346 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(Modal));
+
+/***/ }),
+
+/***/ "./frontend/components/profile/profile_picture.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/profile/profile_picture.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var ProfilePicture =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ProfilePicture, _React$Component);
+
+  function ProfilePicture(props) {
+    var _this;
+
+    _classCallCheck(this, ProfilePicture);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ProfilePicture).call(this, props));
+    _this.state = {
+      user: _this.props.user,
+      formData: null,
+      form: 'file',
+      uploading: false
+    };
+    _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
+    _this.handleInputFile = _this.handleInputFile.bind(_assertThisInitialized(_this));
+    _this.handleDrop = _this.handleDrop.bind(_assertThisInitialized(_this));
+    _this.handleUpload = _this.handleUpload.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ProfilePicture, [{
+    key: "handleInputFile",
+    value: function handleInputFile(e) {
+      e.preventDefault();
+      $('#photo-file-holder').trigger('click');
+    }
+  }, {
+    key: "handlePhoto",
+    value: function handlePhoto(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var reader = new FileReader();
+      var file = e.currentTarget.files[0];
+      var newuserstate = Object.assign({}, this.state.user);
+
+      reader.onloadend = function () {
+        newuserstate.photoFile = file;
+        newuserstate.photoUrl = reader.result;
+
+        _this2.setState({
+          user: newuserstate
+        });
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        newuserstate.photoFile = null;
+        newuserstate.photoUrl = '';
+        this.setState({
+          user: newuserstate
+        });
+      }
+
+      if (file) {
+        this.setState({
+          form: 'details'
+        });
+      }
+    }
+  }, {
+    key: "handleDrop",
+    value: function handleDrop(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      e.stopPropagation();
+      var dt = e.dataTransfer;
+      var file = dt.files[0];
+      var reader = new FileReader();
+      var newuserstate = Object.assign({}, this.state.user);
+
+      reader.onloadend = function () {
+        newuserstate.photoFile = file;
+        newuserstate.photoUrl = reader.result;
+
+        _this3.setState({
+          user: newuserstate
+        });
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        newuserstate.photoFile = null;
+        newuserstate.photoUrl = '';
+        this.setState({
+          user: newuserstate
+        });
+      }
+
+      if (file) {
+        this.setState({
+          form: 'details'
+        });
+      }
+    }
+  }, {
+    key: "handleUpload",
+    value: function handleUpload(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      e.persist();
+
+      if (e.currentTarget.disabled === false) {
+        e.currentTarget.disabled = true;
+        this.setState({
+          loading: true
+        });
+        var formData = new FormData();
+        formData.append('user[profile_picture]', this.state.user.photoFile);
+        formData.append('user[username]', this.state.user.username);
+        this.props.processForm(formData).then(function () {
+          var ele = document.getElementsByClassName("select-files-button")[0];
+
+          if (!!ele) {
+            ele.disabled = false;
+
+            _this4.setState({
+              loading: false
+            });
+
+            _this4.props.closeModal();
+          }
+        }, function () {
+          var ele = document.getElementsByClassName("select-files-button")[0];
+
+          if (!!ele) {
+            ele.disabled = false;
+
+            _this4.setState({
+              loading: false
+            });
+          }
+        });
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.clearErrors();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["fas"]);
+      var exit = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fas',
+        iconName: 'times'
+      });
+      var exitIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(exit);
+      Array.from(exitIcon.node).map(function (n) {
+        return document.getElementsByClassName('video-form-close-button-content')[0].appendChild(n);
+      });
+      var upload = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fas',
+        iconName: 'upload'
+      });
+      var uploadIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(upload);
+      Array.from(uploadIcon.node).map(function (n) {
+        return document.getElementsByClassName('video-file-picker-circle')[0].appendChild(n);
+      });
+      var dropArea = document.getElementsByClassName('video-file-picker-container')[0];
+      dropArea.addEventListener('dragenter', this.highlight.bind(this), false);
+      dropArea.addEventListener('dragover', this.highlight.bind(this), false);
+      dropArea.addEventListener('dragleave', this.unhighlight.bind(this), false);
+      dropArea.addEventListener('drop', this.unhighlight.bind(this), false);
+      dropArea.addEventListener('drop', this.handleDrop, false);
+    }
+  }, {
+    key: "highlight",
+    value: function highlight(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
+      dropCircle.classList.add("highlight");
+    }
+  }, {
+    key: "unhighlight",
+    value: function unhighlight(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
+      dropCircle.classList.remove("highlight");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var preview = !!this.state.user.photoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "profile-pic-preview",
+        src: this.state.user.photoUrl,
+        alt: "Photo"
+      }) : null;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-form-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-form-container-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-form-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-form-header-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-form-title"
+      }, "Profile Picture"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-form-close-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.props.closeModal,
+        className: "video-form-close-button-content"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-file-picker-container"
+      }, this.state.form === 'file' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-file-picker-style-scope"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-file-picker-icon"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleInputFile,
+        className: "video-file-picker-circle"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "video-file-picker-label"
+      }, "Drag and drop a profile picture"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "video-file-picker-sublabel"
+      }, "Your picture will be public when you upload it")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleInputFile,
+        className: "select-files-button"
+      }, "SELECT FILE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.handlePhoto,
+        id: "photo-file-holder",
+        className: "hidden video-file-holder",
+        type: "file",
+        name: "video-file-data"
+      })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "photo-file-preview"
+      }, preview)), this.state.form === 'details' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-file-upload-button-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "inner-button-area"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "upload-button-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleUpload,
+        className: "select-files-button more"
+      }, document.getElementsByClassName("select-files-button")[0].disabled ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "upload-button-submit-value"
+      }, "Confirming...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "upload-button-submit-value"
+      }, "Confirm"))))) : ''));
+    }
+  }]);
+
+  return ProfilePicture;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (ProfilePicture);
+
+/***/ }),
+
+/***/ "./frontend/components/profile/profile_picture_container.js":
+/*!******************************************************************!*\
+  !*** ./frontend/components/profile/profile_picture_container.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _profile_picture__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile_picture */ "./frontend/components/profile/profile_picture.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.entities.users[state.session.id],
+    errors: state.errors.session
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    processForm: function processForm(user) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["updateUser"])(user));
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_profile_picture__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -3154,7 +3525,7 @@ var AuthRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["withRouter
 /*!*******************************************!*\
   !*** ./frontend/util/session_api_util.js ***!
   \*******************************************/
-/*! exports provided: signup, newsignup, login, newlogin, logout */
+/*! exports provided: signup, newsignup, login, newlogin, logout, update */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3164,6 +3535,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newlogin", function() { return newlogin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "update", function() { return update; });
 var signup = function signup(user) {
   return $.ajax({
     url: '/api/users',
@@ -3204,6 +3576,15 @@ var logout = function logout() {
   return $.ajax({
     url: '/api/session',
     method: 'DELETE'
+  });
+};
+var update = function update(formData) {
+  return $.ajax({
+    url: '/api/users',
+    method: 'PATCH',
+    data: formData,
+    contentType: false,
+    processData: false
   });
 };
 

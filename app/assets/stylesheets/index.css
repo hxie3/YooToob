@@ -40,7 +40,6 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     width: calc(100% + 16px + .01px);
-    height: calc(100% - 140px);
 }
 
 .index-item-container {
@@ -50,7 +49,6 @@
     margin-bottom: 40px;
     --width: calc(25% - 16px - 0.1px);
     width: var(--width);
-    height: 263px;
 }
 
 .thumbnail-link {
@@ -93,6 +91,7 @@
     overflow-x: hidden;
     padding-right: 24px;
     width: 100%;
+    margin-top: 12px;
 }
 
 .index-video-title-style {
@@ -108,10 +107,10 @@
 }
 
 .index-title-string {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 24px;
     color: #0d0d0d;
-    display: flex;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -119,7 +118,7 @@
     -webkit-line-clamp: 2;
     font-weight: bold;
     cursor: pointer;
-    font-family: 'Roboto' 'Arial' sans-serif;
+    font-family: 'Roboto', 'Arial', sans-serif;
 }
 
 .grid-style-scope {
@@ -153,8 +152,12 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: normal;
     overflow: hidden;
-    --webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
 .metadata-line {

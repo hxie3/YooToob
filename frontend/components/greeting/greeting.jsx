@@ -11,6 +11,7 @@ class Greeting extends React.Component {
         this.handleLogout = this.handleLogout.bind(this);
         this.handleDropdown = this.handleDropdown.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
+        this.handleProfilePicture = this.handleProfilePicture.bind(this);
     }
 
     handleLogout(e){
@@ -68,6 +69,11 @@ class Greeting extends React.Component {
         }
     }
 
+    handleProfilePicture(e) {
+        e.preventDefault();
+        this.props.openModal('profile-picture')
+    }
+
     render(){
         return(
             <div className='greeting-container'>
@@ -77,7 +83,9 @@ class Greeting extends React.Component {
                         <img onClick={this.handleDropdown} className='profile-pic' src={this.props.user.profilePicture} alt="profile-picture"/>
                         <div className='user-dropdown'>
                             <div className='dropdown-user-info'>
-                                <img className='profile-pic' src={this.props.user.profilePicture} alt="profile-picture"/>
+                                <img 
+                                    onClick={this.handleProfilePicture} 
+                                    className='profile-pic' src={this.props.user.profilePicture} alt="profile-picture"/>
                                 <span className='dropdown-user-username'>{this.props.user.username}</span>
                             </div>
                             <div onClick={this.handleLogout} className='sign-out-dropdown-container'>

@@ -2,6 +2,7 @@ import React from 'react';
 import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
 import CreateVideoFormContainer from '../video/create_video_form_container';
+import ProfilePictureContainer from '../profile/profile_picture_container';
 import UpdateVideoFormContainer from '../video/update_video_form_container';
 import SideNavContainer from '../sidenav/sidenav_container';
 
@@ -13,6 +14,15 @@ function Modal({ modal, closeModal }) {
     switch (modal) {
         case 'create-video':
             component = <CreateVideoFormContainer />;
+            return (
+                <div className="modal-background">
+                    <div className="modal-child" onClick={e => e.stopPropagation()}>
+                        {component}
+                    </div>
+                </div>
+            )
+        case 'profile-picture':
+            component = <ProfilePictureContainer />;
             return (
                 <div className="modal-background">
                     <div className="modal-child" onClick={e => e.stopPropagation()}>

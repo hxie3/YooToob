@@ -225,6 +225,12 @@
     margin: 1px 6px;
 }
 
+.profile-pic-preview {
+    width: 320px;
+    height: 320px;
+    border-radius: 160px;
+}
+
 .signin-pic {
     width: 24px;
     height: 24px;
