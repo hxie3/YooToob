@@ -1,6 +1,7 @@
 import React from 'react';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fileURLToPath } from 'url';
 
 class ProfilePicture extends React.Component {
     constructor(props) {
@@ -53,25 +54,27 @@ class ProfilePicture extends React.Component {
         e.stopPropagation();
         const dt = e.dataTransfer;
         const file = dt.files[0];
-        const reader = new FileReader();
-        let newuserstate = Object.assign({}, this.state.user)
-
-        reader.onloadend = () => {
-            newuserstate.photoFile = file;
-            newuserstate.photoUrl = reader.result;
-            this.setState({ user: newuserstate });
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            newuserstate.photoFile = null
-            newuserstate.photoUrl = ''
-            this.setState({ user: newuserstate });
-        }
-
-        if (file) {
-            this.setState({ form: 'details' })
+        if (file.type.split("/")[0] === "image") {
+            const reader = new FileReader();
+            let newuserstate = Object.assign({}, this.state.user)
+    
+            reader.onloadend = () => {
+                newuserstate.photoFile = file;
+                newuserstate.photoUrl = reader.result;
+                this.setState({ user: newuserstate });
+            }
+    
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                newuserstate.photoFile = null
+                newuserstate.photoUrl = ''
+                this.setState({ user: newuserstate });
+            }
+    
+            if (file) {
+                this.setState({ form: 'details' })
+            }
         }
     }
 
@@ -164,7 +167,7 @@ class ProfilePicture extends React.Component {
                                         <p className='video-file-picker-sublabel'>Your picture will be public when you upload it</p>
                                     </div>
                                     <button onClick={this.handleInputFile} className='select-files-button'>SELECT FILE</button>
-                                    <input onChange={this.handlePhoto} id='photo-file-holder' className='hidden video-file-holder' type="file" name='video-file-data' />
+                                    <input onChange={this.handlePhoto} accept="image/*" id='photo-file-holder' className='hidden video-file-holder' type="file" name='video-file-data' />
                                 </div>
                             ) : (
                                 <div className='photo-file-preview'>

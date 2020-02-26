@@ -12,9 +12,34 @@ class VideoIndexItem extends React.Component {
 
     render() {
         let date = new Date(this.props.video.created_at);
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let year = date.getFullYear();
+        let now = new Date(Date.now());
+        let diffInSeconds = Math.floor((now - date) / 1000);
+        let when;
+        if (diffInSeconds < 60) {
+            when = <span className="date">
+                {diffInSeconds} seconds ago
+            </span>
+        } else if (diffInSeconds/60 < 60) {
+            when = <span className="date">
+                {Math.floor(diffInSeconds/60)} minutes ago
+            </span>
+        } else if (diffInSeconds/60/60 < 24) {
+            when = <span className="date">
+                {Math.floor(diffInSeconds/60/60)} hours ago
+            </span>
+        } else if (diffInSeconds/60/60/24 < 30) {
+            when = <span className="date">
+                {Math.floor(diffInSeconds/60/60/24)} days ago
+            </span>
+        } else if (diffInSeconds/60/60/24/30 < 12) {
+            when = <span className="date">
+                {Math.floor(diffInSeconds / 60 / 60 / 24 / 30)} months ago
+            </span>
+        } else {
+            when = <span className="date">
+                {Math.floor(diffInSeconds / 60 / 60 / 24 / 30 / 12)} years ago
+            </span>
+        }
         return (
             <div className='index-item-container'>
                 <Link className='thumbnail-link' to={`/watch/${this.props.video.id}`}>
@@ -49,10 +74,8 @@ class VideoIndexItem extends React.Component {
                                     <span className='views'>
                                         {this.props.video.views} views
                                     </span>
-                                        <span>{"    "}</span>
-                                    <span className='date'>
-                                        {month}/{day}/{year}
-                                    </span>
+                                    <span>{"    "}</span>
+                                    {when}
                                 </div>
                             </div>
                         </div>

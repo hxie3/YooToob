@@ -145,6 +145,10 @@
   color: gray;
 }
 
+.video-file-picker-circle:hover {
+  background-color: #e2e2e2;
+}
+
 .video-file-picker-label {
   font-family: "Roboto", "Noto", sans-serif;
   font-weight: 400;
@@ -394,6 +398,7 @@
 .video-file-player {
   width: 304px;
   height: 171px;
+  background-color: black;
 }
 
 .row-scope {

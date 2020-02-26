@@ -48,12 +48,26 @@ class ShowVideo extends React.Component {
     }
 
     render() {
+        let months = {
+            1: "Jan",
+            2: "Feb",
+            3: "Mar",
+            4: "Apr",
+            5: "May",
+            6: "Jun",
+            7: "Jul",
+            8: "Aug",
+            9: "Sep",
+            10: "Oct",
+            11: "Nov",
+            12: "Dec"
+        }
         let { video, videos, videoId } = this.props
         if (!video) return null
         if (!videos) return null
         if (!videoId) return null
         let date = new Date(this.props.video.created_at);
-        let month = date.getMonth() + 1;
+        let month = months[date.getMonth() + 1];
         let day = date.getDate();
         let year = date.getFullYear();
         return (
@@ -89,7 +103,7 @@ class ShowVideo extends React.Component {
                                                         </span>
                                                         <span>{"    "}</span>
                                                         <span className='below-title-date'>
-                                                            {month}/{day}/{year}
+                                                            {month} {day}, {year}
                                                         </span>
                                                     </div>
                                                 </div>
