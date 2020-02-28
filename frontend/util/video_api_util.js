@@ -22,13 +22,15 @@ export const fetchVideo = (videoId) => (
     })
 )
 
-export const updateVideo = (video) => (
-    $.ajax({
-        url: `/api/videos/${video.id}`,
-        method: 'PATCH',
-        data: { video }
-    })
-)
+export const updateVideo = (video) => {
+    return (
+        $.ajax({
+            url: `/api/videos/${video.id}`,
+            method: 'PATCH',
+            data: { video }
+        })
+    )
+}
 
 export const deleteVideo = (videoId) => (
     $.ajax({

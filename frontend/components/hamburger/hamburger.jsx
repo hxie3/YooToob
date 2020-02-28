@@ -26,6 +26,7 @@ class Hamburger extends React.Component {
         if (window.location.hash === '#/') {
             document.getElementsByClassName('sidenav')[0].classList.toggle('hidden');
             document.getElementsByClassName('sidenav2')[0].classList.toggle('hidden');
+            document.getElementsByClassName('not-header-or-sidenav')[0].classList.toggle('active-sidenav2')
         } else {
             this.props.openModal('sidenav');
             // document.getElementsByClassName('sidenav3')[0].classList.toggle('hidden')

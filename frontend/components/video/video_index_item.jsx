@@ -16,6 +16,15 @@ class VideoIndexItem extends React.Component {
         let diffInSeconds = Math.floor((now - date) / 1000);
         let num;
         let when;
+        let views = this.props.video.views;
+        let viewsRender;
+        if (views === 0) {
+            viewsRender = "No views"
+        } else if (views === 1) {
+            viewsRender = `${views} view`
+        } else {
+            viewsRender = `${views} views`
+        }
         if (diffInSeconds < 60) {
             if (diffInSeconds === 1) {
                 when = <span className="date">
@@ -96,9 +105,11 @@ class VideoIndexItem extends React.Component {
                             <div className='metadata-line'>
                                 <div className='bottom-metadata'>
                                     <span className='views'>
-                                        {this.props.video.views} views
+                                        {viewsRender}
                                     </span>
-                                    <span>{"    "}</span>
+                                    <div className="fa">
+                                        <i className="fas fa-circle"></i>
+                                    </div>
                                     {when}
                                 </div>
                             </div>

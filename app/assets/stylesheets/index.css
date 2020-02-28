@@ -176,6 +176,15 @@
     line-height: 20px;
     color: #606060;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.fa-circle {
+    margin: 0 4px;
+    font-size: 5px;
+    display: flex;
+    color: #606060;
 }
 
 .views {

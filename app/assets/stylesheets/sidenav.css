@@ -7,6 +7,7 @@
     display: inline-block;
     width: 90px;
     height: 100vh;
+    position: fixed;
 }
 
 .home-icon, .github-icon, .linkedin-icon, .angellist-icon {
@@ -35,6 +36,10 @@
     display: inline-block;
     width: 192px;
     height: 100vh;
+}
+
+.sidenav2 {
+    position: fixed;
 }
 
 .home-icon2, .github-icon2, .linkedin-icon2, .angellist-icon2, .home-icon3, .github-icon3, .linkedin-icon3, .angellist-icon3 {

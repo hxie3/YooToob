@@ -25,10 +25,15 @@ class Api::VideosController < ApplicationController
 
     def update
         @video = Video.find_by(id: params[:id])
-        if @video.update(video_params)
+        if(video_params[:views] != @video[:views])
+            @video.update({views: video_params[:views]})
             render :update
         else
-            render json: @video.errors.full_messages, status: 404
+            if @video.update(video_params)
+                render :update
+            else
+                render json: @video.errors.full_messages, status: 404
+            end
         end
     end
 
@@ -45,6 +50,6 @@ class Api::VideosController < ApplicationController
     private
 
     def video_params
-        params.require(:video).permit(:title, :description, :user_id, :id, :video)
+        params.require(:video).permit(:title, :description, :id, :video, :views, :created_at, :user_id, :username, :profilePicture)
     end
 end

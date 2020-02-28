@@ -340,6 +340,11 @@
 .not-header-or-sidenav {  
     background-color: #ecf3f8;
     width: 100vw;
+    margin-left: 90px;
+}
+
+.active-sidenav2 {
+    margin-left: 192px;
 }
 
 .hamburger, .hamburger2 {

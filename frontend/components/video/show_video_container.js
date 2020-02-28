@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ShowVideo from './show_video';
-import { fetchVideo, fetchVideos } from '../../actions/video_actions';
+import { fetchVideo, fetchVideos, updateVideo } from '../../actions/video_actions';
 import { withRouter } from 'react-router-dom'
 
 
@@ -18,7 +18,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     fetchVideo: (videoId) => dispatch(fetchVideo(videoId)),
-    fetchVideos: () => dispatch((fetchVideos()))
+    fetchVideos: () => dispatch((fetchVideos())),
+    incrementViews: video => dispatch(updateVideo(video))
 })
 
 export default withRouter(connect(

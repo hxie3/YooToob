@@ -10,15 +10,27 @@ class ShowVideo extends React.Component {
         this.state = {
             video: this.props.video,
             videoId: this.props.videoId,
-            videos: this.props.videos
+            videos: this.props.videos,
+            incrementViews: true
         }
 
         this.handleShow = this.handleShow.bind(this);
+        this.incrementViews = this.incrementViews.bind(this);
     }
 
     componentDidMount(){
         this.props.fetchVideo(this.props.match.params.id)
-        this.props.fetchVideos() 
+        this.props.fetchVideos()
+    }
+
+    incrementViews(e) {
+        e.preventDefault();
+        if(this.state.incrementViews) {
+            let newvideo = Object.assign({}, this.props.video)
+            newvideo.views += 1;
+            this.props.incrementViews(newvideo);
+            this.setState({ incrementViews: false })
+        }
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -33,6 +45,7 @@ class ShowVideo extends React.Component {
             //Perform some operation here
             this.props.fetchVideo(this.props.videoId)
             this.setState({ videoId: this.props.videoId});
+            this.setState({ incrementViews: true })
         }
         document.getElementsByClassName("show-more")[0].classList.remove("hidden")
         if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
@@ -70,6 +83,15 @@ class ShowVideo extends React.Component {
         let month = months[date.getMonth() + 1];
         let day = date.getDate();
         let year = date.getFullYear();
+        let views = this.props.video.views;
+        let viewsRender;
+        if (views === 0) {
+            viewsRender = "No views"
+        } else if (views === 1) {
+            viewsRender = `${views} view`
+        } else {
+            viewsRender = `${views} views`
+        }
         return (
             <div className='show-body'>
                 <div className='something'>
@@ -80,7 +102,7 @@ class ShowVideo extends React.Component {
                                     <div className='player-container-outer'>
                                         <div className='player-container-inner'>
                                             <div className='player-container'>
-                                                <video key={this.state.video.video} className='player' controls autoPlay>
+                                                <video key={this.state.video.video} onPlay={this.incrementViews} className='player' controls autoPlay>
                                                     <source src={this.state.video.video} />
                                                 </video>
                                             </div>
@@ -99,9 +121,11 @@ class ShowVideo extends React.Component {
                                                 <div className='info-text'>
                                                     <div className='count'>
                                                         <span className='count-value'>
-                                                            {this.props.video.views} views
+                                                            {viewsRender}
                                                         </span>
-                                                        <span>{"    "}</span>
+                                                        <div className="fa">
+                                                            <i className="fas fa-circle"></i>
+                                                        </div>
                                                         <span className='below-title-date'>
                                                             {month} {day}, {year}
                                                         </span>
@@ -163,6 +187,15 @@ class ShowVideo extends React.Component {
                             <div className='items'>
                                 {(Object.values(videos)).map((videoItem, index) => {
                                     if (videoItem.id === parseInt(this.state.videoId)) return
+                                    let viewsVideoItem = videoItem.views;
+                                    let viewsVideoItemRender;
+                                    if (viewsVideoItem === 0) {
+                                        viewsVideoItemRender = "No views"
+                                    } else if (viewsVideoItem === 1) {
+                                        viewsVideoItemRender = `${viewsVideoItem} view`
+                                    } else {
+                                        viewsVideoItemRender = `${viewsVideoItem} views`
+                                    }
                                     return (
                                         <div key={index} className='index-show-list'>
                                             <div className='dismissable'>
@@ -184,7 +217,7 @@ class ShowVideo extends React.Component {
                                                             {videoItem.username}
                                                         </div>
                                                         <div className="show-username-string">
-                                                            {videoItem.views} views
+                                                            {viewsVideoItemRender}
                                                         </div>
                                                     </Link>
                                                 </div>
