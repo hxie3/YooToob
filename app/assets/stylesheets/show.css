@@ -337,6 +337,7 @@
 
 .thumbnail-show {
     height: 100%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -357,6 +358,7 @@
     top: 50%;
     left: 0;
     width: 100%;
+    height: 100%;
     cursor: pointer;
     background-color: black;
 }

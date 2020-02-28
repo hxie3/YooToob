@@ -77,9 +77,10 @@ class VideoIndexItem extends React.Component {
             <div className='index-item-container'>
                 <Link className='thumbnail-link' to={`/watch/${this.props.video.id}`}>
                     <div className='clip-thumbnail'>
-                        <video key={this.props.video.video} className='video'>
+                        <img className="index-thumbnail" src={this.props.video.thumbnail} alt="thumbnail"/>
+                        {/* <video poster={this.props.video.thumbnail} key={this.props.video.video} className='video'>
                             <source src={this.props.video.video} type='video/mp4' />
-                        </video>
+                        </video> */}
                     </div>
                 </Link>
                 <Link to={`/watch/${this.props.video.id}`}>

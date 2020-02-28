@@ -102,7 +102,7 @@ class ShowVideo extends React.Component {
                                     <div className='player-container-outer'>
                                         <div className='player-container-inner'>
                                             <div className='player-container'>
-                                                <video key={this.state.video.video} onPlay={this.incrementViews} className='player' controls autoPlay>
+                                                <video poster={this.state.video.thumbnail} key={this.state.video.video} onPlay={this.incrementViews} className='player' controls autoPlay>
                                                     <source src={this.state.video.video} />
                                                 </video>
                                             </div>
@@ -202,9 +202,10 @@ class ShowVideo extends React.Component {
                                                 <div className='video-item-show'>
                                                     <Link className='thumbnail-show' to={`/watch/${videoItem.id}`}>
                                                         <div className='after-thumbnail'>
-                                                            <video source={videoItem.video} className="show-video-index">
+                                                            <img className="index-thumbnail" src={videoItem.thumbnail} alt="thumbnail"/>
+                                                            {/* <video poster={videoItem.thumbnail} source={videoItem.video} className="show-video-index">
                                                                 <source src={videoItem.video}/>
-                                                            </video>
+                                                            </video> */}
                                                         </div>
                                                     </Link>
                                                 </div>
