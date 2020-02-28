@@ -1,5 +1,5 @@
 import React from 'react';
-import VideoIndexItem from './video_index_item'
+import VideoIndexItemContainer from './video_index_item_container';
 import SideNavContainer from '../sidenav/sidenav_container';
 
 class VideoIndex extends React.Component {
@@ -49,7 +49,7 @@ class VideoIndex extends React.Component {
                                 </div>
                                 <div className='index-contents'>
                                     { Object.values(videos).map(video => {
-                                        return <VideoIndexItem video={video} key={video.id}/>
+                                        return <VideoIndexItemContainer video={video} key={video.id}/>
                                     })}
                                 </div>
                             </div>

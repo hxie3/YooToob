@@ -785,6 +785,7 @@ function (_React$Component) {
       if (window.location.hash === '#/') {
         document.getElementsByClassName('sidenav')[0].classList.toggle('hidden');
         document.getElementsByClassName('sidenav2')[0].classList.toggle('hidden');
+        document.getElementsByClassName('not-header-or-sidenav')[0].classList.toggle('active-sidenav2');
       } else {
         this.props.openModal('sidenav'); // document.getElementsByClassName('sidenav3')[0].classList.toggle('hidden')
       }
@@ -2114,9 +2115,11 @@ function (_React$Component) {
     _this.state = {
       video: _this.props.video,
       videoId: _this.props.videoId,
-      videos: _this.props.videos
+      videos: _this.props.videos,
+      incrementViews: true
     };
     _this.handleShow = _this.handleShow.bind(_assertThisInitialized(_this));
+    _this.incrementViews = _this.incrementViews.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2127,6 +2130,20 @@ function (_React$Component) {
       this.props.fetchVideos();
     }
   }, {
+    key: "incrementViews",
+    value: function incrementViews(e) {
+      e.preventDefault();
+
+      if (this.state.incrementViews) {
+        var newvideo = Object.assign({}, this.props.video);
+        newvideo.views += 1;
+        this.props.incrementViews(newvideo);
+        this.setState({
+          incrementViews: false
+        });
+      }
+    }
+  }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       if (prevProps.match.params.id !== this.props.match.params.id) {
@@ -2134,6 +2151,9 @@ function (_React$Component) {
         this.props.fetchVideo(this.props.videoId);
         this.setState({
           videoId: this.props.videoId
+        });
+        this.setState({
+          incrementViews: true
         });
       }
 
@@ -2181,6 +2201,17 @@ function (_React$Component) {
       var month = months[date.getMonth() + 1];
       var day = date.getDate();
       var year = date.getFullYear();
+      var views = this.props.video.views;
+      var viewsRender;
+
+      if (views === 0) {
+        viewsRender = "No views";
+      } else if (views === 1) {
+        viewsRender = "".concat(views, " view");
+      } else {
+        viewsRender = "".concat(views, " views");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "show-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2200,6 +2231,7 @@ function (_React$Component) {
         className: "player-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         key: this.state.video.video,
+        onPlay: this.incrementViews,
         className: "player",
         controls: true,
         autoPlay: true
@@ -2221,7 +2253,11 @@ function (_React$Component) {
         className: "count"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "count-value"
-      }, this.props.video.views, " views"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "    "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, viewsRender), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "below-title-date"
       }, month, " ", day, ", ", year))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bottom-border-info"
@@ -2265,6 +2301,17 @@ function (_React$Component) {
         className: "items"
       }, Object.values(videos).map(function (videoItem, index) {
         if (videoItem.id === parseInt(_this2.state.videoId)) return;
+        var viewsVideoItem = videoItem.views;
+        var viewsVideoItemRender;
+
+        if (viewsVideoItem === 0) {
+          viewsVideoItemRender = "No views";
+        } else if (viewsVideoItem === 1) {
+          viewsVideoItemRender = "".concat(viewsVideoItem, " view");
+        } else {
+          viewsVideoItemRender = "".concat(viewsVideoItem, " views");
+        }
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: index,
           className: "index-show-list"
@@ -2292,7 +2339,7 @@ function (_React$Component) {
           className: "show-username-string"
         }, videoItem.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "show-username-string"
-        }, videoItem.views, " views")))));
+        }, viewsVideoItemRender)))));
       }))))));
     }
   }], [{
@@ -2347,6 +2394,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchVideos: function fetchVideos() {
       return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["fetchVideos"])());
+    },
+    incrementViews: function incrementViews(video) {
+      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["updateVideo"])(video));
     }
   };
 };
@@ -2848,7 +2898,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _video_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./video_index_item */ "./frontend/components/video/video_index_item.jsx");
+/* harmony import */ var _video_index_item_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./video_index_item_container */ "./frontend/components/video/video_index_item_container.js");
 /* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -2933,7 +2983,7 @@ function (_React$Component) {
         }, "Recommended")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "index-contents"
         }, Object.values(videos).map(function (video) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_index_item_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
             video: video,
             key: video.id
           });
@@ -3052,6 +3102,16 @@ function (_React$Component) {
       var diffInSeconds = Math.floor((now - date) / 1000);
       var num;
       var when;
+      var views = this.props.video.views;
+      var viewsRender;
+
+      if (views === 0) {
+        viewsRender = "No views";
+      } else if (views === 1) {
+        viewsRender = "".concat(views, " view");
+      } else {
+        viewsRender = "".concat(views, " views");
+      }
 
       if (diffInSeconds < 60) {
         if (diffInSeconds === 1) {
@@ -3147,7 +3207,11 @@ function (_React$Component) {
         className: "bottom-metadata"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "views"
-      }, this.props.video.views, " views"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "    "), when))))));
+      }, viewsRender), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle"
+      })), when))))));
     }
   }]);
 
@@ -3155,6 +3219,40 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (VideoIndexItem);
+
+/***/ }),
+
+/***/ "./frontend/components/video/video_index_item_container.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/video/video_index_item_container.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
+/* harmony import */ var _video_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./video_index_item */ "./frontend/components/video/video_index_item.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    video: ownProps.video
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    incrementViews: function incrementViews(video) {
+      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_1__["updateVideo"])(video));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_video_index_item__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
