@@ -7,17 +7,20 @@ class VideoForm extends React.Component {
         super(props);
         this.state = {
             video: this.props.video,
-            formData: null,
             form: 'file',
             uploading: false,
+            thumbnailUploaded: false,
+            setupDrop: true
         }
 
         this.handleVideo = this.handleVideo.bind(this);
+        this.handlePhoto = this.handlePhoto.bind(this);
         this.handleInputFile = this.handleInputFile.bind(this);
         this.handleDrop = this.handleDrop.bind(this);
         this.updateTitle = this.updateTitle.bind(this);
         this.updateDescription = this.updateDescription.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
+        this.handleThumbnailDrop = this.handleThumbnailDrop.bind(this);
     }
 
     updateTitle(e) {
@@ -30,6 +33,11 @@ class VideoForm extends React.Component {
         let newvideostate = Object.assign({}, this.state.video);
         newvideostate.description = e.currentTarget.value;
         this.setState({ video: newvideostate })
+    }
+
+    handleInputPhotoFile(e) {
+        e.preventDefault();
+        $('#photo-file-holder').trigger('click');
     }
 
     handleInputFile(e){
@@ -62,6 +70,31 @@ class VideoForm extends React.Component {
         }
     }
 
+    handlePhoto(e) {
+        e.preventDefault();
+        const reader = new FileReader();
+        const file = e.currentTarget.files[0];
+        let newvideostate = Object.assign({}, this.state.video)
+
+        reader.onloadend = () => {
+            newvideostate.photoFile = file;
+            newvideostate.photoUrl = reader.result;
+            this.setState({ video: newvideostate });
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            newvideostate.photoFile = null;
+            newvideostate.photoUrl = '';
+            this.setState({ video: newvideostate });
+        }
+
+        if (file) {
+            this.setState({ thumbnailUploaded: true })
+        }
+    }
+
     handleUpload(e){
         e.preventDefault();
         e.persist();
@@ -73,6 +106,7 @@ class VideoForm extends React.Component {
             formData.append('video[title]', this.state.video.title)
             formData.append('video[description]', this.state.video.description)
             formData.append('video[user_id]', this.state.video.user_id)
+            formData.append('video[thumbnail]', this.state.video.photoFile)
             this.props.processForm(formData)
                 .then(() => {
                     let ele = document.getElementsByClassName("select-files-button")[0];
@@ -96,6 +130,21 @@ class VideoForm extends React.Component {
         this.props.clearErrors();
     }
 
+    componentDidUpdate() {
+        if (this.state.form === "details" && this.state.setupDrop) {
+            this.setState({ setupDrop: false })
+            const fileUpload = findIconDefinition({ prefix: 'fas', iconName: 'file-upload' });
+            const fileUploadIcon = icon(fileUpload);
+            Array.from(fileUploadIcon.node).map(n => document.getElementsByClassName('svg-file-upload')[0].appendChild(n))
+            let dropArea = document.getElementsByClassName('thumbnail-container')[0];
+            dropArea.addEventListener('dragenter', this.highlightThumbnail.bind(this), false);
+            dropArea.addEventListener('dragover', this.highlightThumbnail.bind(this), false);
+            dropArea.addEventListener('dragleave', this.unhighlightThumbnail.bind(this), false);
+            dropArea.addEventListener('drop', this.unhighlightThumbnail.bind(this), false);
+            dropArea.addEventListener('drop', this.handleDrop, false);
+        }
+    }
+
     componentDidMount(){
         library.add(fas)
         const exit = findIconDefinition({ prefix: 'fas', iconName: 'times' });
@@ -109,7 +158,36 @@ class VideoForm extends React.Component {
         dropArea.addEventListener('dragover', this.highlight.bind(this), false);
         dropArea.addEventListener('dragleave', this.unhighlight.bind(this), false);
         dropArea.addEventListener('drop', this.unhighlight.bind(this), false);
-        dropArea.addEventListener('drop', this.handleDrop, false);
+        dropArea.addEventListener('drop', this.handleThumbnailDrop, false);
+    }
+
+    handleThumbnailDrop(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const dt = e.dataTransfer
+        const file = dt.files[0]
+        if (file.type.split("/")[0] === "image") {
+            const reader = new FileReader();
+            let newvideostate = Object.assign({}, this.state.video)
+
+            reader.onloadend = () => {
+                newvideostate.photoFile = file;
+                newvideostate.photoUrl = reader.result;
+                this.setState({ video: newvideostate });
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                newvideostate.photoFile = null
+                newvideostate.photoUrl = ''
+                this.setState({ video: newvideostate });
+            }
+
+            if (file) {
+                this.setState({ thumbnailUploaded: true })
+            }
+        }
     }
 
     handleDrop(e) {
@@ -141,6 +219,20 @@ class VideoForm extends React.Component {
         }
     }
 
+    highlightThumbnail(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let container = document.getElementsByClassName('thumbnail-container')[0];
+        container.classList.add('highlight');
+    }
+
+    unhighlightThumbnail(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let container = document.getElementsByClassName('thumbnail-container')[0];
+        container.classList.add('highlight');
+    }
+
     highlight(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -157,10 +249,22 @@ class VideoForm extends React.Component {
 
     render() {
         const preview = !!this.state.video.videoUrl ? (
-            <video key={this.state.video.videoUrl} width='304' height='171' controls>
+            <video poster={this.state.video.photoUrl} key={this.state.video.videoUrl} width='304' height='171' controls>
                 <source src={this.state.video.videoUrl} type='video/mp4'/>
             </video>
-        ) : (null)
+        ) : (null);
+        const thumbnailPreview = !!this.state.video.photoUrl ? (
+            <div onClick={this.handleInputPhotoFile} className='thumbnail-picker-container'>
+                <img className="thumbnail" src={this.state.video.photoUrl} alt="thumbnail"/>
+            </div>
+        ) : (
+            <div onClick={this.handleInputPhotoFile} className='thumbnail-picker-container'>
+                <div className="svg-file-upload"></div>
+                <div className="text-below-thumbnail-upload">
+                        Upload thumbnail
+                </div>
+            </div>
+        );
         return (
             <div className='video-form-container'>
                 <div className='video-form-container-content'>
@@ -222,6 +326,18 @@ class VideoForm extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className='thumbnail-container'>
+                                            <div>
+                                                <div className='thumbnail-string'>
+                                                    Thumbnail
+                                                </div>
+                                                <div className='thumbnail-instructions'>
+                                                    Select or upload a picture that shows what's in your video. A good thumbnail stands out and draws viewers' attention.
+                                                </div>
+                                                {thumbnailPreview}
+                                            </div>
+                                        </div>
+                                        <input onChange={this.handlePhoto} id='photo-file-holder' accept="image/*" className='hidden photo-file-holder' type="file" name='photo-file-data' />
                                     </div>
                                     <div className='video-file-preview'>
                                         <div className='video-file-container'>

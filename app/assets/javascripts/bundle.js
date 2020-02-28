@@ -2230,6 +2230,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "player-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        poster: this.state.video.thumbnail,
         key: this.state.video.video,
         onPlay: this.incrementViews,
         className: "player",
@@ -2324,12 +2325,11 @@ function (_React$Component) {
           to: "/watch/".concat(videoItem.id)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "after-thumbnail"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-          source: videoItem.video,
-          className: "show-video-index"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-          src: videoItem.video
-        }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "index-thumbnail",
+          src: videoItem.thumbnail,
+          alt: "thumbnail"
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "video-item-details-show"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
           to: "/watch/".concat(videoItem.id)
@@ -2552,16 +2552,19 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(VideoForm).call(this, props));
     _this.state = {
       video: _this.props.video,
-      formData: null,
       form: 'file',
-      uploading: false
+      uploading: false,
+      thumbnailUploaded: false,
+      setupDrop: true
     };
     _this.handleVideo = _this.handleVideo.bind(_assertThisInitialized(_this));
+    _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
     _this.handleInputFile = _this.handleInputFile.bind(_assertThisInitialized(_this));
     _this.handleDrop = _this.handleDrop.bind(_assertThisInitialized(_this));
     _this.updateTitle = _this.updateTitle.bind(_assertThisInitialized(_this));
     _this.updateDescription = _this.updateDescription.bind(_assertThisInitialized(_this));
     _this.handleUpload = _this.handleUpload.bind(_assertThisInitialized(_this));
+    _this.handleThumbnailDrop = _this.handleThumbnailDrop.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2582,6 +2585,12 @@ function (_React$Component) {
       this.setState({
         video: newvideostate
       });
+    }
+  }, {
+    key: "handleInputPhotoFile",
+    value: function handleInputPhotoFile(e) {
+      e.preventDefault();
+      $('#photo-file-holder').trigger('click');
     }
   }, {
     key: "handleInputFile",
@@ -2625,9 +2634,44 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "handlePhoto",
+    value: function handlePhoto(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      var reader = new FileReader();
+      var file = e.currentTarget.files[0];
+      var newvideostate = Object.assign({}, this.state.video);
+
+      reader.onloadend = function () {
+        newvideostate.photoFile = file;
+        newvideostate.photoUrl = reader.result;
+
+        _this3.setState({
+          video: newvideostate
+        });
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        newvideostate.photoFile = null;
+        newvideostate.photoUrl = '';
+        this.setState({
+          video: newvideostate
+        });
+      }
+
+      if (file) {
+        this.setState({
+          thumbnailUploaded: true
+        });
+      }
+    }
+  }, {
     key: "handleUpload",
     value: function handleUpload(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       e.preventDefault();
       e.persist();
@@ -2642,17 +2686,18 @@ function (_React$Component) {
         formData.append('video[title]', this.state.video.title);
         formData.append('video[description]', this.state.video.description);
         formData.append('video[user_id]', this.state.video.user_id);
+        formData.append('video[thumbnail]', this.state.video.photoFile);
         this.props.processForm(formData).then(function () {
           var ele = document.getElementsByClassName("select-files-button")[0];
 
           if (!!ele) {
             ele.disabled = false;
 
-            _this3.setState({
+            _this4.setState({
               loading: false
             });
 
-            _this3.props.closeModal();
+            _this4.props.closeModal();
           }
         }, function () {
           var ele = document.getElementsByClassName("select-files-button")[0];
@@ -2660,7 +2705,7 @@ function (_React$Component) {
           if (!!ele) {
             ele.disabled = false;
 
-            _this3.setState({
+            _this4.setState({
               loading: false
             });
           }
@@ -2671,6 +2716,29 @@ function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.clearErrors();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.state.form === "details" && this.state.setupDrop) {
+        this.setState({
+          setupDrop: false
+        });
+        var fileUpload = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+          prefix: 'fas',
+          iconName: 'file-upload'
+        });
+        var fileUploadIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(fileUpload);
+        Array.from(fileUploadIcon.node).map(function (n) {
+          return document.getElementsByClassName('svg-file-upload')[0].appendChild(n);
+        });
+        var dropArea = document.getElementsByClassName('thumbnail-container')[0];
+        dropArea.addEventListener('dragenter', this.highlightThumbnail.bind(this), false);
+        dropArea.addEventListener('dragover', this.highlightThumbnail.bind(this), false);
+        dropArea.addEventListener('dragleave', this.unhighlightThumbnail.bind(this), false);
+        dropArea.addEventListener('drop', this.unhighlightThumbnail.bind(this), false);
+        dropArea.addEventListener('drop', this.handleDrop, false);
+      }
     }
   }, {
     key: "componentDidMount",
@@ -2697,12 +2765,52 @@ function (_React$Component) {
       dropArea.addEventListener('dragover', this.highlight.bind(this), false);
       dropArea.addEventListener('dragleave', this.unhighlight.bind(this), false);
       dropArea.addEventListener('drop', this.unhighlight.bind(this), false);
-      dropArea.addEventListener('drop', this.handleDrop, false);
+      dropArea.addEventListener('drop', this.handleThumbnailDrop, false);
+    }
+  }, {
+    key: "handleThumbnailDrop",
+    value: function handleThumbnailDrop(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+      e.stopPropagation();
+      var dt = e.dataTransfer;
+      var file = dt.files[0];
+
+      if (file.type.split("/")[0] === "image") {
+        var reader = new FileReader();
+        var newvideostate = Object.assign({}, this.state.video);
+
+        reader.onloadend = function () {
+          newvideostate.photoFile = file;
+          newvideostate.photoUrl = reader.result;
+
+          _this5.setState({
+            video: newvideostate
+          });
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          newvideostate.photoFile = null;
+          newvideostate.photoUrl = '';
+          this.setState({
+            video: newvideostate
+          });
+        }
+
+        if (file) {
+          this.setState({
+            thumbnailUploaded: true
+          });
+        }
+      }
     }
   }, {
     key: "handleDrop",
     value: function handleDrop(e) {
-      var _this4 = this;
+      var _this6 = this;
 
       e.preventDefault();
       e.stopPropagation();
@@ -2717,7 +2825,7 @@ function (_React$Component) {
           newvideostate.videoFile = file;
           newvideostate.videoUrl = reader.result;
 
-          _this4.setState({
+          _this6.setState({
             video: newvideostate
           });
         };
@@ -2740,6 +2848,22 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "highlightThumbnail",
+    value: function highlightThumbnail(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var container = document.getElementsByClassName('thumbnail-container')[0];
+      container.classList.add('highlight');
+    }
+  }, {
+    key: "unhighlightThumbnail",
+    value: function unhighlightThumbnail(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var container = document.getElementsByClassName('thumbnail-container')[0];
+      container.classList.add('highlight');
+    }
+  }, {
     key: "highlight",
     value: function highlight(e) {
       e.preventDefault();
@@ -2759,6 +2883,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var preview = !!this.state.video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        poster: this.state.video.photoUrl,
         key: this.state.video.videoUrl,
         width: "304",
         height: "171",
@@ -2767,6 +2892,21 @@ function (_React$Component) {
         src: this.state.video.videoUrl,
         type: "video/mp4"
       })) : null;
+      var thumbnailPreview = !!this.state.video.photoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleInputPhotoFile,
+        className: "thumbnail-picker-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "thumbnail",
+        src: this.state.video.photoUrl,
+        alt: "thumbnail"
+      })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleInputPhotoFile,
+        className: "thumbnail-picker-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "svg-file-upload"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-below-thumbnail-upload"
+      }, "Upload thumbnail"));
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-form-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2848,7 +2988,20 @@ function (_React$Component) {
         value: this.state.video.description,
         placeholder: "Tell viewers about your video",
         className: "description-content"
-      }))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thumbnail-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thumbnail-string"
+      }, "Thumbnail"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thumbnail-instructions"
+      }, "Select or upload a picture that shows what's in your video. A good thumbnail stands out and draws viewers' attention."), thumbnailPreview)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.handlePhoto,
+        id: "photo-file-holder",
+        accept: "image/*",
+        className: "hidden photo-file-holder",
+        type: "file",
+        name: "photo-file-data"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-file-preview"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-file-container"
@@ -3171,13 +3324,11 @@ function (_React$Component) {
         to: "/watch/".concat(this.props.video.id)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "clip-thumbnail"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        key: this.props.video.video,
-        className: "video"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: this.props.video.video,
-        type: "video/mp4"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "index-thumbnail",
+        src: this.props.video.thumbnail,
+        alt: "thumbnail"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/watch/".concat(this.props.video.id)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "index-item-video-details"

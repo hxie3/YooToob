@@ -3,5 +3,6 @@ json.set! video.id do
     json.userId video.user_id
     json.username video.user.username
     json.profilePicture url_for(video.user.profile_picture)
+    json.thumbnail url_for(video.thumbnail)
     json.video url_for(video.video)
 end

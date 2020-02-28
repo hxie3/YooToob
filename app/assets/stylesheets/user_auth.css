@@ -238,6 +238,15 @@
     cursor: pointer;
 }
 
+.video-profile-pic {
+    margin-top: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+}
+
 .user-dropdown {
     z-index: 2020;
     position: fixed;
