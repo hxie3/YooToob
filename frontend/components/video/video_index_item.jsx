@@ -69,7 +69,7 @@ class VideoIndexItem extends React.Component {
             </span>
         } 
         else if (diffInSeconds/60/60/24/7/4.286 < 12) {
-            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30)
+            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286)
             when = <span className="date">
                 {num} {num === 1 ? ("month") : ("months")} ago
             </span>
