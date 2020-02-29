@@ -49,13 +49,13 @@ class App extends React.Component {
                     </div>
                 </header>
                 <br/>
-                    <Switch>
-                        <AuthRoute exact path="/login" component={LoginFormContainer} />
-                        <AuthRoute exact path="/signup" component={SignupFormContainer} />
-                        <Route exact path='/' component={VideoIndexContainer} />
-                        <Route exact path='/watch/:id' component={ShowVideoContainer} />
-                        <Route render={() => <Redirect to={{pathname: "/"}} />} />
-                    </Switch>
+                <Switch>
+                    <AuthRoute exact path="/login" component={LoginFormContainer} />
+                    <AuthRoute exact path="/signup" component={SignupFormContainer} />
+                    <Route exact path='/' component={VideoIndexContainer} />
+                    <Route exact path='/watch/:id' component={ShowVideoContainer} />
+                    <Route render={() => <Redirect to={{pathname: "/"}} />} />
+                </Switch>
                 
             </div>
         )
