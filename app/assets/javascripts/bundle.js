@@ -3484,7 +3484,7 @@ function (_React$Component) {
           className: "date"
         }, num, " ", num === 1 ? "week" : "weeks", " ago");
       } else if (diffInSeconds / 60 / 60 / 24 / 7 / 4.286 < 12) {
-        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30);
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286);
         when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "date"
         }, num, " ", num === 1 ? "month" : "months", " ago");
