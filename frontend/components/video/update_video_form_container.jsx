@@ -1,29 +1,11 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import VideoForm from './video_form';
+import UpdateVideoForm from './update_video_form';
 import { updateVideo, fetchVideo } from '../../actions/video_actions'
 import { closeModal } from '../../actions/modal_actions'
 
-class UpdateVideoForm extends React.Component {
-    componentDidMount() {
-        this.props.fetchVideo(this.props.match.params.videoId);
-    }
-
-    render() {
-        const { action, formType, video } = this.props;
-        if (!video) return null;
-        return (
-            <VideoForm
-                action={action}
-                formType={formType}
-                video={video} />
-        );
-    }
-}
-
 const mapStateToProps = (state, ownProps) => ({
     video: state.entities.videos[ownProps.match.params.videoId],
-    formType: 'Update Video'
 })
 
 const mapDispatchToProps = (dispatch) => ({

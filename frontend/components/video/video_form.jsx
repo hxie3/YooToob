@@ -10,7 +10,8 @@ class VideoForm extends React.Component {
             form: 'file',
             uploading: false,
             thumbnailUploaded: false,
-            setupDrop: true
+            setupDrop: true,
+            uploadable: false,
         }
 
         this.handleVideo = this.handleVideo.bind(this);
@@ -27,12 +28,24 @@ class VideoForm extends React.Component {
         let newvideostate = Object.assign({}, this.state.video);
         newvideostate.title = e.currentTarget.value;
         this.setState({ video: newvideostate })
+        if (e.currentTarget.value === '') {
+            document.getElementsByClassName("select-files-button")[0].disabled = true;
+        } else if (this.state.video.description !== '' && this.state.video.photoUrl) {
+            document.getElementsByClassName("select-files-button")[0].disabled = false;
+            document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+        }
     }
 
     updateDescription(e) {
         let newvideostate = Object.assign({}, this.state.video);
         newvideostate.description = e.currentTarget.value;
         this.setState({ video: newvideostate })
+        if (e.currentTarget.value === '') {
+            document.getElementsByClassName("select-files-button")[0].disabled = true;
+        } else if (this.state.video.title !== '' && this.state.video.photoUrl) {
+            document.getElementsByClassName("select-files-button")[0].disabled = false;
+            document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+        }
     }
 
     handleInputPhotoFile(e) {
@@ -84,20 +97,25 @@ class VideoForm extends React.Component {
 
         if (file) {
             reader.readAsDataURL(file);
-        } else {
-            newvideostate.photoFile = null;
-            newvideostate.photoUrl = '';
-            this.setState({ video: newvideostate });
-        }
+        } 
+        // else {
+        //     newvideostate.photoFile = null;
+        //     newvideostate.photoUrl = '';
+        //     this.setState({ video: newvideostate });
+        //     document.getElementsByClassName("select-files-button")[0].disabled = true;
+        // }
 
         if (file) {
-            this.setState({ thumbnailUploaded: true })
+            this.setState({ thumbnailUploaded: true, uploadable: true });
+            if(this.state.video.title !== '' && this.state.video.description !== '') {
+                document.getElementsByClassName("select-files-button")[0].disabled = false;
+                document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+            }
         }
     }
 
     handleUpload(e){
         e.preventDefault();
-        e.persist();
         if (e.currentTarget.disabled === false) {
             e.currentTarget.disabled = true;
             this.setState({ loading: true })
@@ -141,7 +159,7 @@ class VideoForm extends React.Component {
             dropArea.addEventListener('dragover', this.highlightThumbnail.bind(this), false);
             dropArea.addEventListener('dragleave', this.unhighlightThumbnail.bind(this), false);
             dropArea.addEventListener('drop', this.unhighlightThumbnail.bind(this), false);
-            dropArea.addEventListener('drop', this.handleDrop, false);
+            dropArea.addEventListener('drop', this.handleThumbnailDrop, false);
         }
     }
 
@@ -158,7 +176,7 @@ class VideoForm extends React.Component {
         dropArea.addEventListener('dragover', this.highlight.bind(this), false);
         dropArea.addEventListener('dragleave', this.unhighlight.bind(this), false);
         dropArea.addEventListener('drop', this.unhighlight.bind(this), false);
-        dropArea.addEventListener('drop', this.handleThumbnailDrop, false);
+        dropArea.addEventListener('drop', this.handleDrop, false);
     }
 
     handleThumbnailDrop(e) {
@@ -182,10 +200,15 @@ class VideoForm extends React.Component {
                 newvideostate.photoFile = null
                 newvideostate.photoUrl = ''
                 this.setState({ video: newvideostate });
+                document.getElementsByClassName("select-files-button")[0].disabled = true;
             }
 
             if (file) {
                 this.setState({ thumbnailUploaded: true })
+                if (this.state.video.title !== '' && this.state.video.description !== '') {
+                    document.getElementsByClassName("select-files-button")[0].disabled = false;
+                    document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+                }
             }
         }
     }
@@ -222,29 +245,33 @@ class VideoForm extends React.Component {
     highlightThumbnail(e) {
         e.preventDefault();
         e.stopPropagation();
-        let container = document.getElementsByClassName('thumbnail-container')[0];
+        let container = document.getElementsByClassName('thumbnail-picker-container')[0];
         container.classList.add('highlight');
     }
 
     unhighlightThumbnail(e) {
         e.preventDefault();
         e.stopPropagation();
-        let container = document.getElementsByClassName('thumbnail-container')[0];
-        container.classList.add('highlight');
+        let container = document.getElementsByClassName('thumbnail-picker-container')[0];
+        container.classList.remove('highlight');
     }
 
     highlight(e) {
         e.preventDefault();
         e.stopPropagation();
         let dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
-        dropCircle.classList.add("highlight")
+        if (dropCircle) {
+            dropCircle.classList.add("highlight")
+        }
     }
 
     unhighlight(e) {
         e.preventDefault();
         e.stopPropagation();
         let dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
-        dropCircle.classList.remove("highlight")
+        if (dropCircle) {
+            dropCircle.classList.remove("highlight")
+        }
     }
 
     render() {
@@ -253,18 +280,18 @@ class VideoForm extends React.Component {
                 <source src={this.state.video.videoUrl} type='video/mp4'/>
             </video>
         ) : (null);
-        const thumbnailPreview = !!this.state.video.photoUrl ? (
+        const thumbnailPreview = 
             <div onClick={this.handleInputPhotoFile} className='thumbnail-picker-container'>
-                <img className="thumbnail" src={this.state.video.photoUrl} alt="thumbnail"/>
-            </div>
-        ) : (
-            <div onClick={this.handleInputPhotoFile} className='thumbnail-picker-container'>
+                {this.state.video.photoUrl ? (
+                    <img className="thumbnail" src={this.state.video.photoUrl} alt="thumbnail"/>
+                ) : (
+                    <img className="thumbnail hidden" src={this.state.video.photoUrl} alt="thumbnail"/>
+                )}
                 <div className="svg-file-upload"></div>
                 <div className="text-below-thumbnail-upload">
                         Upload thumbnail
                 </div>
             </div>
-        );
         return (
             <div className='video-form-container'>
                 <div className='video-form-container-content'>
@@ -329,7 +356,7 @@ class VideoForm extends React.Component {
                                         <div className='thumbnail-container'>
                                             <div>
                                                 <div className='thumbnail-string'>
-                                                    Thumbnail
+                                                    Thumbnail (required)
                                                 </div>
                                                 <div className='thumbnail-instructions'>
                                                     Select or upload a picture that shows what's in your video. A good thumbnail stands out and draws viewers' attention.
@@ -378,9 +405,9 @@ class VideoForm extends React.Component {
                             <div className="video-file-upload-button-container">
                                 <div className='inner-button-area'>
                                     <div className='upload-button-container'>
-                                        <button onClick={this.handleUpload} className='select-files-button more'>
+                                        <button disabled onClick={this.handleUpload} className='select-files-button more'>
                                             {
-                                                document.getElementsByClassName("select-files-button")[0].disabled ? (
+                                                this.state.loading ? (
                                                     <div className='upload-button-submit-value'>Uploading...</div>
                                                 ) : (
                                                     <div className='upload-button-submit-value'>Upload</div>

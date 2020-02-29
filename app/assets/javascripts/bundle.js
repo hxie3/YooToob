@@ -2405,21 +2405,19 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/video/update_video_form_container.jsx":
-/*!*******************************************************************!*\
-  !*** ./frontend/components/video/update_video_form_container.jsx ***!
-  \*******************************************************************/
+/***/ "./frontend/components/video/update_video_form.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/video/update_video_form.jsx ***!
+  \*********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _video_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./video_form */ "./frontend/components/video/video_form.jsx");
-/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2442,47 +2440,188 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
-
 var UpdateVideoForm =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(UpdateVideoForm, _React$Component);
 
-  function UpdateVideoForm() {
+  function UpdateVideoForm(props) {
+    var _this;
+
     _classCallCheck(this, UpdateVideoForm);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(UpdateVideoForm).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateVideoForm).call(this, props));
+    _this.state = {
+      video: _this.props.video,
+      updating: false,
+      thumbnailUploaded: false,
+      setupDrop: true
+    };
+    return _this;
   }
 
   _createClass(UpdateVideoForm, [{
+    key: "updateTitle",
+    value: function updateTitle(e) {
+      var newvideostate = Object.assign({}, this.state.video);
+      newvideostate.title = e.currentTarget.value;
+      this.setState({
+        video: newvideostate
+      });
+    }
+  }, {
+    key: "updateDescription",
+    value: function updateDescription(e) {
+      var newvideostate = Object.assign({}, this.state.video);
+      newvideostate.description = e.currentTarget.value;
+      this.setState({
+        video: newvideostate
+      });
+    }
+  }, {
+    key: "handleInputPhotoFile",
+    value: function handleInputPhotoFile(e) {
+      e.preventDefault();
+      $('#photo-file-holder').trigger('click');
+    }
+  }, {
+    key: "handlePhoto",
+    value: function handlePhoto(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var reader = new FileReader();
+      var file = e.currentTarget.files[0];
+      var newvideostate = Object.assign({}, this.state.video);
+
+      reader.onloadend = function () {
+        newvideostate.photoFile = file;
+        newvideostate.photoUrl = reader.result;
+
+        _this2.setState({
+          video: newvideostate
+        });
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        newvideostate.photoFile = null;
+        newvideostate.photoUrl = '';
+        this.setState({
+          video: newvideostate
+        });
+      }
+
+      if (file) {
+        this.setState({
+          thumbnailUploaded: true
+        });
+      }
+    }
+  }, {
+    key: "handleUpdate",
+    value: function handleUpdate(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      e.persist();
+
+      if (e.currentTarget.disabled === false) {
+        e.currentTarget.disabled = true;
+        this.setState({
+          updating: true
+        });
+        var formData = new FormData();
+        formData.append('video[title]', this.state.video.title);
+        formData.append('video[description]', this.state.video.description);
+        formData.append('video[thumbnail]', this.state.video.photoFile);
+        this.props.processForm(formData).then(function () {
+          var ele = document.getElementsByClassName("select-files-button")[0];
+
+          if (!!ele) {
+            ele.disabled = false;
+
+            _this3.setState({
+              updating: false
+            });
+
+            _this3.props.closeModal();
+          }
+        }, function () {
+          var ele = document.getElementsByClassName("select-files-button")[0];
+
+          if (!!ele) {
+            ele.disabled = false;
+
+            _this3.setState({
+              updating: false
+            });
+          }
+        });
+      }
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchVideo(this.props.match.params.videoId);
+      var fileUpload = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        prefix: 'fas',
+        iconName: 'file-upload'
+      });
+      var fileUploadIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(fileUpload);
+      Array.from(fileUploadIcon.node).map(function (n) {
+        return document.getElementsByClassName('svg-file-upload')[0].appendChild(n);
+      });
+      var dropArea = document.getElementsByClassName('thumbnail-container')[0];
+      dropArea.addEventListener('dragenter', this.highlightThumbnail.bind(this), false);
+      dropArea.addEventListener('dragover', this.highlightThumbnail.bind(this), false);
+      dropArea.addEventListener('dragleave', this.unhighlightThumbnail.bind(this), false);
+      dropArea.addEventListener('drop', this.unhighlightThumbnail.bind(this), false);
+      dropArea.addEventListener('drop', this.handleDrop, false);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.props.clearErrors();
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          action = _this$props.action,
-          formType = _this$props.formType,
-          video = _this$props.video;
-      if (!video) return null;
-      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_video_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        action: action,
-        formType: formType,
-        video: video
-      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Hello");
     }
   }]);
 
   return UpdateVideoForm;
-}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (UpdateVideoForm);
+
+/***/ }),
+
+/***/ "./frontend/components/video/update_video_form_container.jsx":
+/*!*******************************************************************!*\
+  !*** ./frontend/components/video/update_video_form_container.jsx ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _update_video_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./update_video_form */ "./frontend/components/video/update_video_form.jsx");
+/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
+
+
+
+
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    video: state.entities.videos[ownProps.match.params.videoId],
-    formType: 'Update Video'
+    video: state.entities.videos[ownProps.match.params.videoId]
   };
 };
 
@@ -2500,7 +2639,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(UpdateVideoForm));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_update_video_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -2555,7 +2694,8 @@ function (_React$Component) {
       form: 'file',
       uploading: false,
       thumbnailUploaded: false,
-      setupDrop: true
+      setupDrop: true,
+      uploadable: false
     };
     _this.handleVideo = _this.handleVideo.bind(_assertThisInitialized(_this));
     _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
@@ -2576,6 +2716,13 @@ function (_React$Component) {
       this.setState({
         video: newvideostate
       });
+
+      if (e.currentTarget.value === '') {
+        document.getElementsByClassName("select-files-button")[0].disabled = true;
+      } else if (this.state.video.description !== '' && this.state.video.photoUrl) {
+        document.getElementsByClassName("select-files-button")[0].disabled = false;
+        document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+      }
     }
   }, {
     key: "updateDescription",
@@ -2585,6 +2732,13 @@ function (_React$Component) {
       this.setState({
         video: newvideostate
       });
+
+      if (e.currentTarget.value === '') {
+        document.getElementsByClassName("select-files-button")[0].disabled = true;
+      } else if (this.state.video.title !== '' && this.state.video.photoUrl) {
+        document.getElementsByClassName("select-files-button")[0].disabled = false;
+        document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+      }
     }
   }, {
     key: "handleInputPhotoFile",
@@ -2654,18 +2808,24 @@ function (_React$Component) {
 
       if (file) {
         reader.readAsDataURL(file);
-      } else {
-        newvideostate.photoFile = null;
-        newvideostate.photoUrl = '';
-        this.setState({
-          video: newvideostate
-        });
-      }
+      } // else {
+      //     newvideostate.photoFile = null;
+      //     newvideostate.photoUrl = '';
+      //     this.setState({ video: newvideostate });
+      //     document.getElementsByClassName("select-files-button")[0].disabled = true;
+      // }
+
 
       if (file) {
         this.setState({
-          thumbnailUploaded: true
+          thumbnailUploaded: true,
+          uploadable: true
         });
+
+        if (this.state.video.title !== '' && this.state.video.description !== '') {
+          document.getElementsByClassName("select-files-button")[0].disabled = false;
+          document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+        }
       }
     }
   }, {
@@ -2674,7 +2834,6 @@ function (_React$Component) {
       var _this4 = this;
 
       e.preventDefault();
-      e.persist();
 
       if (e.currentTarget.disabled === false) {
         e.currentTarget.disabled = true;
@@ -2737,7 +2896,7 @@ function (_React$Component) {
         dropArea.addEventListener('dragover', this.highlightThumbnail.bind(this), false);
         dropArea.addEventListener('dragleave', this.unhighlightThumbnail.bind(this), false);
         dropArea.addEventListener('drop', this.unhighlightThumbnail.bind(this), false);
-        dropArea.addEventListener('drop', this.handleDrop, false);
+        dropArea.addEventListener('drop', this.handleThumbnailDrop, false);
       }
     }
   }, {
@@ -2765,7 +2924,7 @@ function (_React$Component) {
       dropArea.addEventListener('dragover', this.highlight.bind(this), false);
       dropArea.addEventListener('dragleave', this.unhighlight.bind(this), false);
       dropArea.addEventListener('drop', this.unhighlight.bind(this), false);
-      dropArea.addEventListener('drop', this.handleThumbnailDrop, false);
+      dropArea.addEventListener('drop', this.handleDrop, false);
     }
   }, {
     key: "handleThumbnailDrop",
@@ -2798,12 +2957,18 @@ function (_React$Component) {
           this.setState({
             video: newvideostate
           });
+          document.getElementsByClassName("select-files-button")[0].disabled = true;
         }
 
         if (file) {
           this.setState({
             thumbnailUploaded: true
           });
+
+          if (this.state.video.title !== '' && this.state.video.description !== '') {
+            document.getElementsByClassName("select-files-button")[0].disabled = false;
+            document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+          }
         }
       }
     }
@@ -2852,7 +3017,7 @@ function (_React$Component) {
     value: function highlightThumbnail(e) {
       e.preventDefault();
       e.stopPropagation();
-      var container = document.getElementsByClassName('thumbnail-container')[0];
+      var container = document.getElementsByClassName('thumbnail-picker-container')[0];
       container.classList.add('highlight');
     }
   }, {
@@ -2860,8 +3025,8 @@ function (_React$Component) {
     value: function unhighlightThumbnail(e) {
       e.preventDefault();
       e.stopPropagation();
-      var container = document.getElementsByClassName('thumbnail-container')[0];
-      container.classList.add('highlight');
+      var container = document.getElementsByClassName('thumbnail-picker-container')[0];
+      container.classList.remove('highlight');
     }
   }, {
     key: "highlight",
@@ -2869,7 +3034,10 @@ function (_React$Component) {
       e.preventDefault();
       e.stopPropagation();
       var dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
-      dropCircle.classList.add("highlight");
+
+      if (dropCircle) {
+        dropCircle.classList.add("highlight");
+      }
     }
   }, {
     key: "unhighlight",
@@ -2877,7 +3045,10 @@ function (_React$Component) {
       e.preventDefault();
       e.stopPropagation();
       var dropCircle = document.getElementsByClassName('video-file-picker-circle')[0];
-      dropCircle.classList.remove("highlight");
+
+      if (dropCircle) {
+        dropCircle.classList.remove("highlight");
+      }
     }
   }, {
     key: "render",
@@ -2892,17 +3063,18 @@ function (_React$Component) {
         src: this.state.video.videoUrl,
         type: "video/mp4"
       })) : null;
-      var thumbnailPreview = !!this.state.video.photoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      var thumbnailPreview = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: this.handleInputPhotoFile,
         className: "thumbnail-picker-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      }, this.state.video.photoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "thumbnail",
         src: this.state.video.photoUrl,
         alt: "thumbnail"
-      })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        onClick: this.handleInputPhotoFile,
-        className: "thumbnail-picker-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "thumbnail hidden",
+        src: this.state.video.photoUrl,
+        alt: "thumbnail"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "svg-file-upload"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text-below-thumbnail-upload"
@@ -2992,7 +3164,7 @@ function (_React$Component) {
         className: "thumbnail-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thumbnail-string"
-      }, "Thumbnail"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Thumbnail (required)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thumbnail-instructions"
       }, "Select or upload a picture that shows what's in your video. A good thumbnail stands out and draws viewers' attention."), thumbnailPreview)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: this.handlePhoto,
@@ -3023,9 +3195,10 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "upload-button-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        disabled: true,
         onClick: this.handleUpload,
         className: "select-files-button more"
-      }, document.getElementsByClassName("select-files-button")[0].disabled ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.loading ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "upload-button-submit-value"
       }, "Uploading...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "upload-button-submit-value"
@@ -3300,18 +3473,23 @@ function (_React$Component) {
             className: "date"
           }, num, " hours ago");
         }
-      } else if (diffInSeconds / 60 / 60 / 24 < 30) {
+      } else if (diffInSeconds / 60 / 60 / 24 < 7) {
         num = Math.floor(diffInSeconds / 60 / 60 / 24);
         when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "date"
         }, num, " ", num === 1 ? "day" : "days", " ago");
-      } else if (diffInSeconds / 60 / 60 / 24 / 30 < 12) {
+      } else if (diffInSeconds / 60 / 60 / 24 / 7 < 4.286) {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7);
+        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "date"
+        }, num, " ", num === 1 ? "week" : "weeks", " ago");
+      } else if (diffInSeconds / 60 / 60 / 24 / 7 / 4.286 < 12) {
         num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30);
         when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "date"
         }, num, " ", num === 1 ? "month" : "months", " ago");
       } else {
-        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30 / 12);
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286 / 12);
         when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "date"
         }, num, " ", num === 1 ? "year" : "years", " ago");

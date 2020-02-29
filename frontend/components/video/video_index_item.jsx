@@ -57,18 +57,24 @@ class VideoIndexItem extends React.Component {
                     {num} hours ago
                 </span>
             }
-        } else if (diffInSeconds/60/60/24 < 30) {
+        } else if (diffInSeconds/60/60/24 < 7) {
             num = Math.floor(diffInSeconds / 60 / 60 / 24)
             when = <span className="date">
                 {num} {num === 1 ? ("day") : ("days")} ago
             </span>
-        } else if (diffInSeconds/60/60/24/30 < 12) {
+        } else if (diffInSeconds/60/60/24/7 < 4.286) {
+            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7)
+            when = <span className="date">
+                {num} {num === 1 ? ("week") : ("weeks")} ago
+            </span>
+        } 
+        else if (diffInSeconds/60/60/24/7/4.286 < 12) {
             num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30)
             when = <span className="date">
                 {num} {num === 1 ? ("month") : ("months")} ago
             </span>
         } else {
-            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 30 / 12);
+            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286 / 12);
             when = <span className="date">
                 {num} {num === 1 ? ("year") : ("years")} ago
             </span>
