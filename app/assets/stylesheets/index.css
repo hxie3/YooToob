@@ -89,16 +89,6 @@
     flex-direction: row;
 }
 
-/* moved to user_auth.css */
-/* .video-profile-pic {
-    margin-top: 12px;
-    margin-right: 12px;
-    cursor: pointer;
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 18px !important;
-} */
-
 .index-video-details {
     overflow-x: hidden;
     padding-right: 24px;
