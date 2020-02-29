@@ -1,7 +1,8 @@
 import React from 'react';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { Link, Redirect } from 'react-router-dom'
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { Link, Redirect } from 'react-router-dom';
+import CommentFormContainer from '../comment/create_comment_form_container';
 
 class ShowVideo extends React.Component {
     constructor(props) {
@@ -180,6 +181,25 @@ class ShowVideo extends React.Component {
                                             <span className='show-more-string'>Show more</span>
                                         </button>
                                     </div>
+                                </div>
+                            </div>
+                            <div className="comment-section">
+                                <div className="comment-section-header">
+                                    <div className="comment-section-header-title">
+                                        <h2 className="comment-section-count">
+
+                                        </h2>
+                                    </div>
+                                    {this.props.currentUser ? (
+                                        <CommentFormContainer />
+                                    ) : (
+                                        <div className="comment-form">
+                                            <img className="comment-profile-picture" src={window.defaultURL} alt="profile-picture" />
+                                            <div className="comment-form-body-container">
+                                                <textarea className="comment-form-body-textarea" placeholder="Add a public comment..."></textarea>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

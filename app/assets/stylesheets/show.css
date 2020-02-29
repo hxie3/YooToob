@@ -6,6 +6,7 @@
     flex-basis: 1e-9px;
     overflow-y: hidden;
     background-color: #ecf3f8;
+    height: 100vh;
 }
 
 .show-body-left {
@@ -122,7 +123,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 100%;
 }
 
 .menu-container {
