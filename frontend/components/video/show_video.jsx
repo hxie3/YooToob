@@ -21,17 +21,21 @@ class ShowVideo extends React.Component {
     }
 
     componentDidMount(){
-        this.props.fetchVideo(this.props.match.params.id);
-        this.props.fetchVideos();
+        if(this.props.video) {
+            this.props.fetchVideo(this.props.match.params.id);
+            this.props.fetchVideos();
+        }
     }
 
     incrementViews(e) {
         e.preventDefault();
-        if(this.state.incrementViews) {
-            let newvideo = Object.assign({}, this.props.video)
-            newvideo.views += 1;
-            this.props.incrementViews(newvideo);
-            this.setState({ incrementViews: false })
+        if (this.props.video) {
+            if(this.state.incrementViews) {
+                let newvideo = Object.assign({}, this.props.video)
+                newvideo.views += 1;
+                this.props.incrementViews(newvideo);
+                this.setState({ incrementViews: false })
+            }
         }
     }
 
@@ -43,15 +47,17 @@ class ShowVideo extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.match.params.id !== this.props.match.params.id) {
-            //Perform some operation here
-            this.props.fetchVideo(this.props.videoId)
-            this.setState({ videoId: this.props.videoId});
-            this.setState({ incrementViews: true })
-        }
-        document.getElementsByClassName("show-more")[0].classList.remove("hidden")
-        if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
-            document.getElementsByClassName("show-more")[0].classList.add("hidden")
+        if (this.props.video) {
+            if (prevProps.match.params.id !== this.props.match.params.id) {
+                //Perform some operation here
+                this.props.fetchVideo(this.props.videoId)
+                this.setState({ videoId: this.props.videoId});
+                this.setState({ incrementViews: true })
+            }
+            document.getElementsByClassName("show-more")[0].classList.remove("hidden")
+            if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
+                document.getElementsByClassName("show-more")[0].classList.add("hidden")
+            }
         }
     }
 

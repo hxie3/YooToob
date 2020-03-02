@@ -546,15 +546,7 @@ function (_React$Component) {
         className: "search-button"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "greeting"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["AuthRoute"], {
-        exact: true,
-        path: "/login",
-        component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__["AuthRoute"], {
-        exact: true,
-        path: "/signup",
-        component: _session_signup_form_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Route"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_greeting_greeting_container__WEBPACK_IMPORTED_MODULE_1__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Route"], {
         exact: true,
         path: "/",
         component: _video_video_index_container__WEBPACK_IMPORTED_MODULE_10__["default"]
@@ -2500,41 +2492,47 @@ function (_React$Component) {
   _createClass(ShowVideo, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchVideo(this.props.match.params.id);
-      this.props.fetchVideos();
+      if (this.props.video) {
+        this.props.fetchVideo(this.props.match.params.id);
+        this.props.fetchVideos();
+      }
     }
   }, {
     key: "incrementViews",
     value: function incrementViews(e) {
       e.preventDefault();
 
-      if (this.state.incrementViews) {
-        var newvideo = Object.assign({}, this.props.video);
-        newvideo.views += 1;
-        this.props.incrementViews(newvideo);
-        this.setState({
-          incrementViews: false
-        });
+      if (this.props.video) {
+        if (this.state.incrementViews) {
+          var newvideo = Object.assign({}, this.props.video);
+          newvideo.views += 1;
+          this.props.incrementViews(newvideo);
+          this.setState({
+            incrementViews: false
+          });
+        }
       }
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (prevProps.match.params.id !== this.props.match.params.id) {
-        //Perform some operation here
-        this.props.fetchVideo(this.props.videoId);
-        this.setState({
-          videoId: this.props.videoId
-        });
-        this.setState({
-          incrementViews: true
-        });
-      }
+      if (this.props.video) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+          //Perform some operation here
+          this.props.fetchVideo(this.props.videoId);
+          this.setState({
+            videoId: this.props.videoId
+          });
+          this.setState({
+            incrementViews: true
+          });
+        }
 
-      document.getElementsByClassName("show-more")[0].classList.remove("hidden");
+        document.getElementsByClassName("show-more")[0].classList.remove("hidden");
 
-      if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
-        document.getElementsByClassName("show-more")[0].classList.add("hidden");
+        if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
+          document.getElementsByClassName("show-more")[0].classList.add("hidden");
+        }
       }
     }
   }, {
