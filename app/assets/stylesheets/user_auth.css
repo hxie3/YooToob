@@ -45,6 +45,7 @@
 }
 
 .login-link {
+    cursor: pointer;
     font-weight: bold;
     color: blue;
 }
@@ -188,6 +189,7 @@
 }
 
 .login {
+    cursor: pointer;
     background-color: transparent;
     border: 1px solid #065fd4;
     box-sizing: border-box;
