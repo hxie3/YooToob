@@ -39,10 +39,11 @@
 }
 
 .comment-form-body-container {
-    cursor: text;
+    cursor: default;
     padding-bottom: 4px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     flex: 1;
+    margin-bottom: 8px;
 }
 
 .comment-form-body-textarea {
@@ -53,5 +54,58 @@
     font-weight: 400;
     background: transparent;
     width: 100%;
+    box-sizing: border-box;
+    height: 42px;
+    max-height: initial;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    font-family: 'Roboto', 'Noto', 'sans-serif';
+}
+
+.column {
+    width: auto;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
     height: 100%;
+}
+
+.comment-buttons {
+    display: flex;
+    justify-content: flex-end;   
+}
+
+.comment-cancel {
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 10px 16px;
+    margin-right: 8px;
+}
+
+.comment-cancel-text {
+    font-family: 'Roboto', 'Arial', 'sans-serif';
+    font-size: 14px;
+    color: #606060;
+}
+
+.comment-submit-text {
+    font-family: 'Roboto', 'Arial', 'sans-serif';
+    font-size: 14px;
+    color: #ffffff;
+    padding: 10px 16px;
+}
+
+.comment-submit {
+    background-color: #065fd4;
+    text-align: center;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+.comment-submit:disabled {
+    background-color: gray;
+    cursor: default;
 }

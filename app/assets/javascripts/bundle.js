@@ -631,6 +631,10 @@ function (_React$Component) {
       comment: _this.props.comment
     };
     _this.updateBody = _this.updateBody.bind(_assertThisInitialized(_this));
+    _this.focusBody = _this.focusBody.bind(_assertThisInitialized(_this));
+    _this.unfocusBody = _this.unfocusBody.bind(_assertThisInitialized(_this));
+    _this.handleCancel = _this.handleCancel.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -642,6 +646,63 @@ function (_React$Component) {
       this.setState({
         comment: newCommentState
       });
+      e.currentTarget.style.height = 'auto';
+      e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
+      var submit = document.getElementsByClassName("comment-submit")[0];
+
+      if (e.currentTarget.value === '') {
+        submit.disabled = true;
+      } else {
+        submit.disabled = false;
+        submit.addEventListener("click", this.handleSubmit, false);
+      }
+    }
+  }, {
+    key: "handleCancel",
+    value: function handleCancel(e) {
+      e.preventDefault();
+      var newCommentState = Object.assign({}, this.state.comment);
+      newCommentState.body = '';
+      this.setState({
+        comment: newCommentState
+      });
+      document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
+      document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+    }
+  }, {
+    key: "focusBody",
+    value: function focusBody(e) {
+      e.preventDefault();
+
+      if (e.currentTarget.value === '') {
+        document.getElementsByClassName("comment-submit")[0].disabled = true;
+      }
+
+      document.getElementsByClassName("comment-form-body-container")[0].style.borderBottom = "1px solid black";
+      document.getElementsByClassName('comment-buttons')[0].classList.remove('hidden');
+    }
+  }, {
+    key: "unfocusBody",
+    value: function unfocusBody(e) {
+      e.preventDefault();
+      document.getElementsByClassName("comment-form-body-container")[0].style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var submitCommentState = Object.assign({}, this.state.comment);
+      delete submitCommentState.profilePicture;
+      delete submitCommentState.username;
+      this.props.processForm(submitCommentState);
+      var newCommentState = Object.assign({}, this.state.comment);
+      newCommentState.body = '';
+      this.setState({
+        comment: newCommentState
+      });
+      document.getElementsByClassName("comment-form-body-container")[0].style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
+      document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
+      document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
     }
   }, {
     key: "render",
@@ -653,13 +714,30 @@ function (_React$Component) {
         src: this.props.comment.profilePicture,
         alt: "profile-picture"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-form-body-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        onBlur: this.unfocusBody,
+        onFocus: this.focusBody,
         className: "comment-form-body-textarea",
         onChange: this.updateBody,
         value: this.state.comment.body,
         placeholder: "Add a public comment..."
-      })));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-buttons hidden"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleCancel,
+        className: "comment-cancel"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "comment-cancel-text"
+      }, "CANCEL")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        disabled: true,
+        onSubmit: this.handleSubmit,
+        className: "comment-submit"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "comment-submit-text"
+      }, "COMMENT")))));
     }
   }]);
 
@@ -693,12 +771,11 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     comment: {
       body: '',
       user_id: state.session.id,
-      video_id: ownProps.match.params.videoId,
+      video_id: ownProps.match.params.id,
       profilePicture: state.entities.users[state.session.id].profilePicture,
       username: state.entities.users[state.session.id].username
     },
-    errors: state.errors.comments,
-    formType: 'Create Video'
+    errors: state.errors.comments
   };
 };
 
@@ -2366,6 +2443,7 @@ function (_React$Component) {
     };
     _this.handleShow = _this.handleShow.bind(_assertThisInitialized(_this));
     _this.incrementViews = _this.incrementViews.bind(_assertThisInitialized(_this));
+    _this.redirectLogin = _this.redirectLogin.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2408,6 +2486,12 @@ function (_React$Component) {
       if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
         document.getElementsByClassName("show-more")[0].classList.add("hidden");
       }
+    }
+  }, {
+    key: "redirectLogin",
+    value: function redirectLogin(e) {
+      e.preventDefault();
+      this.props.history.push("/login");
     }
   }, {
     key: "handleShow",
@@ -2558,6 +2642,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-form-body-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        onClick: this.redirectLogin,
         className: "comment-form-body-textarea",
         placeholder: "Add a public comment..."
       })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3861,6 +3946,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -3876,7 +3962,7 @@ __webpack_require__.r(__webpack_exports__);
       return [];
     // Untested CLEAR ERRORS 
 
-    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_ERRORS"]:
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["CLEAR_ERRORS"]:
       return [];
 
     default:
@@ -3962,7 +4048,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_errors_reducer */ "./frontend/reducers/session_errors_reducer.js");
 /* harmony import */ var _video_errors_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./video_errors_reducer */ "./frontend/reducers/video_errors_reducer.js");
-/* harmony import */ var _comment_errors_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./comment_errors_reducer */ "./frontend/reducers/comment_errors_reducer.js");
+/* harmony import */ var _comment_errors_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./comment_errors_reducer */ "./frontend/reducers/comment_errors_reducer.js");
 
 
 
@@ -3970,7 +4056,7 @@ __webpack_require__.r(__webpack_exports__);
 var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   videos: _video_errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  comments: _comment_errors_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  comments: _comment_errors_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (errorsReducer);
 
@@ -4405,9 +4491,7 @@ var Auth = function Auth(_ref) {
     path: path,
     exact: exact,
     render: function render(props) {
-      return !loggedIn ? react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Component, props) : react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Redirect"], {
-        to: "/"
-      });
+      return !loggedIn ? react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Component, props) : history.back();
     }
   });
 };

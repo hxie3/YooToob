@@ -1,5 +1,5 @@
 import { RECEIVE_COMMENT_ERRORS, CLEAR_COMMENT_ERRORS } from '../actions/comment_actions';
-import { CLEAR_ERRORS } from '../actions/comment_actions';
+import { CLEAR_ERRORS } from '../actions/session_actions'
 
 export default (state = [], action) => {
     Object.freeze(state);

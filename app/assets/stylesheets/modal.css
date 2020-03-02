@@ -21,7 +21,7 @@
   left: 0%;
   transition: ease-in;
   background-color: white;
-  height: 100vh;
+  height: 100%;
 }
 
 /* Video Form Modal */
@@ -356,7 +356,7 @@
   padding-bottom: 1px;
   margin-bottom: 0px;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   resize: none;
   border: none;
   outline: none;
