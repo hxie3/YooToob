@@ -6,7 +6,7 @@
 .sidenav {
     display: inline-block;
     width: 90px;
-    height: 100vh;
+    height: 100%;
     position: fixed;
 }
 
@@ -35,7 +35,7 @@
 .sidenav2, .sidenav3 {
     display: inline-block;
     width: 192px;
-    height: 100vh;
+    height: 100%;
 }
 
 .sidenav2 {

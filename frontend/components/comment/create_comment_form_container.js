@@ -7,12 +7,11 @@ const mapStateToProps = (state, ownProps) => ({
     comment: {
         body: '',
         user_id: state.session.id,
-        video_id: ownProps.match.params.videoId,
+        video_id: ownProps.match.params.id,
         profilePicture: state.entities.users[state.session.id].profilePicture,
         username: state.entities.users[state.session.id].username
     },
     errors: state.errors.comments,
-    formType: 'Create Video'
 })
 
 const mapDispatchToProps = dispatch => ({

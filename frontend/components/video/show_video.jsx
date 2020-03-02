@@ -17,11 +17,12 @@ class ShowVideo extends React.Component {
 
         this.handleShow = this.handleShow.bind(this);
         this.incrementViews = this.incrementViews.bind(this);
+        this.redirectLogin = this.redirectLogin.bind(this);
     }
 
     componentDidMount(){
-        this.props.fetchVideo(this.props.match.params.id)
-        this.props.fetchVideos()
+        this.props.fetchVideo(this.props.match.params.id);
+        this.props.fetchVideos();
     }
 
     incrementViews(e) {
@@ -52,6 +53,11 @@ class ShowVideo extends React.Component {
         if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
             document.getElementsByClassName("show-more")[0].classList.add("hidden")
         }
+    }
+
+    redirectLogin(e){
+        e.preventDefault();
+        this.props.history.push("/login")
     }
 
     handleShow(e) {
@@ -196,7 +202,7 @@ class ShowVideo extends React.Component {
                                         <div className="comment-form">
                                             <img className="comment-profile-picture" src={window.defaultURL} alt="profile-picture" />
                                             <div className="comment-form-body-container">
-                                                <textarea className="comment-form-body-textarea" placeholder="Add a public comment..."></textarea>
+                                                <textarea onClick={this.redirectLogin} className="comment-form-body-textarea" placeholder="Add a public comment..."></textarea>
                                             </div>
                                         </div>
                                     )}
