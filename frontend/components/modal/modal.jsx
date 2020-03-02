@@ -1,6 +1,8 @@
 import React from 'react';
 import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
+import LoginFormContainer from '../session/login_form_container';
+import SignupFormContainer from '../session/signup_form_container';
 import CreateVideoFormContainer from '../video/create_video_form_container';
 import ProfilePictureContainer from '../profile/profile_picture_container';
 import UpdateVideoFormContainer from '../video/update_video_form_container';
@@ -12,6 +14,12 @@ function Modal({ modal, closeModal }) {
     }
     let component;
     switch (modal) {
+        case 'signup':
+            component = <SignupFormContainer />;
+            break;
+        case 'login':
+            component = <LoginFormContainer />;
+            break;
         case 'create-video':
             component = <CreateVideoFormContainer />;
             return (

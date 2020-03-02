@@ -57,7 +57,7 @@ class ShowVideo extends React.Component {
 
     redirectLogin(e){
         e.preventDefault();
-        this.props.history.push("/login")
+        this.props.openModal("login");
     }
 
     handleShow(e) {

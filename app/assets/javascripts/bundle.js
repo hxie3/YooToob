@@ -581,10 +581,10 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/greeting/greeting.jsx":
-/*!***************************************************!*\
-  !*** ./frontend/components/greeting/greeting.jsx ***!
-  \***************************************************/
+/***/ "./frontend/components/comment/comment_form.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/comment/comment_form.jsx ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -594,8 +594,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -613,6 +611,222 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var CommentForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(CommentForm, _React$Component);
+
+  function CommentForm(props) {
+    var _this;
+
+    _classCallCheck(this, CommentForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentForm).call(this, props));
+    _this.state = {
+      comment: _this.props.comment
+    };
+    _this.updateBody = _this.updateBody.bind(_assertThisInitialized(_this));
+    _this.focusBody = _this.focusBody.bind(_assertThisInitialized(_this));
+    _this.unfocusBody = _this.unfocusBody.bind(_assertThisInitialized(_this));
+    _this.handleCancel = _this.handleCancel.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(CommentForm, [{
+    key: "updateBody",
+    value: function updateBody(e) {
+      var newCommentState = Object.assign({}, this.state.comment);
+      newCommentState.body = e.currentTarget.value;
+      this.setState({
+        comment: newCommentState
+      });
+      e.currentTarget.style.height = 'auto';
+      e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
+      var submit = document.getElementsByClassName("comment-submit")[0];
+
+      if (e.currentTarget.value === '') {
+        submit.disabled = true;
+      } else {
+        submit.disabled = false;
+        submit.addEventListener("click", this.handleSubmit, false);
+      }
+    }
+  }, {
+    key: "handleCancel",
+    value: function handleCancel(e) {
+      e.preventDefault();
+      var newCommentState = Object.assign({}, this.state.comment);
+      newCommentState.body = '';
+      this.setState({
+        comment: newCommentState
+      });
+      document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
+      document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+    }
+  }, {
+    key: "focusBody",
+    value: function focusBody(e) {
+      e.preventDefault();
+
+      if (e.currentTarget.value === '') {
+        document.getElementsByClassName("comment-submit")[0].disabled = true;
+      }
+
+      document.getElementsByClassName("comment-form-body-container")[0].style.borderBottom = "1px solid black";
+      document.getElementsByClassName('comment-buttons')[0].classList.remove('hidden');
+    }
+  }, {
+    key: "unfocusBody",
+    value: function unfocusBody(e) {
+      e.preventDefault();
+      document.getElementsByClassName("comment-form-body-container")[0].style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var submitCommentState = Object.assign({}, this.state.comment);
+      delete submitCommentState.profilePicture;
+      delete submitCommentState.username;
+      this.props.processForm(submitCommentState);
+      var newCommentState = Object.assign({}, this.state.comment);
+      newCommentState.body = '';
+      this.setState({
+        comment: newCommentState
+      });
+      document.getElementsByClassName("comment-form-body-container")[0].style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
+      document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
+      document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "comment-profile-picture",
+        src: this.props.comment.profilePicture,
+        alt: "profile-picture"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-form-body-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        onBlur: this.unfocusBody,
+        onFocus: this.focusBody,
+        className: "comment-form-body-textarea",
+        onChange: this.updateBody,
+        value: this.state.comment.body,
+        placeholder: "Add a public comment..."
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-buttons hidden"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleCancel,
+        className: "comment-cancel"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "comment-cancel-text"
+      }, "CANCEL")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        disabled: true,
+        onSubmit: this.handleSubmit,
+        className: "comment-submit"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "comment-submit-text"
+      }, "COMMENT")))));
+    }
+  }]);
+
+  return CommentForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (CommentForm);
+
+/***/ }),
+
+/***/ "./frontend/components/comment/create_comment_form_container.js":
+/*!**********************************************************************!*\
+  !*** ./frontend/components/comment/create_comment_form_container.js ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _comment_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment_form */ "./frontend/components/comment/comment_form.jsx");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    comment: {
+      body: '',
+      user_id: state.session.id,
+      video_id: ownProps.match.params.id,
+      profilePicture: state.entities.users[state.session.id].profilePicture,
+      username: state.entities.users[state.session.id].username
+    },
+    errors: state.errors.comments
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    processForm: function processForm(comment) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__["createComment"])(comment));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_comment_form__WEBPACK_IMPORTED_MODULE_1__["default"])));
+
+/***/ }),
+
+/***/ "./frontend/components/greeting/greeting.jsx":
+/*!***************************************************!*\
+  !*** ./frontend/components/greeting/greeting.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -653,22 +867,22 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["fas"], _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__["fab"]);
-      var videoIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+      _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["fas"], _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_4__["fab"]);
+      var videoIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["findIconDefinition"])({
         prefix: 'fas',
         iconName: 'video'
       });
-      var videoIconIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(videoIcon);
+      var videoIconIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["icon"])(videoIcon);
       Array.from(videoIconIcon.node).map(function (n) {
         return document.getElementsByClassName('upload')[0].appendChild(n);
       });
 
       if (document.getElementsByClassName('sign-out-dropdown').length === 1) {
-        var exit = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        var exit = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["findIconDefinition"])({
           prefix: 'fas',
           iconName: 'sign-out-alt'
         });
-        var exitIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(exit);
+        var exitIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["icon"])(exit);
         Array.from(exitIcon.node).map(function (n) {
           return document.getElementsByClassName('sign-out-dropdown')[0].appendChild(n);
         });
@@ -684,12 +898,12 @@ function (_React$Component) {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       if (document.getElementsByClassName('sign-out-dropdown').length === 1) {
-        _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["fas"]);
-        var exit = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["findIconDefinition"])({
+        _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["fas"]);
+        var exit = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["findIconDefinition"])({
           prefix: 'fas',
           iconName: 'sign-out-alt'
         });
-        var exitIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["icon"])(exit);
+        var exitIcon = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["icon"])(exit);
         Array.from(exitIcon.node).map(function (n) {
           return document.getElementsByClassName('sign-out-dropdown')[0].appendChild(n);
         });
@@ -721,6 +935,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "greeting-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -751,9 +967,11 @@ function (_React$Component) {
         className: "sign-out-dropdown"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "sign-out-dropdown-text"
-      }, "Sign Out")))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+      }, "Sign Out")))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "login",
-        to: "/login"
+        onClick: function onClick() {
+          return _this2.props.openModal('login');
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "signin-pic",
         src: window.defaultURL,
@@ -767,7 +985,7 @@ function (_React$Component) {
   return Greeting;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Greeting);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Greeting));
 
 /***/ }),
 
@@ -969,10 +1187,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _video_create_video_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../video/create_video_form_container */ "./frontend/components/video/create_video_form_container.js");
-/* harmony import */ var _profile_profile_picture_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../profile/profile_picture_container */ "./frontend/components/profile/profile_picture_container.js");
-/* harmony import */ var _video_update_video_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../video/update_video_form_container */ "./frontend/components/video/update_video_form_container.jsx");
-/* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
+/* harmony import */ var _session_login_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../session/login_form_container */ "./frontend/components/session/login_form_container.jsx");
+/* harmony import */ var _session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../session/signup_form_container */ "./frontend/components/session/signup_form_container.jsx");
+/* harmony import */ var _video_create_video_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../video/create_video_form_container */ "./frontend/components/video/create_video_form_container.js");
+/* harmony import */ var _profile_profile_picture_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../profile/profile_picture_container */ "./frontend/components/profile/profile_picture_container.js");
+/* harmony import */ var _video_update_video_form_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../video/update_video_form_container */ "./frontend/components/video/update_video_form_container.jsx");
+/* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
+
+
 
 
 
@@ -992,8 +1214,16 @@ function Modal(_ref) {
   var component;
 
   switch (modal) {
+    case 'signup':
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      break;
+
+    case 'login':
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+      break;
+
     case 'create-video':
-      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_create_video_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_create_video_form_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1004,7 +1234,7 @@ function Modal(_ref) {
       }, component));
 
     case 'profile-picture':
-      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_profile_profile_picture_container__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_profile_profile_picture_container__WEBPACK_IMPORTED_MODULE_6__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1015,11 +1245,11 @@ function Modal(_ref) {
       }, component));
 
     case 'update-video':
-      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_update_video_form_container__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_video_update_video_form_container__WEBPACK_IMPORTED_MODULE_7__["default"], null);
       break;
 
     case 'sidenav':
-      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+      component = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_8__["default"], null);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background",
         onClick: closeModal
@@ -1489,6 +1719,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session/session_form.jsx");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 
 
 
@@ -1499,9 +1731,11 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     errors: state.errors.session,
     formType: 'login',
-    navLink: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    navLink: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
       className: "create-account",
-      to: "/signup"
+      onClick: function onClick() {
+        return Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["openModal"])('signup');
+      }
     }, "Create Account")
   };
 };
@@ -1516,6 +1750,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["closeModal"])());
+    },
+    openModal: function openModal(str) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["openModal"])(str));
     }
   };
 };
@@ -1579,13 +1819,15 @@ function (_React$Component) {
         username: '',
         password: ''
       },
-      formType: _this.props.formType
+      formType: _this.props.formType,
+      formType2: _this.props.formType
     };
     _this.handleNewSubmit = _this.handleNewSubmit.bind(_assertThisInitialized(_this));
     _this.handleUsernameChange = _this.handleUsernameChange.bind(_assertThisInitialized(_this));
     _this.handlePasswordChange = _this.handlePasswordChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleShake = _this.handleShake.bind(_assertThisInitialized(_this));
+    _this.handleBack = _this.handleBack.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1598,7 +1840,7 @@ function (_React$Component) {
       var user = Object.assign({}, this.state.user);
       this.props.processForm(user).then(function () {
         if (_this2.props.errors.length === 0) {
-          return;
+          _this2.props.closeModal();
         }
       }, function () {
         _this2.handleShake(e);
@@ -1628,7 +1870,7 @@ function (_React$Component) {
         var user = Object.assign({}, this.state.user);
         this.props.newProcessForm(user).then(function () {
           _this3.setState({
-            formType: "password"
+            formType2: "password"
           });
         }, function () {
           _this3.handleShake(e);
@@ -1646,6 +1888,7 @@ function (_React$Component) {
           username: 'DemoUser123',
           password: 'DemoUser123'
         });
+        this.props.closeModal();
       }
     }
   }, {
@@ -1672,7 +1915,10 @@ function (_React$Component) {
     key: "handleBack",
     value: function handleBack(e) {
       e.preventDefault();
-      history.back();
+      this.setState({
+        formType2: 'nothing'
+      });
+      this.props.clearErrors();
     }
   }, {
     key: "componentDidMount",
@@ -1688,9 +1934,11 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       var form;
 
-      if (this.state.formType === 'password') {
+      if (this.state.formType2 === 'password') {
         form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "session-form"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1746,7 +1994,12 @@ function (_React$Component) {
           onClick: this.handleSubmit
         }, "Demo Login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "create-account-or-next"
-        }, this.props.navLink, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          className: "login-link",
+          onClick: function onClick() {
+            return _this4.props.openModal(_this4.props.formType === 'signup' ? 'login' : 'signup');
+          }
+        }, this.props.formType === 'signup' ? 'Sign In' : 'Create Account'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "next",
           onClick: this.handleSubmit
         }, "Next")))));
@@ -1778,6 +2031,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session/session_form.jsx");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 
 
 
@@ -1788,9 +2043,11 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     errors: state.errors.session,
     formType: 'signup',
-    navLink: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    navLink: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
       className: "login-link",
-      to: "/login"
+      onClick: function onClick() {
+        return Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["openModal"])('login');
+      }
     }, "Sign in")
   };
 };
@@ -1805,6 +2062,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
+    },
+    closeModal: function closeModal() {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["closeModal"])());
+    },
+    openModal: function openModal(str) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["openModal"])(str));
     }
   };
 };
@@ -2177,9 +2440,323 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   !*** ./frontend/components/video/show_video.jsx ***!
   \**************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/jugem/Desktop/YooToob/frontend/components/video/show_video.jsx: Unexpected token (20:1)\n\n\u001b[0m \u001b[90m 18 | \u001b[39m        \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mhandleShow \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mhandleShow\u001b[33m.\u001b[39mbind(\u001b[36mthis\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 19 | \u001b[39m        \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mincrementViews \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mincrementViews\u001b[33m.\u001b[39mbind(\u001b[36mthis\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 21 | \u001b[39m        \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mredirectLogin \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mredirectLogin\u001b[33m.\u001b[39mbind(\u001b[36mthis\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 22 | \u001b[39m    }\u001b[0m\n\u001b[0m \u001b[90m 23 | \u001b[39m\u001b[0m\n    at Object.raise (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:7012:17)\n    at Object.unexpected (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:8405:16)\n    at Object.jsxParseIdentifier (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:3900:12)\n    at Object.jsxParseNamespacedName (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:3910:23)\n    at Object.jsxParseElementName (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:3921:21)\n    at Object.jsxParseOpeningElementAt (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4007:22)\n    at Object.jsxParseElementAt (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4040:33)\n    at Object.jsxParseElement (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4114:17)\n    at Object.parseExprAtom (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4121:19)\n    at Object.parseExprSubscripts (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9237:23)\n    at Object.parseMaybeUnary (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9217:21)\n    at Object.parseExprOps (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9083:23)\n    at Object.parseMaybeConditional (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9056:23)\n    at Object.parseMaybeAssign (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9015:21)\n    at Object.parseExpression (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:8965:23)\n    at Object.parseStatementContent (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10819:23)\n    at Object.parseStatement (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10690:17)\n    at Object.parseBlockOrModuleBlockBody (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11266:25)\n    at Object.parseBlockBody (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11253:10)\n    at Object.parseBlock (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11237:10)\n    at Object.parseFunctionBody (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10256:24)\n    at Object.parseFunctionBodyAndFinish (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10226:10)\n    at Object.parseMethod (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10180:10)\n    at Object.pushClassMethod (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11671:30)\n    at Object.parseClassMemberWithIsStatic (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11590:12)\n    at Object.parseClassMember (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11532:10)\n    at withTopicForbiddingContext (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11487:14)\n    at Object.withTopicForbiddingContext (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10565:14)\n    at Object.parseClassBody (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11464:10)\n    at Object.parseClass (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11438:22)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _comment_create_comment_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../comment/create_comment_form_container */ "./frontend/components/comment/create_comment_form_container.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var ShowVideo =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ShowVideo, _React$Component);
+
+  function ShowVideo(props) {
+    var _this;
+
+    _classCallCheck(this, ShowVideo);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowVideo).call(this, props));
+    _this.state = {
+      video: _this.props.video,
+      videoId: _this.props.videoId,
+      videos: _this.props.videos,
+      incrementViews: true
+    };
+    _this.handleShow = _this.handleShow.bind(_assertThisInitialized(_this));
+    _this.incrementViews = _this.incrementViews.bind(_assertThisInitialized(_this));
+    _this.redirectLogin = _this.redirectLogin.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ShowVideo, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchVideo(this.props.match.params.id);
+      this.props.fetchVideos();
+    }
+  }, {
+    key: "incrementViews",
+    value: function incrementViews(e) {
+      e.preventDefault();
+
+      if (this.state.incrementViews) {
+        var newvideo = Object.assign({}, this.props.video);
+        newvideo.views += 1;
+        this.props.incrementViews(newvideo);
+        this.setState({
+          incrementViews: false
+        });
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.match.params.id !== this.props.match.params.id) {
+        //Perform some operation here
+        this.props.fetchVideo(this.props.videoId);
+        this.setState({
+          videoId: this.props.videoId
+        });
+        this.setState({
+          incrementViews: true
+        });
+      }
+
+      document.getElementsByClassName("show-more")[0].classList.remove("hidden");
+
+      if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
+        document.getElementsByClassName("show-more")[0].classList.add("hidden");
+      }
+    }
+  }, {
+    key: "redirectLogin",
+    value: function redirectLogin(e) {
+      e.preventDefault();
+      this.props.openModal("login");
+    }
+  }, {
+    key: "handleShow",
+    value: function handleShow(e) {
+      e.preventDefault();
+      var collapserContent = document.getElementsByClassName("collapser-content2")[0];
+      collapserContent.classList.toggle("collapser-content");
+      document.getElementsByClassName("show-more-string")[0].innerHTML === "Show less" ? document.getElementsByClassName("show-more-string")[0].innerHTML = "Show more" : document.getElementsByClassName("show-more-string")[0].innerHTML = "Show less";
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var months = {
+        1: "Jan",
+        2: "Feb",
+        3: "Mar",
+        4: "Apr",
+        5: "May",
+        6: "Jun",
+        7: "Jul",
+        8: "Aug",
+        9: "Sep",
+        10: "Oct",
+        11: "Nov",
+        12: "Dec"
+      };
+      var _this$props = this.props,
+          video = _this$props.video,
+          videos = _this$props.videos,
+          videoId = _this$props.videoId;
+      if (!video) return null;
+      if (!videos) return null;
+      if (!videoId) return null;
+      var date = new Date(this.props.video.created_at);
+      var month = months[date.getMonth() + 1];
+      var day = date.getDate();
+      var year = date.getFullYear();
+      var views = this.props.video.views;
+      var viewsRender;
+
+      if (views === 0) {
+        viewsRender = "No views";
+      } else if (views === 1) {
+        viewsRender = "".concat(views, " view");
+      } else {
+        viewsRender = "".concat(views, " views");
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "something"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "columns"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "primary",
+        className: "show-body-left"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "player-outer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "player-container-outer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "player-container-inner"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "player-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        poster: this.state.video.thumbnail,
+        key: this.state.video.video,
+        onPlay: this.incrementViews,
+        className: "player",
+        controls: true,
+        autoPlay: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: this.state.video.video
+      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "info-contents"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "title-show"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "title-show-content"
+      }, this.props.video.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "below-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "info-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "count"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "count-value"
+      }, viewsRender), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "below-title-date"
+      }, month, " ", day, ", ", year))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "bottom-border-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "top-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "top-row-renderer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "owner-icon"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "icon-margin",
+        src: this.props.video.profilePicture,
+        alt: "profile-pic"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "upload-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uploader-name"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "no-long-names"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "only-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "display-uploader"
+      }, this.props.video.username))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collapser"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collapser-content collapser-content2"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "collapser-description"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "description-format"
+      }, this.props.video.description))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleShow,
+        className: "show-more"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "show-more-string"
+      }, "Show more"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-section"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-section-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-section-header-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        className: "comment-section-count"
+      })), this.props.currentUser ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_create_comment_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "comment-profile-picture",
+        src: window.defaultURL,
+        alt: "profile-picture"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-form-body-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        onClick: this.redirectLogin,
+        className: "comment-form-body-textarea",
+        placeholder: "Add a public comment..."
+      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "secondary",
+        className: "show-body-right"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "items"
+      }, Object.values(videos).map(function (videoItem, index) {
+        if (videoItem.id === parseInt(_this2.state.videoId)) return;
+        var viewsVideoItem = videoItem.views;
+        var viewsVideoItemRender;
+
+        if (viewsVideoItem === 0) {
+          viewsVideoItemRender = "No views";
+        } else if (viewsVideoItem === 1) {
+          viewsVideoItemRender = "".concat(viewsVideoItem, " view");
+        } else {
+          viewsVideoItemRender = "".concat(viewsVideoItem, " views");
+        }
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: index,
+          className: "index-show-list"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "dismissable"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "video-item-show"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+          className: "thumbnail-show",
+          to: "/watch/".concat(videoItem.id)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "after-thumbnail"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "index-thumbnail",
+          src: videoItem.thumbnail,
+          alt: "thumbnail"
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "video-item-details-show"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+          to: "/watch/".concat(videoItem.id)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-title-string"
+        }, videoItem.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-username-string"
+        }, videoItem.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-username-string"
+        }, viewsVideoItemRender)))));
+      }))))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      if (nextProps.video !== prevState.video) {
+        return {
+          video: nextProps.video
+        };
+      } else return null;
+    }
+  }]);
+
+  return ShowVideo;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (ShowVideo);
 
 /***/ }),
 
@@ -2196,6 +2773,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _show_video__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_video */ "./frontend/components/video/show_video.jsx");
 /* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 
 
 
@@ -2221,6 +2800,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     incrementViews: function incrementViews(video) {
       return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["updateVideo"])(video));
+    },
+    openModal: function openModal(str) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__["openModal"])(str));
     }
   };
 };
@@ -3414,9 +3996,34 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   !*** ./frontend/reducers/comment_errors_reducer.js ***!
   \*****************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/jugem/Desktop/YooToob/frontend/reducers/comment_errors_reducer.js: Unexpected token (2:1)\n\n\u001b[0m \u001b[90m 1 | \u001b[39m\u001b[36mimport\u001b[39m { \u001b[33mRECEIVE_COMMENT_ERRORS\u001b[39m\u001b[33m,\u001b[39m \u001b[33mCLEAR_COMMENT_ERRORS\u001b[39m } from \u001b[32m'../actions/comment_actions'\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 2 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m   | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 3 | \u001b[39m\u001b[36mimport\u001b[39m { \u001b[33mCLEAR_ERRORS\u001b[39m } from \u001b[32m'../actions/session_actions'\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 4 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 5 | \u001b[39m\u001b[36mimport\u001b[39m { \u001b[33mCLEAR_ERRORS\u001b[39m } from \u001b[32m'../actions/comment_actions'\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n    at Object.raise (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:7012:17)\n    at Object.unexpected (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:8405:16)\n    at Object.jsxParseIdentifier (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:3900:12)\n    at Object.jsxParseNamespacedName (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:3910:23)\n    at Object.jsxParseElementName (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:3921:21)\n    at Object.jsxParseOpeningElementAt (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4007:22)\n    at Object.jsxParseElementAt (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4040:33)\n    at Object.jsxParseElement (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4114:17)\n    at Object.parseExprAtom (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:4121:19)\n    at Object.parseExprSubscripts (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9237:23)\n    at Object.parseMaybeUnary (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9217:21)\n    at Object.parseExprOps (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9083:23)\n    at Object.parseMaybeConditional (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9056:23)\n    at Object.parseMaybeAssign (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:9015:21)\n    at Object.parseExpression (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:8965:23)\n    at Object.parseStatementContent (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10819:23)\n    at Object.parseStatement (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10690:17)\n    at Object.parseBlockOrModuleBlockBody (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11266:25)\n    at Object.parseBlockBody (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:11253:10)\n    at Object.parseTopLevel (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:10621:10)\n    at Object.parse (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:12131:10)\n    at parse (/home/jugem/Desktop/YooToob/node_modules/@babel/parser/lib/index.js:12182:38)\n    at parser (/home/jugem/Desktop/YooToob/node_modules/@babel/core/lib/transformation/normalize-file.js:187:34)\n    at normalizeFile (/home/jugem/Desktop/YooToob/node_modules/@babel/core/lib/transformation/normalize-file.js:113:11)\n    at runSync (/home/jugem/Desktop/YooToob/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/home/jugem/Desktop/YooToob/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/home/jugem/Desktop/YooToob/node_modules/@babel/core/lib/transform.js:34:34)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_COMMENT_ERRORS"]:
+      return action.errors;
+
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__["CLEAR_COMMENT_ERRORS"]:
+      return [];
+    // Untested CLEAR ERRORS 
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["CLEAR_ERRORS"]:
+      return [];
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 

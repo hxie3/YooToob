@@ -9,13 +9,15 @@ class SessionForm extends React.Component {
                 username: '',
                 password: ''
             },
-            formType: this.props.formType
+            formType: this.props.formType,
+            formType2: this.props.formType
         };
         this.handleNewSubmit = this.handleNewSubmit.bind(this)
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShake = this.handleShake.bind(this);
+        this.handleBack = this.handleBack.bind(this);
     }
 
     handleNewSubmit(e) {
@@ -24,7 +26,7 @@ class SessionForm extends React.Component {
         this.props.processForm(user)
             .then(() => {
                 if (this.props.errors.length === 0) {
-                    return
+                    this.props.closeModal();
                 }
             }, () => {
                 this.handleShake(e)
@@ -47,7 +49,7 @@ class SessionForm extends React.Component {
             const user = Object.assign({}, this.state.user);
             this.props.newProcessForm(user)
                 .then(() => {
-                    this.setState({ formType: "password" })
+                    this.setState({ formType2: "password" })
                 }, () => {
                     this.handleShake(e)
                 })
@@ -61,6 +63,7 @@ class SessionForm extends React.Component {
             //     }, 50)
             // }, 50)
             this.props.processForm({ username: 'DemoUser123', password: 'DemoUser123' })
+            this.props.closeModal();
         }
     }
 
@@ -78,7 +81,8 @@ class SessionForm extends React.Component {
 
     handleBack(e){
         e.preventDefault();
-        history.back();
+        this.setState({ formType2: 'nothing' });
+        this.props.clearErrors();
     }
 
     componentDidMount(){
@@ -92,7 +96,7 @@ class SessionForm extends React.Component {
 
     render(){
         let form;
-        if (this.state.formType === 'password') {
+        if (this.state.formType2 === 'password') {
             form = 
             <div className='session-form'>
                 <div className='inner-session-form-two'>
@@ -135,7 +139,7 @@ class SessionForm extends React.Component {
                         }
                         <br/>
                         <div className='create-account-or-next'>
-                            {this.props.navLink}
+                            <a className='login-link' onClick={() => this.props.openModal(this.props.formType === 'signup' ? ('login') : ('signup'))}>{this.props.formType === 'signup' ? ('Sign In') : ('Create Account')}</a>
                             <button className='next' onClick={this.handleSubmit}>Next</button>
                         </div>
                     </form>

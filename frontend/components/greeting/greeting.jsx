@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from 'react-router-dom';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -95,14 +96,14 @@ class Greeting extends React.Component {
                         </div>
                     </div>
                 ) : (
-                    <Link className='login' to='/login'>
+                    <a className='login' onClick={() => this.props.openModal('login')}>
                         <img className='signin-pic' src={window.defaultURL} alt="default-pic"/>
                         <span className='loginsignin'>SIGN IN</span>
-                    </Link> 
+                    </a> 
                 )}
             </div>
         )
     }
 }
 
-export default Greeting;
+export default withRouter(Greeting);
