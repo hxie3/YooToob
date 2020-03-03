@@ -21,10 +21,9 @@ class ShowVideo extends React.Component {
     }
 
     componentDidMount(){
-        if(this.props.video) {
-            this.props.fetchVideo(this.props.match.params.id);
-            this.props.fetchVideos();
-        }
+        this.props.fetchVideo(this.props.match.params.id);
+        this.props.fetchVideos();
+        this.props.fetchComments();
     }
 
     incrementViews(e) {
@@ -104,6 +103,15 @@ class ShowVideo extends React.Component {
             viewsRender = `${views} view`
         } else {
             viewsRender = `${views} views`
+        }
+        let commentsLength = this.props.comments.length;
+        let commentsRender;
+        if (commentsLength === 0) {
+            commentsRender = "No Comments"
+        } else if (commentsLength === 1) {
+            commentsRender = `${commentsLength} Comment`
+        } else {
+            commentsRender = `${commentsLength} Comments`
         }
         return (
             <div className='show-body'>
@@ -199,7 +207,7 @@ class ShowVideo extends React.Component {
                                 <div className="comment-section-header">
                                     <div className="comment-section-header-title">
                                         <h2 className="comment-section-count">
-
+                                            {commentsRender}
                                         </h2>
                                     </div>
                                     {this.props.currentUser ? (

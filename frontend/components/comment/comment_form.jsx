@@ -23,7 +23,7 @@ class CommentForm extends React.Component {
         e.currentTarget.style.height = 'auto';
         e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
         let submit = document.getElementsByClassName("comment-submit")[0];
-        if (e.currentTarget.value === '') {
+        if (e.currentTarget.value.trim() === '') {
             submit.disabled = true;
         } else {
             submit.disabled = false;
@@ -59,6 +59,7 @@ class CommentForm extends React.Component {
         let submitCommentState = Object.assign({}, this.state.comment);
         delete submitCommentState.profilePicture;
         delete submitCommentState.username;
+        submitCommentState.body = this.state.comment.body.trim();
         this.props.processForm(submitCommentState);
         let newCommentState = Object.assign({}, this.state.comment);
         newCommentState.body = '';
