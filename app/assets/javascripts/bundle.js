@@ -642,7 +642,7 @@ function (_React$Component) {
       e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
       var submit = document.getElementsByClassName("comment-submit")[0];
 
-      if (e.currentTarget.value === '') {
+      if (e.currentTarget.value.trim() === '') {
         submit.disabled = true;
       } else {
         submit.disabled = false;
@@ -686,6 +686,7 @@ function (_React$Component) {
       var submitCommentState = Object.assign({}, this.state.comment);
       delete submitCommentState.profilePicture;
       delete submitCommentState.username;
+      submitCommentState.body = this.state.comment.body.trim();
       this.props.processForm(submitCommentState);
       var newCommentState = Object.assign({}, this.state.comment);
       newCommentState.body = '';
@@ -2492,10 +2493,9 @@ function (_React$Component) {
   _createClass(ShowVideo, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      if (this.props.video) {
-        this.props.fetchVideo(this.props.match.params.id);
-        this.props.fetchVideos();
-      }
+      this.props.fetchVideo(this.props.match.params.id);
+      this.props.fetchVideos();
+      this.props.fetchComments();
     }
   }, {
     key: "incrementViews",
@@ -2590,6 +2590,17 @@ function (_React$Component) {
         viewsRender = "".concat(views, " views");
       }
 
+      var commentsLength = this.props.comments.length;
+      var commentsRender;
+
+      if (commentsLength === 0) {
+        commentsRender = "No Comments";
+      } else if (commentsLength === 1) {
+        commentsRender = "".concat(commentsLength, " Comment");
+      } else {
+        commentsRender = "".concat(commentsLength, " Comments");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "show-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2681,7 +2692,7 @@ function (_React$Component) {
         className: "comment-section-header-title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "comment-section-count"
-      })), this.props.currentUser ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_create_comment_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, commentsRender)), this.props.currentUser ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_create_comment_form_container__WEBPACK_IMPORTED_MODULE_4__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "comment-profile-picture",
@@ -2770,8 +2781,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _show_video__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_video */ "./frontend/components/video/show_video.jsx");
 /* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 
 
 
@@ -2780,11 +2793,15 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   // const videos = Object.values(state.entities.videos)
+  var comments = Object.values(state.entities.comments).filter(function (comment) {
+    return comment.videoId === Number(ownProps.match.params.id);
+  });
   return {
     video: state.entities.videos[ownProps.match.params.id],
     videos: state.entities.videos,
     videoId: ownProps.match.params.id,
-    currentUser: state.entities.users[state.session.id]
+    currentUser: state.entities.users[state.session.id],
+    comments: comments
   };
 };
 
@@ -2796,16 +2813,19 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchVideos: function fetchVideos() {
       return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["fetchVideos"])());
     },
+    fetchComments: function fetchComments() {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_3__["fetchComments"])());
+    },
     incrementViews: function incrementViews(video) {
       return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["updateVideo"])(video));
     },
     openModal: function openModal(str) {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__["openModal"])(str));
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["openModal"])(str));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_show_video__WEBPACK_IMPORTED_MODULE_1__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_show_video__WEBPACK_IMPORTED_MODULE_1__["default"])));
 
 /***/ }),
 
