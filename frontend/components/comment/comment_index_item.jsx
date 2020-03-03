@@ -6,7 +6,27 @@ class CommentIndexItem extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = this.props.comment
+        this.state = this.props.comment;
+        this.handleReadMore = this.handleReadMore.bind(this);
+    }
+
+    componentDidMount() {
+        let commentBody = document.getElementById(`comment-${this.props.comment.id}`);
+        let readMore = document.getElementById(`read-${this.props.comment.id}`);
+        if (commentBody.offsetHeight < 96) {
+            readMore.classList.add("hidden");
+        }
+    }
+
+    handleReadMore(e) {
+        e.preventDefault();
+        if (e.currentTarget.innerHTML === "Read more") {
+            e.currentTarget.innerHTML = "Show less";
+            document.getElementById(`expand-${this.props.comment.id}`).style.maxHeight = 'none';
+        } else {
+            e.currentTarget.innerHTML = "Read more";
+            document.getElementById(`expand-${this.props.comment.id}`).style.maxHeight = '80px';
+        }
     }
 
     render() {
@@ -74,23 +94,24 @@ class CommentIndexItem extends React.Component {
                 <div className="comment-index-item-contents">
                     <div className="comment-owner">
                         <img className="comment-profile-picture" src={this.props.comment.profilePicture} alt="profile-pic"/>
-                    </div>
-                    <div className="comment-main">
-                        <div className="comment-main-header">
-                            <div className="comment-main-header-author">
-                                <span className="author-string">
-                                    {this.props.comment.username}
-                                </span>
-                                <span className="comment-uploaded-ago">
-                                    {when}
-                                </span>
+                        <div className="comment-main">
+                            <div className="comment-main-header">
+                                <div className="comment-main-header-author">
+                                    <span className="author-string">
+                                        {this.props.comment.username}
+                                    </span>
+                                    <span className="comment-uploaded-ago">
+                                        {when}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="comment-expander">
-                            <div className="comment-expander-contents">
-                                <span className="comment-expander-string">
-                                    {this.props.comment.body}
-                                </span>
+                            <div className="comment-expander">
+                                <div id={`expand-${this.props.comment.id}`} className="comment-expander-contents">
+                                    <span id={`comment-${this.props.comment.id}`} className="comment-expander-string">
+                                        {this.props.comment.body}
+                                    </span>
+                                </div>
+                                <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
                             </div>
                         </div>
                     </div>

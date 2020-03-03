@@ -8,3 +8,69 @@
     display: flex;
     flex-direction: row;
 }
+
+.comment-owner {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.comment-main-header {
+    margin-bottom: 2px;
+}
+
+.comment-main-header-author {
+    align-items: baseline;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+}
+
+.author-string {
+    color: #030303;
+    font-family: 'Roboto', 'Arial', 'sans-serif';
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 600;
+    margin-right: 4px;
+    margin-bottom: 2px;
+}
+
+.comment-uploaded-ago {
+    color: #606060;
+    font-size: 13px;
+    font-family: 'Roboto', 'Arial', 'sans-serif';
+}
+
+.comment-expander {
+    display: block;
+}
+
+.comment-expander-contents {
+    overflow: hidden;
+    max-height: 80px;
+    word-wrap: break-word;
+    min-width: 0;
+}
+
+.comment-expander-string {
+    font-size: 14px;
+    line-height: 20px;
+    white-space: pre-wrap;
+    font-family: 'Roboto', 'Arial', 'sans-serif';
+    color: #030303;
+}
+
+.read-more {
+    color: #606060;
+    line-height: 16px;
+    font-size: 14px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
