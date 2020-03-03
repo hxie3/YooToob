@@ -3,6 +3,7 @@ import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { Link, Redirect } from 'react-router-dom';
 import CommentFormContainer from '../comment/create_comment_form_container';
+import CommentIndexItemContainer from '../comment/comment_index_item_container'
 
 class ShowVideo extends React.Component {
     constructor(props) {
@@ -221,6 +222,11 @@ class ShowVideo extends React.Component {
                                         </div>
                                     )}
                                 </div>
+                                <ul className="comment-section-index">
+                                    {this.props.comments.map((comment, index) => (
+                                        <CommentIndexItemContainer key={index} comment={comment}/>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                         <div id='secondary' className='show-body-right'>
