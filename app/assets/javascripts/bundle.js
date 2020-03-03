@@ -741,6 +741,194 @@ function (_React$Component) {
 
 /***/ }),
 
+/***/ "./frontend/components/comment/comment_index_item.jsx":
+/*!************************************************************!*\
+  !*** ./frontend/components/comment/comment_index_item.jsx ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var CommentIndexItem =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(CommentIndexItem, _React$Component);
+
+  function CommentIndexItem(props) {
+    var _this;
+
+    _classCallCheck(this, CommentIndexItem);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentIndexItem).call(this, props));
+    _this.state = _this.props.comment;
+    return _this;
+  }
+
+  _createClass(CommentIndexItem, [{
+    key: "render",
+    value: function render() {
+      var date = new Date(this.props.comment.created_at);
+      var now = new Date(Date.now());
+      var diffInSeconds = Math.floor((now - date) / 1000);
+      var num;
+      var when;
+
+      if (diffInSeconds < 60) {
+        if (diffInSeconds === 1 || diffInSeconds === 0) {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, "1 second ago");
+        } else {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, diffInSeconds, " seconds ago");
+        }
+      } else if (diffInSeconds / 60 < 60) {
+        num = Math.floor(diffInSeconds / 60);
+
+        if (num === 1) {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " minute ago");
+        } else {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " minutes ago");
+        }
+      } else if (diffInSeconds / 60 / 60 < 24) {
+        num = Math.floor(diffInSeconds / 60 / 60);
+
+        if (num === 1) {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " hour ago");
+        } else {
+          when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "date"
+          }, num, " hours ago");
+        }
+      } else if (diffInSeconds / 60 / 60 / 24 < 7) {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24);
+        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "date"
+        }, num, " ", num === 1 ? "day" : "days", " ago");
+      } else if (diffInSeconds / 60 / 60 / 24 / 7 < 4.286) {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7);
+        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "date"
+        }, num, " ", num === 1 ? "week" : "weeks", " ago");
+      } else if (diffInSeconds / 60 / 60 / 24 / 7 / 4.286 < 12) {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286);
+        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "date"
+        }, num, " ", num === 1 ? "month" : "months", " ago");
+      } else {
+        num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286 / 12);
+        when = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "date"
+        }, num, " ", num === 1 ? "year" : "years", " ago");
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "comment-index-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-index-item-contents"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-owner"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "comment-profile-picture",
+        src: this.props.comment.profilePicture,
+        alt: "profile-pic"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-main"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-main-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-main-header-author"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "author-string"
+      }, this.props.comment.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "comment-uploaded-ago"
+      }, when))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-expander"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-expander-contents"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "comment-expander-string"
+      }, this.props.comment.body))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comment-replies"
+      }));
+    }
+  }]);
+
+  return CommentIndexItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (CommentIndexItem);
+
+/***/ }),
+
+/***/ "./frontend/components/comment/comment_index_item_container.js":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/comment/comment_index_item_container.js ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _comment_index_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./comment_index_item */ "./frontend/components/comment/comment_index_item.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    comment: ownProps.comment
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateComment: function updateComment(comment) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["updateComment"])(comment));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_comment_index_item__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/comment/create_comment_form_container.js":
 /*!**********************************************************************!*\
   !*** ./frontend/components/comment/create_comment_form_container.js ***!
@@ -2443,6 +2631,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _comment_create_comment_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../comment/create_comment_form_container */ "./frontend/components/comment/create_comment_form_container.js");
+/* harmony import */ var _comment_comment_index_item_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../comment/comment_index_item_container */ "./frontend/components/comment/comment_index_item_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2460,6 +2649,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2704,7 +2894,14 @@ function (_React$Component) {
         onClick: this.redirectLogin,
         className: "comment-form-body-textarea",
         placeholder: "Add a public comment..."
-      })))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "comment-section-index"
+      }, this.props.comments.map(function (comment, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_comment_index_item_container__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          key: index,
+          comment: comment
+        });
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "secondary",
         className: "show-body-right"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
