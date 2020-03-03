@@ -764,9 +764,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -788,10 +788,34 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentIndexItem).call(this, props));
     _this.state = _this.props.comment;
+    _this.handleReadMore = _this.handleReadMore.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(CommentIndexItem, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var commentBody = document.getElementById("comment-".concat(this.props.comment.id));
+      var readMore = document.getElementById("read-".concat(this.props.comment.id));
+
+      if (commentBody.offsetHeight < 96) {
+        readMore.classList.add("hidden");
+      }
+    }
+  }, {
+    key: "handleReadMore",
+    value: function handleReadMore(e) {
+      e.preventDefault();
+
+      if (e.currentTarget.innerHTML === "Read more") {
+        e.currentTarget.innerHTML = "Show less";
+        document.getElementById("expand-".concat(this.props.comment.id)).style.maxHeight = 'none';
+      } else {
+        e.currentTarget.innerHTML = "Read more";
+        document.getElementById("expand-".concat(this.props.comment.id)).style.maxHeight = '80px';
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var date = new Date(this.props.comment.created_at);
@@ -866,7 +890,7 @@ function (_React$Component) {
         className: "comment-profile-picture",
         src: this.props.comment.profilePicture,
         alt: "profile-pic"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-main"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-main-header"
@@ -879,10 +903,16 @@ function (_React$Component) {
       }, when))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-expander"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "expand-".concat(this.props.comment.id),
         className: "comment-expander-contents"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "comment-".concat(this.props.comment.id),
         className: "comment-expander-string"
-      }, this.props.comment.body))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.comment.body)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleReadMore,
+        id: "read-".concat(this.props.comment.id),
+        className: "read-more"
+      }, "Read more"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-replies"
       }));
     }
@@ -906,7 +936,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
-/* harmony import */ var _comment_index_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./comment_index_item */ "./frontend/components/comment/comment_index_item.jsx");
+/* harmony import */ var _comment_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./comment_index_item */ "./frontend/components/comment/comment_index_item.jsx");
 
 
 
@@ -925,7 +955,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_comment_index_item__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_comment_index_item__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
