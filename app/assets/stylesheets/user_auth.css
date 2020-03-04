@@ -380,7 +380,7 @@
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .is-active .user-dropdown {

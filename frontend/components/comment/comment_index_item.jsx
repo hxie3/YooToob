@@ -8,6 +8,8 @@ class CommentIndexItem extends React.Component {
 
         this.state = this.props.comment;
         this.handleReadMore = this.handleReadMore.bind(this);
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
     }
 
     componentDidMount() {
@@ -27,6 +29,16 @@ class CommentIndexItem extends React.Component {
             e.currentTarget.innerHTML = "Read more";
             document.getElementById(`expand-${this.props.comment.id}`).style.maxHeight = '80px';
         }
+    }
+
+    handleMouseEnter(e) {
+        e.preventDefault();
+        document.getElementById(`edit-${this.props.comment.id}`).classList.remove("hidden")
+    }
+
+    handleMouseLeave(e) {
+        e.preventDefault();
+        document.getElementById(`edit-${this.props.comment.id}`).classList.add("hidden")
     }
 
     render() {
@@ -90,7 +102,7 @@ class CommentIndexItem extends React.Component {
             </span>
         }
         return (
-            <li className="comment-index-item">
+            <li onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} className="comment-index-item">
                 <div className="comment-index-item-contents">
                     <div className="comment-owner">
                         <img className="comment-profile-picture" src={this.props.comment.profilePicture} alt="profile-pic"/>
@@ -113,6 +125,9 @@ class CommentIndexItem extends React.Component {
                                 </div>
                                 <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
                             </div>
+                        </div>
+                        <div id={`edit-${this.props.comment.id}`} className="edit-comment fa hidden">
+                            <i className="fas fa-ellipsis-v"></i>
                         </div>
                     </div>
                 </div>
