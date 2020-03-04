@@ -10,6 +10,7 @@ class CommentIndexItem extends React.Component {
         this.handleReadMore = this.handleReadMore.bind(this);
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
+        this.handleDropdown = this.handleDropdown.bind(this);
     }
 
     componentDidMount() {
@@ -33,12 +34,20 @@ class CommentIndexItem extends React.Component {
 
     handleMouseEnter(e) {
         e.preventDefault();
-        document.getElementById(`edit-${this.props.comment.id}`).classList.remove("hidden")
+        document.getElementById(`edit-${this.props.comment.id}`).classList.remove("hidden");
     }
 
     handleMouseLeave(e) {
         e.preventDefault();
-        document.getElementById(`edit-${this.props.comment.id}`).classList.add("hidden")
+        if (!Array.from(document.getElementById(`edit-${this.props.comment.id}`).classList).includes("active")) {
+            document.getElementById(`edit-${this.props.comment.id}`).classList.add("hidden");
+        }
+    }
+
+    handleDropdown(e) {
+        e.preventDefault();
+        document.getElementById(`comment-edit-${this.props.comment.id}`).classList.toggle("hidden");
+        document.getElementById(`edit-${this.props.comment.id}`).classList.toggle("active");
     }
 
     render() {
@@ -126,8 +135,18 @@ class CommentIndexItem extends React.Component {
                                 <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
                             </div>
                         </div>
-                        <div id={`edit-${this.props.comment.id}`} className="edit-comment fa hidden">
+                        <div onClick={this.handleDropdown} id={`edit-${this.props.comment.id}`} className="edit-comment fa hidden">
                             <i className="fas fa-ellipsis-v"></i>
+                            <div id={`comment-edit-${this.props.comment.id}`} className="comment-edit-dropdown hidden">
+                                <div className="inside-dropdown">
+                                    <div id={`comment-edit-button-${this.props.comment.id}`} className="comment-edit-button">
+                                        Edit
+                                    </div>
+                                    <div id={`comment-delete-button-${this.props.comment.id}`} className="comment-delete-button">
+                                        Delete
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

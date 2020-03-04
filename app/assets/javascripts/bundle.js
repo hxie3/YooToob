@@ -816,6 +816,7 @@ function (_React$Component) {
     _this.handleReadMore = _this.handleReadMore.bind(_assertThisInitialized(_this));
     _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
     _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
+    _this.handleDropdown = _this.handleDropdown.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -852,7 +853,17 @@ function (_React$Component) {
     key: "handleMouseLeave",
     value: function handleMouseLeave(e) {
       e.preventDefault();
-      document.getElementById("edit-".concat(this.props.comment.id)).classList.add("hidden");
+
+      if (!Array.from(document.getElementById("edit-".concat(this.props.comment.id)).classList).includes("active")) {
+        document.getElementById("edit-".concat(this.props.comment.id)).classList.add("hidden");
+      }
+    }
+  }, {
+    key: "handleDropdown",
+    value: function handleDropdown(e) {
+      e.preventDefault();
+      document.getElementById("comment-edit-".concat(this.props.comment.id)).classList.toggle("hidden");
+      document.getElementById("edit-".concat(this.props.comment.id)).classList.toggle("active");
     }
   }, {
     key: "render",
@@ -954,11 +965,23 @@ function (_React$Component) {
         id: "read-".concat(this.props.comment.id),
         className: "read-more"
       }, "Read more"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleDropdown,
         id: "edit-".concat(this.props.comment.id),
         className: "edit-comment fa hidden"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-v"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "comment-edit-".concat(this.props.comment.id),
+        className: "comment-edit-dropdown hidden"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "inside-dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "comment-edit-button-".concat(this.props.comment.id),
+        className: "comment-edit-button"
+      }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "comment-delete-button-".concat(this.props.comment.id),
+        className: "comment-delete-button"
+      }, "Delete")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-replies"
       }));
     }
