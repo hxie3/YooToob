@@ -3,7 +3,8 @@ import { updateComment } from '../../actions/comment_actions'
 import CommentIndexItem from './comment_index_item';
 
 const mapStateToProps = (state, ownProps) => ({
-    comment: ownProps.comment
+    comment: ownProps.comment,
+    currentUser: state.session.id
 })
 
 const mapDispatchToProps = dispatch => ({

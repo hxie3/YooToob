@@ -823,11 +823,58 @@ function (_React$Component) {
   _createClass(CommentIndexItem, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       var commentBody = document.getElementById("comment-".concat(this.props.comment.id));
       var readMore = document.getElementById("read-".concat(this.props.comment.id));
 
       if (commentBody.offsetHeight < 96) {
         readMore.classList.add("hidden");
+      }
+
+      if (document.getElementById("comment-edit-dropdown-".concat(this.props.comment.id))) {
+        var $menu = $("#comment-edit-dropdown-".concat(this.props.comment.id));
+        $(document).mouseup(function (e) {
+          if (!$menu.is(e.target) && $menu.has(e.target).length === 0) {
+            if (_this2.props.comment.userId === _this2.props.currentUser) {
+              var comment = $("#comment-index-item-".concat(_this2.props.comment.id));
+
+              if (comment.is(e.target) || comment.has(e.target).length === 1) {
+                document.getElementById("comment-edit-".concat(_this2.props.comment.id)).classList.add("hidden");
+                document.getElementById("edit-".concat(_this2.props.comment.id)).classList.remove("active");
+              } else {
+                document.getElementById("edit-".concat(_this2.props.comment.id)).classList.remove("active");
+                document.getElementById("edit-".concat(_this2.props.comment.id)).classList.add("hidden");
+                document.getElementById("comment-edit-".concat(_this2.props.comment.id)).classList.add("hidden");
+              }
+            }
+          }
+        });
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var _this3 = this;
+
+      if (document.getElementById("comment-edit-dropdown-".concat(this.props.comment.id))) {
+        var $menu = $("#comment-edit-dropdown-".concat(this.props.comment.id));
+        $(document).mouseup(function (e) {
+          if (!$menu.is(e.target) && $menu.has(e.target).length === 0) {
+            if (_this3.props.comment.userId === _this3.props.currentUser) {
+              var comment = $("#comment-index-item-".concat(_this3.props.comment.id));
+
+              if (comment.is(e.target) || comment.has(e.target).length === 1) {
+                document.getElementById("comment-edit-".concat(_this3.props.comment.id)).classList.add("hidden");
+                document.getElementById("edit-".concat(_this3.props.comment.id)).classList.remove("active");
+              } else {
+                document.getElementById("edit-".concat(_this3.props.comment.id)).classList.remove("active");
+                document.getElementById("edit-".concat(_this3.props.comment.id)).classList.add("hidden");
+                document.getElementById("comment-edit-".concat(_this3.props.comment.id)).classList.add("hidden");
+              }
+            }
+          }
+        });
       }
     }
   }, {
@@ -847,15 +894,20 @@ function (_React$Component) {
     key: "handleMouseEnter",
     value: function handleMouseEnter(e) {
       e.preventDefault();
-      document.getElementById("edit-".concat(this.props.comment.id)).classList.remove("hidden");
+
+      if (document.getElementById("edit-".concat(this.props.comment.id))) {
+        document.getElementById("edit-".concat(this.props.comment.id)).classList.remove("hidden");
+      }
     }
   }, {
     key: "handleMouseLeave",
     value: function handleMouseLeave(e) {
       e.preventDefault();
 
-      if (!Array.from(document.getElementById("edit-".concat(this.props.comment.id)).classList).includes("active")) {
-        document.getElementById("edit-".concat(this.props.comment.id)).classList.add("hidden");
+      if (document.getElementById("edit-".concat(this.props.comment.id))) {
+        if (!Array.from(document.getElementById("edit-".concat(this.props.comment.id)).classList).includes("active")) {
+          document.getElementById("edit-".concat(this.props.comment.id)).classList.add("hidden");
+        }
       }
     }
   }, {
@@ -931,6 +983,7 @@ function (_React$Component) {
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        id: "comment-index-item-".concat(this.props.comment.id),
         onMouseEnter: this.handleMouseEnter,
         onMouseLeave: this.handleMouseLeave,
         className: "comment-index-item"
@@ -964,13 +1017,18 @@ function (_React$Component) {
         onClick: this.handleReadMore,
         id: "read-".concat(this.props.comment.id),
         className: "read-more"
-      }, "Read more"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Read more"))), this.props.currentUser === this.props.comment.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "comment-edit-dropdown-".concat(this.props.comment.id)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: this.handleDropdown,
         id: "edit-".concat(this.props.comment.id),
         className: "edit-comment fa hidden"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-v"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: function onClick(e) {
+          e.stopPropagation();
+        },
         id: "comment-edit-".concat(this.props.comment.id),
         className: "comment-edit-dropdown hidden"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -978,10 +1036,14 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "comment-edit-button-".concat(this.props.comment.id),
         className: "comment-edit-button"
-      }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-pen"
+      })), "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "comment-delete-button-".concat(this.props.comment.id),
         className: "comment-delete-button"
-      }, "Delete")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Delete"))))) : "")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-replies"
       }));
     }
@@ -1012,7 +1074,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    comment: ownProps.comment
+    comment: ownProps.comment,
+    currentUser: state.session.id
   };
 };
 
