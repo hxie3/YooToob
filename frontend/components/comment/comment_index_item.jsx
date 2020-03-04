@@ -19,6 +19,45 @@ class CommentIndexItem extends React.Component {
         if (commentBody.offsetHeight < 96) {
             readMore.classList.add("hidden");
         }
+        if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {
+            const $menu = $(`#comment-edit-dropdown-${this.props.comment.id}`);
+            $(document).mouseup(e => {
+                if (!$menu.is(e.target) && ($menu.has(e.target).length === 0)) {
+                    if (this.props.comment.userId === this.props.currentUser) {
+                        const comment = $(`#comment-index-item-${this.props.comment.id}`)
+                        if (comment.is(e.target) || comment.has(e.target).length === 1) {
+                            document.getElementById(`comment-edit-${this.props.comment.id}`).classList.add("hidden");
+                            document.getElementById(`edit-${this.props.comment.id}`).classList.remove("active");
+                        } else {
+                            document.getElementById(`edit-${this.props.comment.id}`).classList.remove("active");
+                            document.getElementById(`edit-${this.props.comment.id}`).classList.add("hidden");
+                            document.getElementById(`comment-edit-${this.props.comment.id}`).classList.add("hidden");
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    componentDidUpdate() {
+        if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {
+            const $menu = $(`#comment-edit-dropdown-${this.props.comment.id}`);
+            $(document).mouseup(e => {
+                if (!$menu.is(e.target) && ($menu.has(e.target).length === 0)) {
+                    if(this.props.comment.userId === this.props.currentUser) {
+                        const comment = $(`#comment-index-item-${this.props.comment.id}`)
+                        if (comment.is(e.target) || comment.has(e.target).length === 1) {
+                            document.getElementById(`comment-edit-${this.props.comment.id}`).classList.add("hidden");
+                            document.getElementById(`edit-${this.props.comment.id}`).classList.remove("active");
+                        } else {
+                            document.getElementById(`edit-${this.props.comment.id}`).classList.remove("active");
+                            document.getElementById(`edit-${this.props.comment.id}`).classList.add("hidden");
+                            document.getElementById(`comment-edit-${this.props.comment.id}`).classList.add("hidden");
+                        }
+                    }
+                }
+            });
+        }
     }
 
     handleReadMore(e) {
@@ -34,13 +73,17 @@ class CommentIndexItem extends React.Component {
 
     handleMouseEnter(e) {
         e.preventDefault();
-        document.getElementById(`edit-${this.props.comment.id}`).classList.remove("hidden");
+        if (document.getElementById(`edit-${this.props.comment.id}`)) {
+            document.getElementById(`edit-${this.props.comment.id}`).classList.remove("hidden");
+        }
     }
 
     handleMouseLeave(e) {
         e.preventDefault();
-        if (!Array.from(document.getElementById(`edit-${this.props.comment.id}`).classList).includes("active")) {
-            document.getElementById(`edit-${this.props.comment.id}`).classList.add("hidden");
+        if (document.getElementById(`edit-${this.props.comment.id}`)) {
+            if (!Array.from(document.getElementById(`edit-${this.props.comment.id}`).classList).includes("active")) {
+                document.getElementById(`edit-${this.props.comment.id}`).classList.add("hidden");
+            }
         }
     }
 
@@ -111,7 +154,7 @@ class CommentIndexItem extends React.Component {
             </span>
         }
         return (
-            <li onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} className="comment-index-item">
+            <li id={`comment-index-item-${this.props.comment.id}`} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} className="comment-index-item">
                 <div className="comment-index-item-contents">
                     <div className="comment-owner">
                         <img className="comment-profile-picture" src={this.props.comment.profilePicture} alt="profile-pic"/>
@@ -135,19 +178,28 @@ class CommentIndexItem extends React.Component {
                                 <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
                             </div>
                         </div>
-                        <div onClick={this.handleDropdown} id={`edit-${this.props.comment.id}`} className="edit-comment fa hidden">
-                            <i className="fas fa-ellipsis-v"></i>
-                            <div id={`comment-edit-${this.props.comment.id}`} className="comment-edit-dropdown hidden">
-                                <div className="inside-dropdown">
-                                    <div id={`comment-edit-button-${this.props.comment.id}`} className="comment-edit-button">
-                                        Edit
-                                    </div>
-                                    <div id={`comment-delete-button-${this.props.comment.id}`} className="comment-delete-button">
-                                        Delete
+                        { this.props.currentUser === this.props.comment.userId ? (
+                            <div id={`comment-edit-dropdown-${this.props.comment.id}`}>
+                                <div onClick={this.handleDropdown} id={`edit-${this.props.comment.id}`} className="edit-comment fa hidden">
+                                    <i className="fas fa-ellipsis-v"></i>
+                                    <div onClick={(e) => {e.stopPropagation()}} id={`comment-edit-${this.props.comment.id}`} className="comment-edit-dropdown hidden">
+                                        <div className="inside-dropdown">
+                                            <div id={`comment-edit-button-${this.props.comment.id}`} className="comment-edit-button">
+                                                <div className="fa">
+                                                    <i className="fas fa-pen"></i>
+                                                </div>
+                                                Edit
+                                            </div>
+                                            <div id={`comment-delete-button-${this.props.comment.id}`} className="comment-delete-button">
+                                                Delete
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        ) : (
+                            ""
+                        ) }
                     </div>
                 </div>
                 <div className="comment-replies">
