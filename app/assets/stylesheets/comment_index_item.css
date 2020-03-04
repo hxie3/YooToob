@@ -17,6 +17,10 @@
     margin-bottom: 16px;
 }
 
+.comment-main {
+    flex: 1;
+}
+
 .comment-main-header {
     margin-bottom: 2px;
 }
@@ -73,4 +77,26 @@
 
 .read-more:hover {
     text-decoration: underline;
+}
+
+.fa-ellipsis-v {
+    margin: 0 4px;
+    font-size: 20px;
+    display: flex;
+    color: inherit;
+}
+
+.edit-comment {
+    display: flex !important;
+    color: #909090;
+    height: 24px;
+    width: 24px;
+    padding: 8px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-comment:hover {
+    color: #030303;
 }

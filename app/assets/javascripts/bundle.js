@@ -631,6 +631,22 @@ function (_React$Component) {
   }
 
   _createClass(CommentForm, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.comment) {
+        if (prevProps.comment.video_id !== this.props.comment.video_id) {
+          //Perform some operation here
+          var newCommentState = Object.assign({}, this.state.comment);
+          newCommentState.body = '';
+          this.setState({
+            comment: newCommentState
+          });
+          document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
+          document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+        }
+      }
+    }
+  }, {
     key: "updateBody",
     value: function updateBody(e) {
       var newCommentState = Object.assign({}, this.state.comment);
@@ -732,6 +748,15 @@ function (_React$Component) {
         className: "comment-submit-text"
       }, "COMMENT")))));
     }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      if (nextProps.comment.video_id !== prevState.comment.video_id) {
+        return {
+          comment: nextProps.comment
+        };
+      } else return null;
+    }
   }]);
 
   return CommentForm;
@@ -789,6 +814,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentIndexItem).call(this, props));
     _this.state = _this.props.comment;
     _this.handleReadMore = _this.handleReadMore.bind(_assertThisInitialized(_this));
+    _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
+    _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -814,6 +841,18 @@ function (_React$Component) {
         e.currentTarget.innerHTML = "Read more";
         document.getElementById("expand-".concat(this.props.comment.id)).style.maxHeight = '80px';
       }
+    }
+  }, {
+    key: "handleMouseEnter",
+    value: function handleMouseEnter(e) {
+      e.preventDefault();
+      document.getElementById("edit-".concat(this.props.comment.id)).classList.remove("hidden");
+    }
+  }, {
+    key: "handleMouseLeave",
+    value: function handleMouseLeave(e) {
+      e.preventDefault();
+      document.getElementById("edit-".concat(this.props.comment.id)).classList.add("hidden");
     }
   }, {
     key: "render",
@@ -881,6 +920,8 @@ function (_React$Component) {
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        onMouseEnter: this.handleMouseEnter,
+        onMouseLeave: this.handleMouseLeave,
         className: "comment-index-item"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-index-item-contents"
@@ -912,7 +953,12 @@ function (_React$Component) {
         onClick: this.handleReadMore,
         id: "read-".concat(this.props.comment.id),
         className: "read-more"
-      }, "Read more"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Read more"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "edit-".concat(this.props.comment.id),
+        className: "edit-comment fa hidden"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-ellipsis-v"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comment-replies"
       }));
     }
@@ -1108,7 +1154,7 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      if (document.getElementsByClassName('sign-out-dropdown').length === 1) {
+      if (document.getElementsByClassName('sign-out-dropdown')[0] && !document.getElementsByClassName('sign-out-dropdown')[0].hasChildNodes()) {
         _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["fas"]);
         var exit = Object(_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["findIconDefinition"])({
           prefix: 'fas',

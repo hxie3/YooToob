@@ -46,7 +46,7 @@ class Greeting extends React.Component {
     }
 
     componentDidUpdate(){
-        if(document.getElementsByClassName('sign-out-dropdown').length === 1) {
+        if(document.getElementsByClassName('sign-out-dropdown')[0] && !document.getElementsByClassName('sign-out-dropdown')[0].hasChildNodes()) {
             library.add(fas);
             const exit = findIconDefinition({ prefix: 'fas', iconName: 'sign-out-alt' })
             const exitIcon = icon(exit)

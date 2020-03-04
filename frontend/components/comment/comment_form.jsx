@@ -16,6 +16,26 @@ class CommentForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.comment.video_id !== prevState.comment.video_id) {
+            return { comment: nextProps.comment };
+        }
+        else return null;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.comment) {
+            if (prevProps.comment.video_id !== this.props.comment.video_id) {
+                //Perform some operation here
+                let newCommentState = Object.assign({}, this.state.comment);
+                newCommentState.body = '';
+                this.setState({ comment: newCommentState })
+                document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
+                document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+            }
+        }
+    }
+
     updateBody(e) {
         let newCommentState = Object.assign({}, this.state.comment);
         newCommentState.body = e.currentTarget.value;
