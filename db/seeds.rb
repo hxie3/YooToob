@@ -14,14 +14,14 @@ user.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/imag
 user = User.create(username: 'Dewey Griffin', password: 'Dewey Griffin')
 user.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/images/signin.jpeg")), filename: "default_profile_pic.jpeg")
 video = Video.create(title: "Maple Story", description: "Maple Sit-tory dance", user_id: 2)
-video.thumbnail.attach(io: File.open(File.join(Rails.root, "app/assets/images/maplestory.jpeg")), failename: "maplestory.jpeg")
+video.thumbnail.attach(io: File.open(File.join(Rails.root, "app/assets/images/maplestory.jpeg")), filename: "maplestory.jpeg")
 file = open("https://yootoob-seeds.s3-us-west-1.amazonaws.com/maplestory.mp4")
 video.video.attach(io: file, filename: "maplestory.mp4")
 
 user = User.create(username: 'The Dodo', password: 'The Dodo')
 user.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/images/dodo_profile_pic.jpeg")), filename: "dodo_profile_pic.jpeg")
 video = Video.create(title: "Guy Helps Wolf Spider Untangle His Feet | The Dodo", description: 'No Description', user_id: 3)
-video.thumbnail.attach(io: File.open(File.join(Rails.root, "app/assets/images/dodo.jpeg")), failename: "dodo.jpeg")
+video.thumbnail.attach(io: File.open(File.join(Rails.root, "app/assets/images/dodo.jpeg")), filename: "dodo.jpeg")
 file = open("https://yootoob-seeds.s3-us-west-1.amazonaws.com/Guy+Helps+Wolf+Spider+Untangle+His+Feet+_+The+Dodo.mp4")
 video.video.attach(io: file, filename: "spider.mp4")
 
