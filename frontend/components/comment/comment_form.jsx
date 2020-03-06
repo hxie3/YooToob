@@ -31,7 +31,7 @@ class CommentForm extends React.Component {
                 newCommentState.body = '';
                 this.setState({ comment: newCommentState })
                 document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
-                document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+                document.getElementsByClassName('comment-form-body-textarea')[0].style.height = 'auto';
             }
         }
     }
@@ -57,7 +57,7 @@ class CommentForm extends React.Component {
         newCommentState.body = '';
         this.setState({ comment: newCommentState })
         document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
-        document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+        document.getElementsByClassName('comment-form-body-textarea')[0].style.height = 'auto';
     }
 
     focusBody(e) {
@@ -86,7 +86,7 @@ class CommentForm extends React.Component {
         this.setState({ comment: newCommentState })
         document.getElementsByClassName("comment-form-body-container")[0].style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
         document.getElementsByClassName('comment-buttons')[0].classList.add('hidden');
-        document.getElementsByClassName('comment-form-body-textarea')[0].style.height = '42px';
+        document.getElementsByClassName('comment-form-body-textarea')[0].style.height = 'auto';
     }
 
     render() {
