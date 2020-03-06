@@ -28,7 +28,7 @@ video.video.attach(io: file, filename: "spider.mp4")
 user = User.create(username: 'IGN', password: 'IGNIGN')
 user.profile_picture.attach(io: File.open(File.join(Rails.root, "app/assets/images/ign.jpeg")), filename: "ign_profile_pic.jpeg")
 video = Video.create(title: "Weathering With You Official Subbed Trailer", description: "Weathering With You follows Hodaka, a high school runaway alone in Tokyo. Not long after finding work as a writer for an occult magazine, he meets Hina, a girl who has the ability to clear away the seemingly neverending rain. Makoto Shinkai's (Your Name) next movie hits theaters in North America beginning January 17.", user_id: 4)
-video.thumbnail.attach(io: File.open(File.join(Rails.root, "app/assets/images/weathering.jpeg")), failename: "weathering.jpeg")
+video.thumbnail.attach(io: File.open(File.join(Rails.root, "app/assets/images/weathering.jpeg")), filename: "weathering.jpeg")
 file = open("https://yootoob-seeds.s3-us-west-1.amazonaws.com/Weathering+With+You+Official+Subbed+Trailer.mp4")
 video.video.attach(io: file, filename: "Weathering With You Official Subbed Trailer.mp4")
 
