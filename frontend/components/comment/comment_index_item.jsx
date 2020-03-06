@@ -1,4 +1,5 @@
 import React from 'react';
+import UpdateCommentContainer from './update_comment_form_container';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
@@ -6,22 +7,34 @@ class CommentIndexItem extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = this.props.comment;
+        this.state = {
+            comment: this.props.comment,
+            edit: false
+        };
         this.handleReadMore = this.handleReadMore.bind(this);
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
         this.handleDropdown = this.handleDropdown.bind(this);
+        this.handleCommentEdit = this.handleCommentEdit.bind(this);
+        this.handleCancelChild = this.handleCancelChild.bind(this);
+        this.handleCommentDelete = this.handleCommentDelete.bind(this);
     }
 
     componentDidMount() {
         let commentBody = document.getElementById(`comment-${this.props.comment.id}`);
         let readMore = document.getElementById(`read-${this.props.comment.id}`);
-        if (commentBody.offsetHeight < 96) {
-            readMore.classList.add("hidden");
+        if (commentBody) {
+            if (commentBody.offsetHeight < 96) {
+                readMore.classList.add("hidden");
+            } else {
+                readMore.classList.remove("hidden");
+            }
         }
         if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {
             const $menu = $(`#comment-edit-dropdown-${this.props.comment.id}`);
             $(document).mouseup(e => {
+                if (this.state.edit) return
+                if (!document.getElementById(`edit-${this.props.comment.id}`)) return
                 if (!$menu.is(e.target) && ($menu.has(e.target).length === 0)) {
                     if (this.props.comment.userId === this.props.currentUser) {
                         const comment = $(`#comment-index-item-${this.props.comment.id}`)
@@ -40,11 +53,22 @@ class CommentIndexItem extends React.Component {
     }
 
     componentDidUpdate() {
+        let commentBody = document.getElementById(`comment-${this.props.comment.id}`);
+        let readMore = document.getElementById(`read-${this.props.comment.id}`);
+        if (commentBody) {
+            if (commentBody.offsetHeight < 96) {
+                readMore.classList.add("hidden");
+            } else {
+                readMore.classList.remove("hidden");
+            }
+        }
         if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {
             const $menu = $(`#comment-edit-dropdown-${this.props.comment.id}`);
             $(document).mouseup(e => {
+                if (this.state.edit) return
+                if (!document.getElementById(`edit-${this.props.comment.id}`)) return
                 if (!$menu.is(e.target) && ($menu.has(e.target).length === 0)) {
-                    if(this.props.comment.userId === this.props.currentUser) {
+                    if (this.props.comment.userId === this.props.currentUser) {
                         const comment = $(`#comment-index-item-${this.props.comment.id}`)
                         if (comment.is(e.target) || comment.has(e.target).length === 1) {
                             document.getElementById(`comment-edit-${this.props.comment.id}`).classList.add("hidden");
@@ -93,120 +117,145 @@ class CommentIndexItem extends React.Component {
         document.getElementById(`edit-${this.props.comment.id}`).classList.toggle("active");
     }
 
+    handleCommentEdit(e) {
+        e.preventDefault();
+        this.setState({ edit: true })
+    }
+
+    handleCommentDelete(e) {
+        e.preventDefault();
+        this.props.deleteComment(this.props.comment.id);
+    }
+
+    handleCancelChild() {
+        this.setState({ edit: false })
+    }
+
     render() {
-        let date = new Date(this.props.comment.created_at);
-        let now = new Date(Date.now());
-        let diffInSeconds = Math.floor((now - date) / 1000);
-        let num;
-        let when;
-        if (diffInSeconds < 60) {
-            if (diffInSeconds === 1 || diffInSeconds === 0) {
-                when = <span className="date">
-                    1 second ago
-                </span>
-            } else {
-                when = <span className="date">
-                    {diffInSeconds} seconds ago
-                </span>
-            }
-        } else if (diffInSeconds / 60 < 60) {
-            num = Math.floor(diffInSeconds / 60)
-            if (num === 1) {
-                when = <span className="date">
-                    {num} minute ago
-                </span>
-            } else {
-                when = <span className="date">
-                    {num} minutes ago
-                </span>
-            }
-        } else if (diffInSeconds / 60 / 60 < 24) {
-            num = Math.floor(diffInSeconds / 60 / 60);
-            if (num === 1) {
-                when = <span className="date">
-                    {num} hour ago
-                </span>
-            } else {
-                when = <span className="date">
-                    {num} hours ago
-                </span>
-            }
-        } else if (diffInSeconds / 60 / 60 / 24 < 7) {
-            num = Math.floor(diffInSeconds / 60 / 60 / 24)
-            when = <span className="date">
-                {num} {num === 1 ? ("day") : ("days")} ago
-            </span>
-        } else if (diffInSeconds / 60 / 60 / 24 / 7 < 4.286) {
-            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7)
-            when = <span className="date">
-                {num} {num === 1 ? ("week") : ("weeks")} ago
-            </span>
-        }
-        else if (diffInSeconds / 60 / 60 / 24 / 7 / 4.286 < 12) {
-            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286)
-            when = <span className="date">
-                {num} {num === 1 ? ("month") : ("months")} ago
-            </span>
+        if (this.state.edit) {
+            return (
+                <li id={`comment-index-item-${this.props.comment.id}`} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} className="comment-index-item">
+                    <UpdateCommentContainer comment={this.props.comment} cancelEdit={this.handleCancelChild}/>
+                </li>
+            )
         } else {
-            num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286 / 12);
-            when = <span className="date">
-                {num} {num === 1 ? ("year") : ("years")} ago
-            </span>
-        }
-        return (
-            <li id={`comment-index-item-${this.props.comment.id}`} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} className="comment-index-item">
-                <div className="comment-index-item-contents">
-                    <div className="comment-owner">
-                        <img className="comment-profile-picture" src={this.props.comment.profilePicture} alt="profile-pic"/>
-                        <div className="comment-main">
-                            <div className="comment-main-header">
-                                <div className="comment-main-header-author">
-                                    <span className="author-string">
-                                        {this.props.comment.username}
-                                    </span>
-                                    <span className="comment-uploaded-ago">
-                                        {when}
-                                    </span>
+            let date = new Date(this.props.comment.created_at);
+            let now = new Date(Date.now());
+            let diffInSeconds = Math.floor((now - date) / 1000);
+            let num;
+            let when;
+            if (diffInSeconds < 60) {
+                if (diffInSeconds === 1 || diffInSeconds === 0) {
+                    when = <span className="date">
+                        1 second ago
+                    </span>
+                } else {
+                    when = <span className="date">
+                        {diffInSeconds} seconds ago
+                    </span>
+                }
+            } else if (diffInSeconds / 60 < 60) {
+                num = Math.floor(diffInSeconds / 60)
+                if (num === 1) {
+                    when = <span className="date">
+                        {num} minute ago
+                    </span>
+                } else {
+                    when = <span className="date">
+                        {num} minutes ago
+                    </span>
+                }
+            } else if (diffInSeconds / 60 / 60 < 24) {
+                num = Math.floor(diffInSeconds / 60 / 60);
+                if (num === 1) {
+                    when = <span className="date">
+                        {num} hour ago
+                    </span>
+                } else {
+                    when = <span className="date">
+                        {num} hours ago
+                    </span>
+                }
+            } else if (diffInSeconds / 60 / 60 / 24 < 7) {
+                num = Math.floor(diffInSeconds / 60 / 60 / 24)
+                when = <span className="date">
+                    {num} {num === 1 ? ("day") : ("days")} ago
+                </span>
+            } else if (diffInSeconds / 60 / 60 / 24 / 7 < 4.286) {
+                num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7)
+                when = <span className="date">
+                    {num} {num === 1 ? ("week") : ("weeks")} ago
+                </span>
+            }
+            else if (diffInSeconds / 60 / 60 / 24 / 7 / 4.286 < 12) {
+                num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286)
+                when = <span className="date">
+                    {num} {num === 1 ? ("month") : ("months")} ago
+                </span>
+            } else {
+                num = Math.floor(diffInSeconds / 60 / 60 / 24 / 7 / 4.286 / 12);
+                when = <span className="date">
+                    {num} {num === 1 ? ("year") : ("years")} ago
+                </span>
+            }
+            return (
+                <li id={`comment-index-item-${this.props.comment.id}`} onMouseOver={this.handleMouseEnter} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} className="comment-index-item">
+                    <div className="comment-index-item-contents">
+                        <div className="comment-owner">
+                            <img className="comment-profile-picture" src={this.props.comment.profilePicture} alt="profile-pic"/>
+                            <div className="comment-main">
+                                <div className="comment-main-header">
+                                    <div className="comment-main-header-author">
+                                        <span className="author-string">
+                                            {this.props.comment.username}
+                                        </span>
+                                        <span className="comment-uploaded-ago">
+                                            {when}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="comment-expander">
+                                    <div id={`expand-${this.props.comment.id}`} className="comment-expander-contents">
+                                        <span id={`comment-${this.props.comment.id}`} className="comment-expander-string">
+                                            {this.props.comment.body}
+                                        </span>
+                                    </div>
+                                    <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
                                 </div>
                             </div>
-                            <div className="comment-expander">
-                                <div id={`expand-${this.props.comment.id}`} className="comment-expander-contents">
-                                    <span id={`comment-${this.props.comment.id}`} className="comment-expander-string">
-                                        {this.props.comment.body}
-                                    </span>
-                                </div>
-                                <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
-                            </div>
-                        </div>
-                        { this.props.currentUser === this.props.comment.userId ? (
-                            <div id={`comment-edit-dropdown-${this.props.comment.id}`}>
-                                <div onClick={this.handleDropdown} id={`edit-${this.props.comment.id}`} className="edit-comment fa hidden">
-                                    <i className="fas fa-ellipsis-v"></i>
-                                    <div onClick={(e) => {e.stopPropagation()}} id={`comment-edit-${this.props.comment.id}`} className="comment-edit-dropdown hidden">
-                                        <div className="inside-dropdown">
-                                            <div id={`comment-edit-button-${this.props.comment.id}`} className="comment-edit-button">
-                                                <div className="fa">
-                                                    <i className="fas fa-pen"></i>
+                            { this.props.currentUser === this.props.comment.userId ? (
+                                <div id={`comment-edit-dropdown-${this.props.comment.id}`}>
+                                    <div onClick={this.handleDropdown} id={`edit-${this.props.comment.id}`} className="edit-comment fa hidden">
+                                        <i className="fas fa-ellipsis-v"></i>
+                                        <div onClick={(e) => {e.stopPropagation()}} id={`comment-edit-${this.props.comment.id}`} className="comment-edit-dropdown hidden">
+                                            <div className="inside-dropdown">
+                                                <div onClick={this.handleCommentEdit} id={`comment-edit-button-${this.props.comment.id}`} className="comment-edit-button">
+                                                    <div className="fa fa-pen-container">
+                                                        <i className="fas fa-edit"></i>
+                                                    </div>
+                                                    Edit
                                                 </div>
-                                                Edit
-                                            </div>
-                                            <div id={`comment-delete-button-${this.props.comment.id}`} className="comment-delete-button">
-                                                Delete
+                                                <div onClick={this.handleCommentDelete} id={`comment-delete-button-${this.props.comment.id}`} className="comment-delete-button">
+                                                    <div className="fa fa-pen-container">
+                                                        <i className="fas fa-trash"></i>
+                                                    </div>
+                                                    Delete
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ) : (
-                            ""
-                        ) }
+                            ) : (
+                                ""
+                            ) }
+                        </div>
                     </div>
-                </div>
-                <div className="comment-replies">
+                    <div className="comment-replies">
 
-                </div>
-            </li>
-        )
+                    </div>
+                </li>
+            )
+        }
     }
 }
 

@@ -1,11 +1,10 @@
-.comment_index_item {
+.comment-index-item {
     display: block;
     margin-bottom: 16px;
 }
 
-.comment_index_item-contents {
+.comment-index-item-contents {
     margin-bottom: 0;
-    display: flex;
     flex-direction: row;
 }
 
@@ -149,3 +148,19 @@
     display: flex;
     flex-direction: column-reverse;
 }
+
+.fa-pen-container {
+    margin-right: 16px;
+    display: inline-block;
+}
+
+.fa-edit, .fa-trash {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    color: #909090;
+}
+
