@@ -142,6 +142,9 @@ class CommentIndexItem extends React.Component {
             let date = new Date(this.props.comment.created_at);
             let now = new Date(Date.now());
             let diffInSeconds = Math.floor((now - date) / 1000);
+            if (diffInSeconds <= 0) {
+                diffInSeconds = 1;
+            }
             let num;
             let when;
             if (diffInSeconds < 60) {

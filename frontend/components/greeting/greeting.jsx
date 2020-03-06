@@ -63,10 +63,10 @@ class Greeting extends React.Component {
 
     handleUpload(e){
         e.preventDefault();
-            if (!!this.props.user) {
+        if (!!this.props.user) {
             this.props.openModal('create-video')
         } else {
-            window.location.hash = '#/login'
+            this.props.openModal('login')
         }
     }
 
