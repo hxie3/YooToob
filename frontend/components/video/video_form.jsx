@@ -63,23 +63,24 @@ class VideoForm extends React.Component {
         const reader = new FileReader();
         const file = e.currentTarget.files[0];
         let newvideostate = Object.assign({}, this.state.video)
+        if (file.type.split("/")[0] === "video") {
+            reader.onloadend = () => {
+                newvideostate.videoFile = file;
+                newvideostate.videoUrl = reader.result;
+                this.setState({ video: newvideostate });
+            }
 
-        reader.onloadend = () => {
-            newvideostate.videoFile = file;
-            newvideostate.videoUrl = reader.result;
-            this.setState({ video: newvideostate });
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            newvideostate.videoFile = null
-            newvideostate.videoUrl = ''
-            this.setState({ video: newvideostate });
-        }
-        
-        if (file) {
-            this.setState({ form: 'details' })
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                newvideostate.videoFile = null
+                newvideostate.videoUrl = ''
+                this.setState({ video: newvideostate });
+            }
+            
+            if (file) {
+                this.setState({ form: 'details' })
+            }
         }
     }
 
@@ -88,28 +89,30 @@ class VideoForm extends React.Component {
         const reader = new FileReader();
         const file = e.currentTarget.files[0];
         let newvideostate = Object.assign({}, this.state.video)
+        if (file.type.split("/")[0] === "image") {
 
-        reader.onloadend = () => {
-            newvideostate.photoFile = file;
-            newvideostate.photoUrl = reader.result;
-            this.setState({ video: newvideostate });
-        }
+            reader.onloadend = () => {
+                newvideostate.photoFile = file;
+                newvideostate.photoUrl = reader.result;
+                this.setState({ video: newvideostate });
+            }
 
-        if (file) {
-            reader.readAsDataURL(file);
-        } 
-        // else {
-        //     newvideostate.photoFile = null;
-        //     newvideostate.photoUrl = '';
-        //     this.setState({ video: newvideostate });
-        //     document.getElementsByClassName("select-files-button")[0].disabled = true;
-        // }
+            if (file) {
+                reader.readAsDataURL(file);
+            } 
+            // else {
+            //     newvideostate.photoFile = null;
+            //     newvideostate.photoUrl = '';
+            //     this.setState({ video: newvideostate });
+            //     document.getElementsByClassName("select-files-button")[0].disabled = true;
+            // }
 
-        if (file) {
-            this.setState({ thumbnailUploaded: true, uploadable: true });
-            if(this.state.video.title !== '' && this.state.video.description !== '') {
-                document.getElementsByClassName("select-files-button")[0].disabled = false;
-                document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+            if (file) {
+                this.setState({ thumbnailUploaded: true, uploadable: true });
+                if(this.state.video.title !== '' && this.state.video.description !== '') {
+                    document.getElementsByClassName("select-files-button")[0].disabled = false;
+                    document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+                }
             }
         }
     }

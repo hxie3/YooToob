@@ -984,6 +984,11 @@ function (_React$Component) {
         var date = new Date(this.props.comment.created_at);
         var now = new Date(Date.now());
         var diffInSeconds = Math.floor((now - date) / 1000);
+
+        if (diffInSeconds <= 0) {
+          diffInSeconds = 1;
+        }
+
         var num;
         var when;
 
@@ -1576,7 +1581,7 @@ function (_React$Component) {
       if (!!this.props.user) {
         this.props.openModal('create-video');
       } else {
-        window.location.hash = '#/login';
+        this.props.openModal('login');
       }
     }
   }, {
@@ -3855,29 +3860,31 @@ function (_React$Component) {
       var file = e.currentTarget.files[0];
       var newvideostate = Object.assign({}, this.state.video);
 
-      reader.onloadend = function () {
-        newvideostate.videoFile = file;
-        newvideostate.videoUrl = reader.result;
+      if (file.type.split("/")[0] === "video") {
+        reader.onloadend = function () {
+          newvideostate.videoFile = file;
+          newvideostate.videoUrl = reader.result;
 
-        _this2.setState({
-          video: newvideostate
-        });
-      };
+          _this2.setState({
+            video: newvideostate
+          });
+        };
 
-      if (file) {
-        reader.readAsDataURL(file);
-      } else {
-        newvideostate.videoFile = null;
-        newvideostate.videoUrl = '';
-        this.setState({
-          video: newvideostate
-        });
-      }
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          newvideostate.videoFile = null;
+          newvideostate.videoUrl = '';
+          this.setState({
+            video: newvideostate
+          });
+        }
 
-      if (file) {
-        this.setState({
-          form: 'details'
-        });
+        if (file) {
+          this.setState({
+            form: 'details'
+          });
+        }
       }
     }
   }, {
@@ -3890,34 +3897,36 @@ function (_React$Component) {
       var file = e.currentTarget.files[0];
       var newvideostate = Object.assign({}, this.state.video);
 
-      reader.onloadend = function () {
-        newvideostate.photoFile = file;
-        newvideostate.photoUrl = reader.result;
+      if (file.type.split("/")[0] === "image") {
+        reader.onloadend = function () {
+          newvideostate.photoFile = file;
+          newvideostate.photoUrl = reader.result;
 
-        _this3.setState({
-          video: newvideostate
-        });
-      };
+          _this3.setState({
+            video: newvideostate
+          });
+        };
 
-      if (file) {
-        reader.readAsDataURL(file);
-      } // else {
-      //     newvideostate.photoFile = null;
-      //     newvideostate.photoUrl = '';
-      //     this.setState({ video: newvideostate });
-      //     document.getElementsByClassName("select-files-button")[0].disabled = true;
-      // }
+        if (file) {
+          reader.readAsDataURL(file);
+        } // else {
+        //     newvideostate.photoFile = null;
+        //     newvideostate.photoUrl = '';
+        //     this.setState({ video: newvideostate });
+        //     document.getElementsByClassName("select-files-button")[0].disabled = true;
+        // }
 
 
-      if (file) {
-        this.setState({
-          thumbnailUploaded: true,
-          uploadable: true
-        });
+        if (file) {
+          this.setState({
+            thumbnailUploaded: true,
+            uploadable: true
+          });
 
-        if (this.state.video.title !== '' && this.state.video.description !== '') {
-          document.getElementsByClassName("select-files-button")[0].disabled = false;
-          document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+          if (this.state.video.title !== '' && this.state.video.description !== '') {
+            document.getElementsByClassName("select-files-button")[0].disabled = false;
+            document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+          }
         }
       }
     }
