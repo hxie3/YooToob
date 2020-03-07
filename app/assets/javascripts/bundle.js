@@ -1084,7 +1084,19 @@ function (_React$Component) {
           onClick: this.handleReadMore,
           id: "read-".concat(this.props.comment.id),
           className: "read-more"
-        }, "Read more"))), this.props.currentUser === this.props.comment.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, "Read more"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "comment-like-button"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "comment-like-button-toggle"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "comment-like-button-button"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "comment-like-button-icon fa"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-thumbs-up comment-thumbs-up"
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "comment-likes-string"
+        }, "100"))))), this.props.currentUser === this.props.comment.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           id: "comment-edit-dropdown-".concat(this.props.comment.id)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           onClick: this.handleDropdown,
@@ -1298,7 +1310,7 @@ function (_React$Component) {
       e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
       var submit = document.getElementById("comment-submit-".concat(this.props.comment.id));
 
-      if (e.currentTarget.value.trim() === '') {
+      if (e.currentTarget.value.trim() === '' || e.currentTarget.value.trim() === this.props.comment.body) {
         submit.disabled = true;
       } else {
         submit.disabled = false;
@@ -1362,6 +1374,7 @@ function (_React$Component) {
           id: "comment-form-body-container-".concat(this.props.comment.id),
           className: "comment-form-body-container"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+          autoFocus: true,
           id: "comment-form-body-textarea-".concat(this.props.comment.id),
           onBlur: this.unfocusBody,
           onFocus: this.focusBody,
@@ -1384,7 +1397,7 @@ function (_React$Component) {
           className: "comment-submit"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "comment-submit-text"
-        }, "COMMENT")))));
+        }, "SAVE")))));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_comment_index_item_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
           comment: this.props.comment
@@ -3316,7 +3329,49 @@ function (_React$Component) {
         className: "fas fa-circle"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "below-title-date"
-      }, month, " ", day, ", ", year))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, month, " ", day, ", ", year))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "menu-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "menu"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "menu-renderer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "top-level-buttons"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "like-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "like-button-toggle"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "like-button-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "like-button-icon fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-thumbs-up video-thumbs-up"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "video-likes-string"
+      }, "100"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dislike-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dislike-button-toggle"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dislike-button-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dislike-button-icon fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-thumbs-down"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "video-dislikes-string"
+      }, "20"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-dropdown-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "center-self"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "video-dropdown-button-icon fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-ellipsis-h"
+      }))))))))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bottom-border-info"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "top-row"

@@ -43,7 +43,7 @@ class UpdateCommentForm extends React.Component {
         e.currentTarget.style.height = 'auto';
         e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
         let submit = document.getElementById(`comment-submit-${this.props.comment.id}`);
-        if (e.currentTarget.value.trim() === '') {
+        if (e.currentTarget.value.trim() === '' || e.currentTarget.value.trim() === this.props.comment.body ) {
             submit.disabled = true;
         } else {
             submit.disabled = false;
@@ -93,7 +93,7 @@ class UpdateCommentForm extends React.Component {
                     </div>
                     <div className="column">
                         <div id={`comment-form-body-container-${this.props.comment.id}`} className="comment-form-body-container">
-                            <textarea id={`comment-form-body-textarea-${this.props.comment.id}`} onBlur={this.unfocusBody} onFocus={this.focusBody} className="comment-form-body-textarea" onChange={this.updateBody} value={this.state.comment.body} placeholder="Add a public comment..."></textarea>
+                            <textarea autoFocus id={`comment-form-body-textarea-${this.props.comment.id}`} onBlur={this.unfocusBody} onFocus={this.focusBody} className="comment-form-body-textarea" onChange={this.updateBody} value={this.state.comment.body} placeholder="Add a public comment..."></textarea>
                         </div>
                         <div id={`comment-buttons-${this.props.comment.id}`} className="comment-buttons hidden">
                             <button onClick={this.handleCancel} className="comment-cancel">
@@ -103,7 +103,7 @@ class UpdateCommentForm extends React.Component {
                             </button>
                             <button disabled onSubmit={this.handleSubmit} id={`comment-submit-${this.props.comment.id}`} className="comment-submit">
                                 <span className="comment-submit-text">
-                                    COMMENT
+                                    SAVE
                                 </span>
                             </button>
                         </div>

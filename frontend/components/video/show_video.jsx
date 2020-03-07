@@ -153,20 +153,47 @@ class ShowVideo extends React.Component {
                                                         </span>
                                                     </div>
                                                 </div>
-                                                {/* <div className='menu-container'>
+                                                <div className='menu-container'>
                                                     <div className='menu'>
                                                         <div className='menu-renderer'>
                                                             <div className='top-level-buttons'>
                                                                 <div className='like-button'>
-                                                                    <a className='like-button-toggle'>
-                                                                        <div className='like-button-button'></div>
-
-                                                                    </a>
+                                                                    <div className='like-button-toggle'>
+                                                                        <div className='like-button-button'>
+                                                                            <div className='like-button-icon fa'>
+                                                                                <i className="fas fa-thumbs-up video-thumbs-up"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <span className='video-likes-string'>
+                                                                            100
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className='dislike-button'>
+                                                                    <div className='dislike-button-toggle'>
+                                                                        <div className='dislike-button-button'>
+                                                                            <div className='dislike-button-icon fa'>
+                                                                                <i className="fas fa-thumbs-down"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <span className='video-dislikes-string'>
+                                                                            20
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className='video-dropdown'>
+                                                                    <div className='video-dropdown-button'>
+                                                                        <div className="center-self">
+                                                                            <div className='video-dropdown-button-icon fa'>
+                                                                                <i className="fas fa-ellipsis-h"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div> */}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -84,6 +84,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 }
 
 .info-text {
@@ -144,25 +145,110 @@
     flex-direction: row;
 }
 
-.like-button {
-    color: #909090;
+.like-button, .dislike-button {
+    color: #606060;
+    padding-right: 8px;
+    font-size: 13px;
+    letter-spacing: 0.007px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    display: inline-block;
+    font-family: 'Roboto', 'Arial', sans-serif;
 }
 
 .like-button-active {
     color: lightskyblue;
 }
 
-.like-button-toggle {
+.like-button-toggle, .dislike-button-toggle {
     cursor: pointer;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    color: inherit;
+    border-radius: inherit;
+    text-decoration: none;
 }
 
-.like-button-button {
-    color: #909090;
+.like-button-button, .dislike-button-button {
+    color: #606060;
     background-color: transparent;
+    text-transform: inherit;
+    line-height: 1;
+    padding: 8px;
+    width: 36px;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+.like-button-icon, .dislike-button-icon {
+    vertical-align: middle;
+    color: inherit;
+    outline: none;
+    background: none;
+    margin: 0;
+    border: none;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 0;
+    cursor: pointer;
+}
+
+.fa-thumbs-up, .fa-thumbs-down, .fa-ellipsis-h {
+    font-size: 20px;
+}
+
+.video-dropdown {
+    margin-left: 8px;
+    width: 40px;
+    height: 40px;
+}
+
+.video-dropdown-button {
+    vertical-align: middle;
+    color: inherit;
+    outline: none;
+    background: none;
+    margin: 0;
+    border: none;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-self {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    vertical-align: middle;
+}
+
+.video-dropdown-button-icon {
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    fill: currentColor;
+    stroke: none;
+}
+
+.fa-ellipsis-h {
+    display: inline-flex;
+    justify-self: center;
+    align-self: center;
+    color: #909090;
 }
 
 .bottom-border-info {
