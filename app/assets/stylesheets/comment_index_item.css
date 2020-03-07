@@ -164,7 +164,7 @@
     color: #909090;
 }
 
-.comment-like-button {
+.comment-like-button, .comment-dislike-button {
     color: #606060;
     padding-right: 8px;
     font-size: 13px;
@@ -175,11 +175,11 @@
     font-family: 'Roboto', 'Arial', sans-serif;
 }
 
-.comment-like-button-active {
+.comment-like-button-active, .comment-dislike-button-active {
     color: lightskyblue;
 }
 
-.comment-like-button-toggle {
+.comment-like-button-toggle, .comment-dislike-button-toggle {
     cursor: pointer;
     display: flex;
     flex-direction: row;
@@ -190,18 +190,22 @@
     text-decoration: none;
 }
 
-.comment-like-button-button {
+.comment-like-button-toggle {
+    margin-left: -8px;
+}
+
+.comment-like-button-button, .comment-dislike-button-button {
     color: #606060;
     background-color: transparent;
     text-transform: inherit;
     line-height: 1;
     padding: 8px;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     box-sizing: border-box;
 }
 
-.comment-like-button-icon {
+.comment-like-button-icon, .comment-dislike-button-icon {
     vertical-align: middle;
     color: inherit;
     outline: none;
@@ -215,6 +219,6 @@
     cursor: pointer;
 }
 
-.video-thumbs-up, .fa-thumbs-down, .fa-ellipsis-h {
-    font-size: 20px;
+.comment-thumbs-up, .comment-thumbs-down {
+    font-size: 16px;
 }

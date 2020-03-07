@@ -13,12 +13,27 @@ class ShowVideo extends React.Component {
             video: this.props.video,
             videoId: this.props.videoId,
             videos: this.props.videos,
-            incrementViews: true
+            incrementViews: true,
         }
 
         this.handleShow = this.handleShow.bind(this);
         this.incrementViews = this.incrementViews.bind(this);
         this.redirectLogin = this.redirectLogin.bind(this);
+        this.handleLike = this.handleLike.bind(this);
+    }
+
+    handleLike(e) {
+        e.preventDefault();
+        console.log(this.props.like)
+        if (!Object.values(this.props.like).length) {
+            this.props.createLike({ user_id: this.props.currentUser.id, likeable_type: 'Video', likeable_id: this.props.video.id, liked: true })
+        } else if (this.props.like.liked) {
+            this.props.deleteLike(this.props.like.id)
+        } else {
+            let like = Object.assign({}, this.props.like);
+            like.liked = true;
+            this.props.updateLike(like);
+        }
     }
 
     componentDidMount(){
@@ -114,6 +129,9 @@ class ShowVideo extends React.Component {
         } else {
             commentsRender = `${commentsLength} Comments`
         }
+        // let styles = {
+        //     width: `${ this.props.video.likes / this.props.video.dislikes }`
+        // }
         return (
             <div className='show-body'>
                 <div className='something'>
@@ -158,7 +176,7 @@ class ShowVideo extends React.Component {
                                                         <div className='menu-renderer'>
                                                             <div className='top-level-buttons'>
                                                                 <div className='like-button'>
-                                                                    <div className='like-button-toggle'>
+                                                                    <div onClick={this.handleLike} className='like-button-toggle'>
                                                                         <div className='like-button-button'>
                                                                             <div className='like-button-icon fa'>
                                                                                 <i className="fas fa-thumbs-up video-thumbs-up"></i>
@@ -173,7 +191,7 @@ class ShowVideo extends React.Component {
                                                                     <div className='dislike-button-toggle'>
                                                                         <div className='dislike-button-button'>
                                                                             <div className='dislike-button-icon fa'>
-                                                                                <i className="fas fa-thumbs-down"></i>
+                                                                                <i className="fas fa-thumbs-down video-thumbs-down"></i>
                                                                             </div>
                                                                         </div>
                                                                         <span className='video-dislikes-string'>
@@ -191,6 +209,13 @@ class ShowVideo extends React.Component {
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="likes-container">
+                                                        <div className="likes-visualizer">
+                                                        {/* style = {styles}
+                                                        > */}
+
                                                         </div>
                                                     </div>
                                                 </div>

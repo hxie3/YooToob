@@ -236,6 +236,18 @@ class CommentIndexItem extends React.Component {
                                             </span>
                                         </div>
                                     </div>
+                                    <div className='comment-dislike-button'>
+                                        <div className='comment-dislike-button-toggle'>
+                                            <div className='comment-dislike-button-button'>
+                                                <div className='comment-dislike-button-icon fa'>
+                                                    <i className="fas fa-thumbs-down comment-thumbs-down"></i>
+                                                </div>
+                                            </div>
+                                            <span className='comment-dislikes-string'>
+                                                20
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             { this.props.currentUser === this.props.comment.userId ? (
