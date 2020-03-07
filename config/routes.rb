@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :show, :index]
     resources :videos, only: [:index, :create, :show, :update, :destroy]
     resources :comments, only: [:index, :create, :show, :update, :destroy]
+    resources :likes, only: [:create, :update, :destroy]
     match 'users' => 'users#update', :via => :patch
   end
   root 'static_pages#root'
