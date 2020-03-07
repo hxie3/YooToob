@@ -224,6 +224,18 @@ class CommentIndexItem extends React.Component {
                                         </span>
                                     </div>
                                     <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
+                                    <div className='comment-like-button'>
+                                        <div className='comment-like-button-toggle'>
+                                            <div className='comment-like-button-button'>
+                                                <div className='comment-like-button-icon fa'>
+                                                    <i className="fas fa-thumbs-up comment-thumbs-up"></i>
+                                                </div>
+                                            </div>
+                                            <span className='comment-likes-string'>
+                                                100
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             { this.props.currentUser === this.props.comment.userId ? (
