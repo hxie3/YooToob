@@ -5,7 +5,6 @@ import { createLike, updateLike, deleteLike } from '../../actions/like_actions';
 import { fetchComments } from '../../actions/comment_actions';
 import { withRouter } from 'react-router-dom';
 import { openModal } from '../../actions/modal_actions';
-import { update } from '../../util/session_api_util';
 
 
 const mapStateToProps = (state, ownProps) => {
