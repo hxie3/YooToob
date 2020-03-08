@@ -18,6 +18,8 @@ class CommentIndexItem extends React.Component {
         this.handleCommentEdit = this.handleCommentEdit.bind(this);
         this.handleCancelChild = this.handleCancelChild.bind(this);
         this.handleCommentDelete = this.handleCommentDelete.bind(this);
+        this.handleCommentLike = this.handleCommentLike.bind(this);
+        this.handleCommentDislike = this.handleCommentDislike.bind(this);
     }
 
     componentDidMount() {
@@ -28,6 +30,15 @@ class CommentIndexItem extends React.Component {
                 readMore.classList.add("hidden");
             } else {
                 readMore.classList.remove("hidden");
+            }
+        }
+        if (this.props.like) {
+            if (this.props.like.liked) {
+                document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
+            } else {
+                document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
             }
         }
         if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {
@@ -60,6 +71,31 @@ class CommentIndexItem extends React.Component {
                 readMore.classList.add("hidden");
             } else {
                 readMore.classList.remove("hidden");
+            }
+        }
+        if (!this.props.currentUser) {
+            document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+            document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
+            document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+            document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
+        } else {
+            if (this.props.like) {
+                if (this.props.like.liked) {
+                    document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                    document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
+                    document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+                    document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
+                } else {
+                    document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                    document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
+                    document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+                    document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
+                }
+            } else {
+                document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+                document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
+                document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+                document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
             }
         }
         if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {
@@ -129,6 +165,74 @@ class CommentIndexItem extends React.Component {
 
     handleCancelChild() {
         this.setState({ edit: false })
+    }
+
+    handleCommentLike(e) {
+        e.preventDefault();
+        if (!this.props.currentUser) {
+            this.props.openModal('login');
+            return;
+        }
+        if (!this.props.like) {
+            this.props.createLike({ user_id: this.props.currentUser, likeable_type: 'Comment', likeable_id: this.props.comment.id, liked: true })
+                .then(() => {
+                    this.props.fetchComment(this.props.comment.id);
+                })
+            document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+            document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
+        } else if (this.props.like.liked) {
+            this.props.deleteLike(this.props.like.id)
+                .then(() => {
+                    this.props.fetchComment(this.props.comment.id);
+                })
+            document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+            document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
+        } else {
+            let like = Object.assign({}, this.props.like);
+            like.liked = true;
+            this.props.updateLike(like)
+                .then(() => {
+                    this.props.fetchComment(this.props.comment.id);
+                })
+            document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+            document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
+            document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+            document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
+        }
+    }
+
+    handleCommentDislike(e) {
+        e.preventDefault();
+        if (!this.props.currentUser) {
+            this.props.openModal('login');
+            return;
+        }
+        if (!this.props.like) {
+            this.props.createLike({ user_id: this.props.currentUser, likeable_type: 'Comment', likeable_id: this.props.comment.id, liked: false })
+                .then(() => {
+                    this.props.fetchComment(this.props.comment.id);
+                })
+            document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+            document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
+        } else if (!this.props.like.liked) {
+            this.props.deleteLike(this.props.like.id)
+                .then(() => {
+                    this.props.fetchComment(this.props.comment.id);
+                })
+            document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+            document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
+        } else {
+            let like = Object.assign({}, this.props.like);
+            like.liked = false;
+            this.props.updateLike(like)
+                .then(() => {
+                    this.props.fetchComment(this.props.comment.id);
+                })
+            document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+            document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
+            document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+            document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
+        }
     }
 
     render() {
@@ -225,26 +329,26 @@ class CommentIndexItem extends React.Component {
                                     </div>
                                     <div onClick={this.handleReadMore} id={`read-${this.props.comment.id}`} className="read-more">Read more</div>
                                     <div className='comment-like-button'>
-                                        <div className='comment-like-button-toggle'>
-                                            <div className='comment-like-button-button'>
+                                        <div id={`comment-like-button-toggle-${this.props.comment.id}`} onClick={this.handleCommentLike} className='comment-like-button-toggle'>
+                                            <div id={`comment-like-button-button-${this.props.comment.id}`} className='comment-like-button-button'>
                                                 <div className='comment-like-button-icon fa'>
                                                     <i className="fas fa-thumbs-up comment-thumbs-up"></i>
                                                 </div>
                                             </div>
                                             <span className='comment-likes-string'>
-                                                100
+                                                { this.props.comment.likes }
                                             </span>
                                         </div>
                                     </div>
                                     <div className='comment-dislike-button'>
-                                        <div className='comment-dislike-button-toggle'>
-                                            <div className='comment-dislike-button-button'>
+                                        <div id={`comment-dislike-button-toggle-${this.props.comment.id}`} onClick={this.handleCommentDislike} className='comment-dislike-button-toggle'>
+                                            <div id={`comment-dislike-button-button-${this.props.comment.id}`} className='comment-dislike-button-button'>
                                                 <div className='comment-dislike-button-icon fa'>
                                                     <i className="fas fa-thumbs-down comment-thumbs-down"></i>
                                                 </div>
                                             </div>
                                             <span className='comment-dislikes-string'>
-                                                20
+                                                { this.props.comment.dislikes }
                                             </span>
                                         </div>
                                     </div>
