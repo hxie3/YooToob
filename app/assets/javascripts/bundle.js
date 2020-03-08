@@ -1235,6 +1235,9 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    fetchComment: function fetchComment(commentId) {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["fetchComment"])(commentId));
+    },
     updateComment: function updateComment(comment) {
       return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["updateComment"])(comment));
     },
@@ -3236,6 +3239,7 @@ function (_React$Component) {
     _this.incrementViews = _this.incrementViews.bind(_assertThisInitialized(_this));
     _this.redirectLogin = _this.redirectLogin.bind(_assertThisInitialized(_this));
     _this.handleLike = _this.handleLike.bind(_assertThisInitialized(_this));
+    _this.handleDislike = _this.handleDislike.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3243,27 +3247,88 @@ function (_React$Component) {
     key: "handleLike",
     value: function handleLike(e) {
       e.preventDefault();
-      console.log(this.props.like);
 
-      if (!Object.values(this.props.like).length) {
+      if (!this.props.currentUser) {
+        this.props.openModal('login');
+        return;
+      }
+
+      if (!this.props.like) {
         this.props.createLike({
           user_id: this.props.currentUser.id,
           likeable_type: 'Video',
           likeable_id: this.props.video.id,
           liked: true
         });
+        document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+        document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
       } else if (this.props.like.liked) {
         this.props.deleteLike(this.props.like.id);
+        document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+        document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
       } else {
         var like = Object.assign({}, this.props.like);
         like.liked = true;
         this.props.updateLike(like);
+        document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+        document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+        document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+        document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
       }
+
+      this.props.fetchVideo(this.props.match.params.id);
+    }
+  }, {
+    key: "handleDislike",
+    value: function handleDislike(e) {
+      e.preventDefault();
+
+      if (!this.props.currentUser) {
+        this.props.openModal('login');
+        return;
+      }
+
+      if (!this.props.like) {
+        this.props.createLike({
+          user_id: this.props.currentUser.id,
+          likeable_type: 'Video',
+          likeable_id: this.props.video.id,
+          liked: false
+        });
+        document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+        document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+      } else if (!this.props.like.liked) {
+        this.props.deleteLike(this.props.like.id);
+        document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+        document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
+      } else {
+        var like = Object.assign({}, this.props.like);
+        like.liked = false;
+        this.props.updateLike(like);
+        document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+        document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+        document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+        document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
+      }
+
+      this.props.fetchVideo(this.props.match.params.id);
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchVideo(this.props.match.params.id);
+      var _this2 = this;
+
+      this.props.fetchVideo(this.props.match.params.id).then(function () {
+        if (_this2.props.like) {
+          if (_this2.props.like.liked) {
+            document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+            document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+          } else {
+            document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+            document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+          }
+        }
+      });
       this.props.fetchVideos();
       this.props.fetchComments();
     }
@@ -3286,16 +3351,32 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
       if (this.props.video) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
           //Perform some operation here
-          this.props.fetchVideo(this.props.videoId);
+          this.props.fetchVideo(this.props.videoId).then(function () {
+            if (_this3.props.like) {
+              if (_this3.props.like.liked) {
+                document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+                document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+              } else {
+                document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+                document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+              }
+            }
+          });
           this.setState({
             videoId: this.props.videoId
           });
           this.setState({
             incrementViews: true
           });
+          document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+          document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
+          document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+          document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
         }
 
         document.getElementsByClassName("show-more")[0].classList.remove("hidden");
@@ -3322,7 +3403,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       var months = {
         1: "Jan",
@@ -3443,9 +3524,10 @@ function (_React$Component) {
         className: "fas fa-thumbs-up video-thumbs-up"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "video-likes-string"
-      }, "100"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.video.likes))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dislike-button"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleDislike,
         className: "dislike-button-toggle"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dislike-button-button"
@@ -3455,7 +3537,7 @@ function (_React$Component) {
         className: "fas fa-thumbs-down video-thumbs-down"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "video-dislikes-string"
-      }, "20"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.video.dislikes))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-dropdown-button"
@@ -3537,7 +3619,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "items"
       }, Object.values(videos).map(function (videoItem, index) {
-        if (videoItem.id === parseInt(_this2.state.videoId)) return;
+        if (videoItem.id === parseInt(_this4.state.videoId)) return;
         var viewsVideoItem = videoItem.views;
         var viewsVideoItemRender;
 
@@ -3627,7 +3709,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var comments = Object.values(state.entities.comments).filter(function (comment) {
     return comment.videoId === Number(ownProps.match.params.id);
   });
-  var like = state.entities.likes;
+  var like = Object.values(state.entities.likes)[0];
   return {
     video: state.entities.videos[ownProps.match.params.id],
     videos: state.entities.videos,
@@ -4950,9 +5032,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  likes: _likes_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
   videos: _videos_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  comments: _comments_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  likes: _likes_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  comments: _comments_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -4994,6 +5076,8 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_like_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/like_actions */ "./frontend/actions/like_actions.js");
+/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/video_actions */ "./frontend/actions/video_actions.js");
+
 
 
 var likesReducer = function likesReducer() {
@@ -5006,9 +5090,13 @@ var likesReducer = function likesReducer() {
     case _actions_like_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_LIKE"]:
       return Object.assign({}, state, action.like);
 
+    case _actions_video_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_VIDEO"]:
+      newState = Object.assign({}, state, action.video).like;
+      if (newState) return newState;
+      return {};
+
     case _actions_like_actions__WEBPACK_IMPORTED_MODULE_0__["DELETE_LIKE"]:
-      delete newState[Object.keys(action.comment)[0]];
-      return newState;
+      return {};
 
     default:
       return state;
@@ -5269,7 +5357,9 @@ var videosReducer = function videosReducer() {
       return action.videos;
 
     case _actions_video_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEO"]:
-      return Object.assign({}, state, action.video);
+      newState = Object.assign({}, state, action.video);
+      delete newState.like;
+      return newState;
 
     case _actions_video_actions__WEBPACK_IMPORTED_MODULE_0__["DELETE_VIDEO"]:
       delete newState[action.video.id];

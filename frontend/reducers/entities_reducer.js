@@ -7,9 +7,9 @@ import likesReducer from "./likes_reducer";
 
 const entitiesReducer = combineReducers({
     users: usersReducer,
+    likes: likesReducer,
     videos: videosReducer,
     comments: commentsReducer,
-    likes: likesReducer
 });
 
 export default entitiesReducer;
