@@ -32,13 +32,15 @@ class CommentIndexItem extends React.Component {
                 readMore.classList.remove("hidden");
             }
         }
-        if (this.props.like) {
-            if (this.props.like.liked) {
-                document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
-                document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
-            } else {
-                document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
-                document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
+        if (document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`)) {
+            if (this.props.like) {
+                if (this.props.like.liked) {
+                    document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                    document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
+                } else {
+                    document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                    document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
+                }
             }
         }
         if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {
@@ -79,23 +81,25 @@ class CommentIndexItem extends React.Component {
             document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
             document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
         } else {
-            if (this.props.like) {
-                if (this.props.like.liked) {
-                    document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
-                    document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
+            if (document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`)) {
+                if (this.props.like) {
+                    if (this.props.like.liked) {
+                        document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                        document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.add("toggled");
+                        document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+                        document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
+                    } else {
+                        document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
+                        document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
+                        document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
+                        document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
+                    }
+                } else {
                     document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
                     document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
-                } else {
-                    document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.add("toggled");
-                    document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.add("toggled");
                     document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
                     document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
                 }
-            } else {
-                document.getElementById(`comment-dislike-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
-                document.getElementById(`comment-dislike-button-button-${this.props.comment.id}`).classList.remove("toggled");
-                document.getElementById(`comment-like-button-toggle-${this.props.comment.id}`).classList.remove("toggled");
-                document.getElementById(`comment-like-button-button-${this.props.comment.id}`).classList.remove("toggled");
             }
         }
         if (document.getElementById(`comment-edit-dropdown-${this.props.comment.id}`)) {

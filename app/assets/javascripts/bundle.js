@@ -902,13 +902,15 @@ function (_React$Component) {
         }
       }
 
-      if (this.props.like) {
-        if (this.props.like.liked) {
-          document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
-          document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
-        } else {
-          document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
-          document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+      if (document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id))) {
+        if (this.props.like) {
+          if (this.props.like.liked) {
+            document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+            document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+          } else {
+            document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+            document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+          }
         }
       }
 
@@ -957,23 +959,25 @@ function (_React$Component) {
         document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
         document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
       } else {
-        if (this.props.like) {
-          if (this.props.like.liked) {
-            document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
-            document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+        if (document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id))) {
+          if (this.props.like) {
+            if (this.props.like.liked) {
+              document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+              document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+              document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+              document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+            } else {
+              document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+              document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+              document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+              document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+            }
+          } else {
             document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
             document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
-          } else {
-            document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
-            document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
             document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
             document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
           }
-        } else {
-          document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
-          document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
-          document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
-          document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
         }
       }
 
@@ -3881,8 +3885,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../util/session_api_util */ "./frontend/util/session_api_util.js");
-
 
 
 
