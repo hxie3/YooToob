@@ -881,6 +881,8 @@ function (_React$Component) {
     _this.handleCommentEdit = _this.handleCommentEdit.bind(_assertThisInitialized(_this));
     _this.handleCancelChild = _this.handleCancelChild.bind(_assertThisInitialized(_this));
     _this.handleCommentDelete = _this.handleCommentDelete.bind(_assertThisInitialized(_this));
+    _this.handleCommentLike = _this.handleCommentLike.bind(_assertThisInitialized(_this));
+    _this.handleCommentDislike = _this.handleCommentDislike.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -897,6 +899,16 @@ function (_React$Component) {
           readMore.classList.add("hidden");
         } else {
           readMore.classList.remove("hidden");
+        }
+      }
+
+      if (this.props.like) {
+        if (this.props.like.liked) {
+          document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+          document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+        } else {
+          document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+          document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
         }
       }
 
@@ -936,6 +948,32 @@ function (_React$Component) {
           readMore.classList.add("hidden");
         } else {
           readMore.classList.remove("hidden");
+        }
+      }
+
+      if (!this.props.currentUser) {
+        document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+        document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+        document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+        document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+      } else {
+        if (this.props.like) {
+          if (this.props.like.liked) {
+            document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+            document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+            document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+            document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+          } else {
+            document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+            document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+            document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+            document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+          }
+        } else {
+          document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+          document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+          document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+          document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
         }
       }
 
@@ -1022,6 +1060,88 @@ function (_React$Component) {
       this.setState({
         edit: false
       });
+    }
+  }, {
+    key: "handleCommentLike",
+    value: function handleCommentLike(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+
+      if (!this.props.currentUser) {
+        this.props.openModal('login');
+        return;
+      }
+
+      if (!this.props.like) {
+        this.props.createLike({
+          user_id: this.props.currentUser,
+          likeable_type: 'Comment',
+          likeable_id: this.props.comment.id,
+          liked: true
+        }).then(function () {
+          _this4.props.fetchComment(_this4.props.comment.id);
+        });
+        document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+        document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+      } else if (this.props.like.liked) {
+        this.props.deleteLike(this.props.like.id).then(function () {
+          _this4.props.fetchComment(_this4.props.comment.id);
+        });
+        document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+        document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+      } else {
+        var like = Object.assign({}, this.props.like);
+        like.liked = true;
+        this.props.updateLike(like).then(function () {
+          _this4.props.fetchComment(_this4.props.comment.id);
+        });
+        document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+        document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+        document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+        document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+      }
+    }
+  }, {
+    key: "handleCommentDislike",
+    value: function handleCommentDislike(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+
+      if (!this.props.currentUser) {
+        this.props.openModal('login');
+        return;
+      }
+
+      if (!this.props.like) {
+        this.props.createLike({
+          user_id: this.props.currentUser,
+          likeable_type: 'Comment',
+          likeable_id: this.props.comment.id,
+          liked: false
+        }).then(function () {
+          _this5.props.fetchComment(_this5.props.comment.id);
+        });
+        document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+        document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+      } else if (!this.props.like.liked) {
+        this.props.deleteLike(this.props.like.id).then(function () {
+          _this5.props.fetchComment(_this5.props.comment.id);
+        });
+        document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+        document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+      } else {
+        var like = Object.assign({}, this.props.like);
+        like.liked = false;
+        this.props.updateLike(like).then(function () {
+          _this5.props.fetchComment(_this5.props.comment.id);
+        });
+        document.getElementById("comment-dislike-button-toggle-".concat(this.props.comment.id)).classList.add("toggled");
+        document.getElementById("comment-dislike-button-button-".concat(this.props.comment.id)).classList.add("toggled");
+        document.getElementById("comment-like-button-toggle-".concat(this.props.comment.id)).classList.remove("toggled");
+        document.getElementById("comment-like-button-button-".concat(this.props.comment.id)).classList.remove("toggled");
+      }
     }
   }, {
     key: "render",
@@ -1143,8 +1263,11 @@ function (_React$Component) {
         }, "Read more"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "comment-like-button"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "comment-like-button-toggle-".concat(this.props.comment.id),
+          onClick: this.handleCommentLike,
           className: "comment-like-button-toggle"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "comment-like-button-button-".concat(this.props.comment.id),
           className: "comment-like-button-button"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "comment-like-button-icon fa"
@@ -1152,11 +1275,14 @@ function (_React$Component) {
           className: "fas fa-thumbs-up comment-thumbs-up"
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "comment-likes-string"
-        }, "100"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.props.comment.likes))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "comment-dislike-button"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "comment-dislike-button-toggle-".concat(this.props.comment.id),
+          onClick: this.handleCommentDislike,
           className: "comment-dislike-button-toggle"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "comment-dislike-button-button-".concat(this.props.comment.id),
           className: "comment-dislike-button-button"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "comment-dislike-button-icon fa"
@@ -1164,7 +1290,7 @@ function (_React$Component) {
           className: "fas fa-thumbs-down comment-thumbs-down"
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "comment-dislikes-string"
-        }, "20"))))), this.props.currentUser === this.props.comment.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.props.comment.dislikes))))), this.props.currentUser === this.props.comment.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           id: "comment-edit-dropdown-".concat(this.props.comment.id)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           onClick: this.handleDropdown,
@@ -1221,15 +1347,26 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
-/* harmony import */ var _comment_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./comment_index_item */ "./frontend/components/comment/comment_index_item.jsx");
+/* harmony import */ var _actions_like_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/like_actions */ "./frontend/actions/like_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _comment_index_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./comment_index_item */ "./frontend/components/comment/comment_index_item.jsx");
+
+
 
 
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var like;
+
+  if (ownProps.comment.like) {
+    like = Object.values(ownProps.comment.like)[0];
+  }
+
   return {
     comment: ownProps.comment,
-    currentUser: state.session.id
+    currentUser: state.session.id,
+    like: like
   };
 };
 
@@ -1243,11 +1380,23 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     deleteComment: function deleteComment(commentId) {
       return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_1__["deleteComment"])(commentId));
+    },
+    createLike: function createLike(like) {
+      return dispatch(Object(_actions_like_actions__WEBPACK_IMPORTED_MODULE_2__["createLike"])(like));
+    },
+    updateLike: function updateLike(like) {
+      return dispatch(Object(_actions_like_actions__WEBPACK_IMPORTED_MODULE_2__["updateLike"])(like));
+    },
+    deleteLike: function deleteLike(likeId) {
+      return dispatch(Object(_actions_like_actions__WEBPACK_IMPORTED_MODULE_2__["deleteLike"])(likeId));
+    },
+    openModal: function openModal(str) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["openModal"])(str));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_comment_index_item__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_comment_index_item__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -3246,6 +3395,8 @@ function (_React$Component) {
   _createClass(ShowVideo, [{
     key: "handleLike",
     value: function handleLike(e) {
+      var _this2 = this;
+
       e.preventDefault();
 
       if (!this.props.currentUser) {
@@ -3259,28 +3410,34 @@ function (_React$Component) {
           likeable_type: 'Video',
           likeable_id: this.props.video.id,
           liked: true
+        }).then(function () {
+          _this2.props.fetchVideo(_this2.props.match.params.id);
         });
         document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
         document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
       } else if (this.props.like.liked) {
-        this.props.deleteLike(this.props.like.id);
+        this.props.deleteLike(this.props.like.id).then(function () {
+          _this2.props.fetchVideo(_this2.props.match.params.id);
+        });
         document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
         document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
       } else {
         var like = Object.assign({}, this.props.like);
         like.liked = true;
-        this.props.updateLike(like);
+        this.props.updateLike(like).then(function () {
+          _this2.props.fetchVideo(_this2.props.match.params.id);
+        });
         document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
         document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
         document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
         document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
       }
-
-      this.props.fetchVideo(this.props.match.params.id);
     }
   }, {
     key: "handleDislike",
     value: function handleDislike(e) {
+      var _this3 = this;
+
       e.preventDefault();
 
       if (!this.props.currentUser) {
@@ -3294,17 +3451,23 @@ function (_React$Component) {
           likeable_type: 'Video',
           likeable_id: this.props.video.id,
           liked: false
+        }).then(function () {
+          _this3.props.fetchVideo(_this3.props.match.params.id);
         });
         document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
         document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
       } else if (!this.props.like.liked) {
-        this.props.deleteLike(this.props.like.id);
+        this.props.deleteLike(this.props.like.id).then(function () {
+          _this3.props.fetchVideo(_this3.props.match.params.id);
+        });
         document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
         document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
       } else {
         var like = Object.assign({}, this.props.like);
         like.liked = false;
-        this.props.updateLike(like);
+        this.props.updateLike(like).then(function () {
+          _this3.props.fetchVideo(_this3.props.match.params.id);
+        });
         document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
         document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
         document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
@@ -3316,11 +3479,11 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.props.fetchVideo(this.props.match.params.id).then(function () {
-        if (_this2.props.like) {
-          if (_this2.props.like.liked) {
+        if (_this4.props.like) {
+          if (_this4.props.like.liked) {
             document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
             document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
           } else {
@@ -3351,14 +3514,38 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this3 = this;
+      var _this5 = this;
 
       if (this.props.video) {
+        if (prevProps.currentUser !== this.props.currentUser) {
+          this.props.fetchVideo(this.props.videoId).then(function () {
+            if (_this5.props.like) {
+              if (_this5.props.like.liked) {
+                document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+                document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+                document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+                document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
+              } else {
+                document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+                document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+                document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+                document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
+              }
+            } else {
+              document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+              document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
+              document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+              document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
+            }
+          });
+          this.props.fetchComments();
+        }
+
         if (prevProps.match.params.id !== this.props.match.params.id) {
           //Perform some operation here
           this.props.fetchVideo(this.props.videoId).then(function () {
-            if (_this3.props.like) {
-              if (_this3.props.like.liked) {
+            if (_this5.props.like) {
+              if (_this5.props.like.liked) {
                 document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
                 document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
               } else {
@@ -3403,7 +3590,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this6 = this;
 
       var months = {
         1: "Jan",
@@ -3619,7 +3806,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "items"
       }, Object.values(videos).map(function (videoItem, index) {
-        if (videoItem.id === parseInt(_this4.state.videoId)) return;
+        if (videoItem.id === parseInt(_this6.state.videoId)) return;
         var viewsVideoItem = videoItem.views;
         var viewsVideoItemRender;
 
