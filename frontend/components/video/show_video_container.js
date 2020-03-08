@@ -11,7 +11,7 @@ import { update } from '../../util/session_api_util';
 const mapStateToProps = (state, ownProps) => {
     // const videos = Object.values(state.entities.videos)
     const comments = Object.values(state.entities.comments).filter((comment) => comment.videoId === Number(ownProps.match.params.id));
-    const like = state.entities.likes;
+    const like = Object.values(state.entities.likes)[0];
     return (
         {
             video: state.entities.videos[ownProps.match.params.id],

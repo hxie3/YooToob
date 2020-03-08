@@ -20,24 +20,74 @@ class ShowVideo extends React.Component {
         this.incrementViews = this.incrementViews.bind(this);
         this.redirectLogin = this.redirectLogin.bind(this);
         this.handleLike = this.handleLike.bind(this);
+        this.handleDislike = this.handleDislike.bind(this);
     }
 
     handleLike(e) {
         e.preventDefault();
-        console.log(this.props.like)
-        if (!Object.values(this.props.like).length) {
+        if (!this.props.currentUser) {
+            this.props.openModal('login');
+            return;
+        }
+        if (!this.props.like) {
             this.props.createLike({ user_id: this.props.currentUser.id, likeable_type: 'Video', likeable_id: this.props.video.id, liked: true })
+            document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+            document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
         } else if (this.props.like.liked) {
             this.props.deleteLike(this.props.like.id)
+            document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+            document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
         } else {
             let like = Object.assign({}, this.props.like);
             like.liked = true;
             this.props.updateLike(like);
+            document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+            document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+            document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+            document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
         }
+        this.props.fetchVideo(this.props.match.params.id);
+    }
+
+    handleDislike(e) {
+        e.preventDefault();
+        if (!this.props.currentUser) {
+            this.props.openModal('login');
+            return;
+        }
+        if (!this.props.like) {
+            this.props.createLike({ user_id: this.props.currentUser.id, likeable_type: 'Video', likeable_id: this.props.video.id, liked: false })
+            document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+            document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+        } else if (!this.props.like.liked) {
+            this.props.deleteLike(this.props.like.id)
+            document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+            document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
+        } else {
+            let like = Object.assign({}, this.props.like);
+            like.liked = false;
+            this.props.updateLike(like);
+            document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+            document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+            document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+            document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
+        }
+        this.props.fetchVideo(this.props.match.params.id);
     }
 
     componentDidMount(){
-        this.props.fetchVideo(this.props.match.params.id);
+        this.props.fetchVideo(this.props.match.params.id)
+            .then(() => {
+                if(this.props.like) {
+                    if(this.props.like.liked) {
+                        document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+                        document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+                    } else {
+                        document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+                        document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+                    }
+                }
+            })
         this.props.fetchVideos();
         this.props.fetchComments();
     }
@@ -66,8 +116,23 @@ class ShowVideo extends React.Component {
             if (prevProps.match.params.id !== this.props.match.params.id) {
                 //Perform some operation here
                 this.props.fetchVideo(this.props.videoId)
+                    .then(() => {
+                        if (this.props.like) {
+                            if (this.props.like.liked) {
+                                document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+                                document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+                            } else {
+                                document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+                                document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+                            }
+                        }
+                    })
                 this.setState({ videoId: this.props.videoId});
                 this.setState({ incrementViews: true })
+                document.getElementsByClassName("like-button-toggle")[0].classList.remove("toggled");
+                document.getElementsByClassName("like-button-button")[0].classList.remove("toggled");
+                document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
+                document.getElementsByClassName("dislike-button-button")[0].classList.remove("toggled");
             }
             document.getElementsByClassName("show-more")[0].classList.remove("hidden")
             if (document.getElementsByClassName("collapser-content")[0].offsetHeight === document.getElementsByClassName("collapser-description")[0].offsetHeight) {
@@ -183,19 +248,19 @@ class ShowVideo extends React.Component {
                                                                             </div>
                                                                         </div>
                                                                         <span className='video-likes-string'>
-                                                                            100
+                                                                            {this.props.video.likes}
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div className='dislike-button'>
-                                                                    <div className='dislike-button-toggle'>
+                                                                    <div onClick={this.handleDislike} className='dislike-button-toggle'>
                                                                         <div className='dislike-button-button'>
                                                                             <div className='dislike-button-icon fa'>
                                                                                 <i className="fas fa-thumbs-down video-thumbs-down"></i>
                                                                             </div>
                                                                         </div>
                                                                         <span className='video-dislikes-string'>
-                                                                            20
+                                                                            {this.props.video.dislikes}
                                                                         </span>
                                                                     </div>
                                                                 </div>

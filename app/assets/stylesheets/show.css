@@ -481,3 +481,7 @@
     font-family: 'Roboto', 'Arial', sans-serif;
     font-size: 13px;
 }
+
+.toggled {
+    color: #065FD4;
+}

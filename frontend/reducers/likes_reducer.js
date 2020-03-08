@@ -1,4 +1,5 @@
 import { RECEIVE_LIKE, DELETE_LIKE } from "../actions/like_actions";
+import { RECEIVE_VIDEO } from "../actions/video_actions";
 
 const likesReducer = (state = {}, action) => {
     Object.freeze(state);
@@ -6,9 +7,12 @@ const likesReducer = (state = {}, action) => {
     switch (action.type) {
         case RECEIVE_LIKE:
             return Object.assign({}, state, action.like);
+        case RECEIVE_VIDEO:
+            newState = Object.assign({}, state, action.video).like
+            if (newState) return newState;
+            return {}
         case DELETE_LIKE:
-            delete newState[Object.keys(action.comment)[0]];
-            return newState
+            return {}
         default:
             return state
     }
