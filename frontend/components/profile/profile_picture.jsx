@@ -1,7 +1,6 @@
 import React from 'react';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import { fileURLToPath } from 'url';
 
 class ProfilePicture extends React.Component {
     constructor(props) {
