@@ -1,7 +1,7 @@
 import React from 'react';
 import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 class SearchBar extends React.Component {
     constructor(props) {
@@ -24,7 +24,8 @@ class SearchBar extends React.Component {
 
     handleSearch(e) {
         e.preventDefault();
-        let query = document.getElementsByClassName("searchbar")[0].value;
+        // history.push decodes '%25' back to '%' which breaks, encode '%' yourself
+        let query = document.getElementsByClassName('searchbar')[0].value.split('%').map((part) => (encodeURIComponent(part))).join('+');
         this.props.history.push(`/search/${query}`);
     }
 
@@ -35,17 +36,17 @@ class SearchBar extends React.Component {
 
     handleSearchChange(e) {
         e.preventDefault();
-        this.setState({ query: e.currentTarget.value });
+        this.setState({ query: e.currentTarget.value })
     }
 
     render() {
         return (
-            <div className='searchbar-container-button-container'>
+            <form className='searchbar-container-button-container' onSubmit={this.handleSearch}>
                 <div className='searchbar-container'>
                     <input onChange={this.handleSearchChange} className='searchbar' type="text" placeholder='Search' onFocus={this.handleSearchFocus} onBlur={this.handleSearchFocus} />
                 </div>
                 <button onClick={this.handleSearch} className='search-button'></button>
-            </div>
+            </form>
         )
     }
 }

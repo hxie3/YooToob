@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do 
     resource :session, only: [:create, :update, :destroy]
     resources :users, only: [:create, :show, :index]
-    resources :videos, only: [:index, :create, :show, :update, :destroy]
+    resources :videos, only: [:index, :create, :show, :update, :destroy] do 
+      collection do
+        get 'search'
+      end
+    end
     resources :comments, only: [:index, :create, :show, :update, :destroy]
     resources :likes, only: [:create, :update, :destroy]
     match 'users' => 'users#update', :via => :patch

@@ -30,6 +30,16 @@ export const clearErrors = () => ({
     type: CLEAR_VIDEO_ERRORS
 })
 
+export const searchVideos = (query) => dispatch => {
+    return (
+        VideoAPIUtil.searchVideos(query).then(videos => (
+            dispatch(receiveVideos(videos))
+        ), err => (
+            dispatch(receiveErrors(err.responseJSON))
+        ))
+    )
+};
+
 export const fetchVideos = () => dispatch => {
     return (
         VideoAPIUtil.fetchVideos().then(videos => (

@@ -49,6 +49,12 @@ class Api::VideosController < ApplicationController
         end
     end
 
+    def search
+        query = "%" + params[:query] + "%"
+        @videos = Video.joins(:user).where("lower(username) LIKE ? OR lower(title) LIKE ?", query.downcase, query.downcase)
+        render :search
+    end
+
     private
 
     def video_params
