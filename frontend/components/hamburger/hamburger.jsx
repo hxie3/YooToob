@@ -23,7 +23,7 @@ class Hamburger extends React.Component {
 
     handleHamburger(e) {
         e.preventDefault();
-        if (window.location.hash === '#/') {
+        if (window.location.hash === '#/' || window.location.hash.split('/')[1] === "search") {
             document.getElementsByClassName('sidenav')[0].classList.toggle('hidden');
             document.getElementsByClassName('sidenav2')[0].classList.toggle('hidden');
             document.getElementsByClassName('not-header-or-sidenav')[0].classList.toggle('active-sidenav2')

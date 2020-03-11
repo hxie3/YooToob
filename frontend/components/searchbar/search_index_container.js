@@ -7,6 +7,7 @@ import SearchIndex from './search_index';
 const mapStateToProps = (state, ownProps) => {
     return({
         query: ownProps.match.params.query.split('+').map(part => decodeURIComponent(part)).join('%'),
+        videos: state.entities.videos
     })
 }
 
