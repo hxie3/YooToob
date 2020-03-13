@@ -21,6 +21,9 @@ class ShowVideo extends React.Component {
         this.redirectLogin = this.redirectLogin.bind(this);
         this.handleLike = this.handleLike.bind(this);
         this.handleDislike = this.handleDislike.bind(this);
+        this.handleVideoDelete = this.handleVideoDelete.bind(this);
+        this.handleVideoEdit = this.handleVideoEdit.bind(this);
+        this.handleVideoMenu = this.handleVideoMenu.bind(this);
     }
 
     handleLike(e) {
@@ -94,17 +97,28 @@ class ShowVideo extends React.Component {
 
     componentDidMount(){
         this.props.fetchVideo(this.props.match.params.id)
-            .then(() => {
-                if(this.props.like) {
-                    if(this.props.like.liked) {
-                        document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
-                        document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
-                    } else {
-                        document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
-                        document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
+        .then(() => {
+            if (document.getElementsByClassName(`video-dropdown`)[0]) {
+                const $menu = $(`.video-dropdown`);
+                $(document).mouseup(e => {
+                    if (document.getElementById("video-edit")) {
+                        if (!$menu.is(e.target) && ($menu.has(e.target).length === 0)) {
+                            document.getElementById("video-edit").classList.add("hidden");
+                        }
                     }
+                    // if (!document.getElementById(`edit-${this.props.comment.id}`)) return
+                });
+            }
+            if(this.props.like) {
+                if(this.props.like.liked) {
+                    document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
+                    document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
+                } else {
+                    document.getElementsByClassName("dislike-button-toggle")[0].classList.add("toggled");
+                    document.getElementsByClassName("dislike-button-button")[0].classList.add("toggled");
                 }
-            })
+            }
+        })
         this.props.fetchVideos();
         this.props.fetchComments();
     }
@@ -192,6 +206,20 @@ class ShowVideo extends React.Component {
         const collapserContent = document.getElementsByClassName("collapser-content2")[0];
         collapserContent.classList.toggle("collapser-content");
         document.getElementsByClassName("show-more-string")[0].innerHTML === "Show less" ? (document.getElementsByClassName("show-more-string")[0].innerHTML = "Show more") : (document.getElementsByClassName("show-more-string")[0].innerHTML = "Show less");
+    }
+
+    handleVideoMenu(e) {
+        e.preventDefault();
+        document.getElementById("video-edit").classList.toggle("hidden");
+    }
+
+    handleVideoEdit(e) {
+        e.preventDefault();
+        this.props.openModal("update-video");
+    }
+
+    handleVideoDelete(e) {
+        e.preventDefault();
     }
 
     render() {
@@ -306,10 +334,26 @@ class ShowVideo extends React.Component {
                                                                     </div>
                                                                 </div>
                                                                 <div className='video-dropdown'>
-                                                                    <div className='video-dropdown-button'>
+                                                                    <div onClick={this.handleVideoMenu} className='video-dropdown-button'>
                                                                         <div className="center-self">
                                                                             <div className='video-dropdown-button-icon fa'>
                                                                                 <i className="fas fa-ellipsis-h"></i>
+                                                                                <div onClick={(e) => { e.stopPropagation() }} id="video-edit" className="comment-edit-dropdown hidden">
+                                                                                    <div className="inside-dropdown">
+                                                                                        <div onClick={this.handleVideoEdit} id={`video-edit-button`} className="comment-edit-button">
+                                                                                            <div className="fa fa-pen-container">
+                                                                                                <i className="fas fa-edit"></i>
+                                                                                            </div>
+                                                                                            Edit
+                                                                                        </div>
+                                                                                        <div onClick={this.handleVideoDelete} id={`video-delete-button`} className="comment-delete-button">
+                                                                                            <div className="fa fa-pen-container">
+                                                                                                <i className="fas fa-trash"></i>
+                                                                                            </div>
+                                                                                            Delete
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

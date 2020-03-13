@@ -5,6 +5,7 @@ class Api::VideosController < ApplicationController
     end
 
     def create
+        debugger
         @video = Video.new(video_params)
         if @video.save
             render :create
@@ -51,7 +52,7 @@ class Api::VideosController < ApplicationController
 
     def search
         query = "%" + params[:query] + "%"
-        @videos = Video.joins(:user).where("lower(username) LIKE ? OR lower(title) LIKE ?", query.downcase, query.downcase)
+        @videos = Video.joins(:user).where("lower(username) LIKE ? OR lower(title) LIKE ? OR lower(description) LIKE ?", query.downcase, query.downcase, query.downcase)
         render :search
     end
 

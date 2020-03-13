@@ -30,8 +30,8 @@ class SearchIndex extends React.Component {
                             <div className="max-width">
                                 <div className="primary-search">
                                     <div className="search-contents">
-                                        {Object.values(this.props.videos).map(video => (
-                                            <SearchIndexItem video={video}/>
+                                        {Object.values(this.props.videos).map((video, i) => (
+                                            <SearchIndexItem key={`search-${i}`} video={video}/>
                                         ))}
                                     </div>
                                 </div>

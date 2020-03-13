@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import React from 'react';
 import UpdateVideoForm from './update_video_form';
-import { updateVideo, fetchVideo } from '../../actions/video_actions'
-import { closeModal } from '../../actions/modal_actions'
+import { updateVideo, fetchVideo, clearErrors } from '../../actions/video_actions';
+import { closeModal } from '../../actions/modal_actions';
+import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = (state, ownProps) => ({
     video: state.entities.videos[ownProps.match.params.videoId],
@@ -10,11 +10,12 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     fetchVideo: videoId => dispatch(fetchVideo(videoId)),
+    clearErrors: () => dispatch(clearErrors()),
     closeModal: () => dispatch(closeModal()),
     processForm: video => dispatch(updateVideo(video))
 })
 
-export default connect (
+export default withRouter(connect(
     mapStateToProps, 
     mapDispatchToProps
-)(UpdateVideoForm)
+)(UpdateVideoForm));

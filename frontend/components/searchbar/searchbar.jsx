@@ -26,7 +26,9 @@ class SearchBar extends React.Component {
         e.preventDefault();
         // history.push decodes '%25' back to '%' which breaks, encode '%' yourself
         let query = document.getElementsByClassName('searchbar')[0].value.split('%').map((part) => (encodeURIComponent(part))).join('+');
-        this.props.history.push(`/search/${query}`);
+        if (!!query) {
+            this.props.history.push(`/search/${query}`);
+        }
     }
 
     handleSearchFocus(e) {

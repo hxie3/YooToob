@@ -1,8 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class SearchIndexItem extends React.Component {
     constructor(props) {
         super(props);
+
+        this.createViewsString = this.createViewsString.bind(this);
+        this.createUploadedString = this.createUploadedString.bind(this);
     }
 
     createViewsString() {
@@ -80,41 +84,44 @@ class SearchIndexItem extends React.Component {
     render() {
         return (
             <div className="search-index-item">
-                <div className="search-index-item-thumbnail">
-                    <Link className="search-thumbnail-link" to={`/watch/${this.props.video.id}`}>
-                        <div className='search-clip-thumbnail'>
-                            <img className="search-thumbnail" src={this.props.video.thumbnail} alt="thumbnail"/>
-                        </div>
-                    </Link>
-                    <Link to={`/watch/${this.props.video.id}`}>
-                        <div className="search-item-text-container">
-                            <div className="search-item-header">
-                                <div className="search-item-header-1">
-                                    <h3 className="search-item-title">
-                                        {this.props.video.title}
-                                    </h3>
+                <Link className="search-thumbnail-link" to={`/watch/${this.props.video.id}`}>
+                    <div className='search-clip-thumbnail'>
+                        <img className="search-thumbnail" src={this.props.video.thumbnail} alt="thumbnail"/>
+                    </div>
+                </Link>
+                <Link className="search-item-text-container" to={`/watch/${this.props.video.id}`}>
+                    <div className="search-item-text-container">
+                        <div className="search-item-header">
+                            <div className="search-item-header-1">
+                                <h3 className="search-item-title">
+                                    {this.props.video.title}
+                                </h3>
+                            </div>
+                            <div className="search-item-header-2">
+                                <span className="search-item-username">
+                                    {this.props.video.username}
+                                </span>
+                                <div className="fa">
+                                    <i className="fas fa-circle"></i>
                                 </div>
-                                <div className="search-item-header-2">
-                                    <span className="search-item-username">
-                                        {this.props.video.username}
+                                <div className="search-item-views-and-upload">
+                                    <span className="search-item-views">
+                                        {this.createViewsString()}
                                     </span>
-                                    <div className="search-item-views-and-upload">
-                                        <span className="search-item-views">
-                                            {this.props.video.views}
-                                        </span>
-                                        {/* dot */}
-                                        <span className="search-item-uploaded">
-
-                                        </span>
+                                    <div className="fa">
+                                        <i className="fas fa-circle"></i>
                                     </div>
+                                    <span className="search-item-uploaded">
+                                        {this.createUploadedString()}
+                                    </span>
                                 </div>
                             </div>
-                            <span className="search-item-description">
-                                {this.props.video.description}
-                            </span>
                         </div>
-                    </Link>                      
-                </div>
+                        <span className="search-item-description">
+                            {this.props.video.description}
+                        </span>
+                    </div>
+                </Link>                      
             </div>
         )
     }

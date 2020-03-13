@@ -29,23 +29,30 @@ class ProfilePicture extends React.Component {
         const file = e.currentTarget.files[0];
         let newuserstate = Object.assign({}, this.state.user)
 
-        reader.onloadend = () => {
-            newuserstate.photoFile = file;
-            newuserstate.photoUrl = reader.result;
-            this.setState({ user: newuserstate });
-        }
-
         if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            newuserstate.photoFile = null
-            newuserstate.photoUrl = ''
-            this.setState({ user: newuserstate });
-        }
-
-        if (file) {
-            this.setState({ form: 'details' })
-        }
+            if (file.name.split(".")[file.name.split(".").length - 1] === "svg") {
+                alert("Sorry, svg image files are not supported yet!")
+            }
+            if (file.type.split("/")[0] === "image" && file.name.split(".")[file.name.split(".").length - 1] !== "svg") {
+                reader.onloadend = () => {
+                    newuserstate.photoFile = file;
+                    newuserstate.photoUrl = reader.result;
+                    this.setState({ user: newuserstate });
+                }
+        
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    newuserstate.photoFile = null
+                    newuserstate.photoUrl = ''
+                    this.setState({ user: newuserstate });
+                }
+        
+                if (file) {
+                    this.setState({ form: 'details' })
+                }
+            }
+        }   
     }
 
     handleDrop(e) {
@@ -53,26 +60,28 @@ class ProfilePicture extends React.Component {
         e.stopPropagation();
         const dt = e.dataTransfer;
         const file = dt.files[0];
-        if (file.type.split("/")[0] === "image") {
-            const reader = new FileReader();
-            let newuserstate = Object.assign({}, this.state.user)
-    
-            reader.onloadend = () => {
-                newuserstate.photoFile = file;
-                newuserstate.photoUrl = reader.result;
-                this.setState({ user: newuserstate });
-            }
-    
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                newuserstate.photoFile = null
-                newuserstate.photoUrl = ''
-                this.setState({ user: newuserstate });
-            }
-    
-            if (file) {
-                this.setState({ form: 'details' })
+        if (file) {
+            if (file.type.split("/")[0] === "image" && file.name.split(".")[file.name.split(".").length - 1] !== "svg") {
+                const reader = new FileReader();
+                let newuserstate = Object.assign({}, this.state.user)
+        
+                reader.onloadend = () => {
+                    newuserstate.photoFile = file;
+                    newuserstate.photoUrl = reader.result;
+                    this.setState({ user: newuserstate });
+                }
+        
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    newuserstate.photoFile = null
+                    newuserstate.photoUrl = ''
+                    this.setState({ user: newuserstate });
+                }
+        
+                if (file) {
+                    this.setState({ form: 'details' })
+                }
             }
         }
     }
@@ -141,7 +150,7 @@ class ProfilePicture extends React.Component {
 
     render() {
         const preview = !!this.state.user.photoUrl ? (
-            <img className="profile-pic-preview" src={this.state.user.photoUrl} alt="Photo"/>
+            <img onClick={this.handleInputFile} className="profile-pic-preview" src={this.state.user.photoUrl} alt="Photo"/>
         ) : (null)
         return(
             <div className='video-form-container'>
@@ -171,6 +180,7 @@ class ProfilePicture extends React.Component {
                             ) : (
                                 <div className='photo-file-preview'>
                                     {preview}
+                                    <input onChange={this.handlePhoto} accept="image/*" id='photo-file-holder' className='hidden video-file-holder' type="file" name='video-file-data' />
                                 </div>
                             )
                         }

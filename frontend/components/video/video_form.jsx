@@ -63,23 +63,26 @@ class VideoForm extends React.Component {
         const reader = new FileReader();
         const file = e.currentTarget.files[0];
         let newvideostate = Object.assign({}, this.state.video)
-        if (file.type.split("/")[0] === "video") {
-            reader.onloadend = () => {
-                newvideostate.videoFile = file;
-                newvideostate.videoUrl = reader.result;
-                this.setState({ video: newvideostate });
-            }
+        if (file) {
 
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                newvideostate.videoFile = null
-                newvideostate.videoUrl = ''
-                this.setState({ video: newvideostate });
-            }
-            
-            if (file) {
-                this.setState({ form: 'details' })
+            if (file.type.split("/")[0] === "video") {
+                reader.onloadend = () => {
+                    newvideostate.videoFile = file;
+                    newvideostate.videoUrl = reader.result;
+                    this.setState({ video: newvideostate });
+                }
+    
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    newvideostate.videoFile = null
+                    newvideostate.videoUrl = ''
+                    this.setState({ video: newvideostate });
+                }
+                
+                if (file) {
+                    this.setState({ form: 'details' })
+                }
             }
         }
     }
@@ -89,29 +92,33 @@ class VideoForm extends React.Component {
         const reader = new FileReader();
         const file = e.currentTarget.files[0];
         let newvideostate = Object.assign({}, this.state.video)
-        if (file.type.split("/")[0] === "image") {
-
-            reader.onloadend = () => {
-                newvideostate.photoFile = file;
-                newvideostate.photoUrl = reader.result;
-                this.setState({ video: newvideostate });
+        if (file) {
+            if (file.name.split(".")[file.name.split(".").length - 1] === "svg") {
+                alert("Sorry, svg image files are not supported yet!")
             }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            } 
-            // else {
-            //     newvideostate.photoFile = null;
-            //     newvideostate.photoUrl = '';
-            //     this.setState({ video: newvideostate });
-            //     document.getElementsByClassName("select-files-button")[0].disabled = true;
-            // }
-
-            if (file) {
-                this.setState({ thumbnailUploaded: true, uploadable: true });
-                if(this.state.video.title !== '' && this.state.video.description !== '') {
-                    document.getElementsByClassName("select-files-button")[0].disabled = false;
-                    document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+            if (file.type.split("/")[0] === "image" && file.name.split(".")[file.name.split(".").length - 1] !== "svg") {
+                reader.onloadend = () => {
+                    newvideostate.photoFile = file;
+                    newvideostate.photoUrl = reader.result;
+                    this.setState({ video: newvideostate });
+                }
+    
+                if (file) {
+                    reader.readAsDataURL(file);
+                } 
+                // else {
+                //     newvideostate.photoFile = null;
+                //     newvideostate.photoUrl = '';
+                //     this.setState({ video: newvideostate });
+                //     document.getElementsByClassName("select-files-button")[0].disabled = true;
+                // }
+    
+                if (file) {
+                    this.setState({ thumbnailUploaded: true, uploadable: true });
+                    if(this.state.video.title !== '' && this.state.video.description !== '') {
+                        document.getElementsByClassName("select-files-button")[0].disabled = false;
+                        document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+                    }
                 }
             }
         }
@@ -187,30 +194,32 @@ class VideoForm extends React.Component {
         e.stopPropagation();
         const dt = e.dataTransfer
         const file = dt.files[0]
-        if (file.type.split("/")[0] === "image") {
-            const reader = new FileReader();
-            let newvideostate = Object.assign({}, this.state.video)
-
-            reader.onloadend = () => {
-                newvideostate.photoFile = file;
-                newvideostate.photoUrl = reader.result;
-                this.setState({ video: newvideostate });
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                newvideostate.photoFile = null
-                newvideostate.photoUrl = ''
-                this.setState({ video: newvideostate });
-                document.getElementsByClassName("select-files-button")[0].disabled = true;
-            }
-
-            if (file) {
-                this.setState({ thumbnailUploaded: true })
-                if (this.state.video.title !== '' && this.state.video.description !== '') {
-                    document.getElementsByClassName("select-files-button")[0].disabled = false;
-                    document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+        if (file) {
+            if (file.type.split("/")[0] === "image" && file.name.split("/")[file.name.split("/").length - 1] !== "svg") {
+                const reader = new FileReader();
+                let newvideostate = Object.assign({}, this.state.video)
+    
+                reader.onloadend = () => {
+                    newvideostate.photoFile = file;
+                    newvideostate.photoUrl = reader.result;
+                    this.setState({ video: newvideostate });
+                }
+    
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    newvideostate.photoFile = null
+                    newvideostate.photoUrl = ''
+                    this.setState({ video: newvideostate });
+                    document.getElementsByClassName("select-files-button")[0].disabled = true;
+                }
+    
+                if (file) {
+                    this.setState({ thumbnailUploaded: true })
+                    if (this.state.video.title !== '' && this.state.video.description !== '') {
+                        document.getElementsByClassName("select-files-button")[0].disabled = false;
+                        document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
+                    }
                 }
             }
         }
@@ -221,26 +230,28 @@ class VideoForm extends React.Component {
         e.stopPropagation();
         const dt = e.dataTransfer
         const file = dt.files[0]
-        if (file.type.split("/")[0] === "video") {
-            const reader = new FileReader();
-            let newvideostate = Object.assign({}, this.state.video)
-    
-            reader.onloadend = () => {
-                newvideostate.videoFile = file;
-                newvideostate.videoUrl = reader.result;
-                this.setState({ video: newvideostate });
-            }
-    
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                newvideostate.videoFile = null
-                newvideostate.videoUrl = ''
-                this.setState({ video: newvideostate });
-            }
-    
-            if (file) {
-                this.setState({ form: 'details' })
+        if (file) {
+            if (file.type.split("/")[0] === "video") {
+                const reader = new FileReader();
+                let newvideostate = Object.assign({}, this.state.video)
+        
+                reader.onloadend = () => {
+                    newvideostate.videoFile = file;
+                    newvideostate.videoUrl = reader.result;
+                    this.setState({ video: newvideostate });
+                }
+        
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    newvideostate.videoFile = null
+                    newvideostate.videoUrl = ''
+                    this.setState({ video: newvideostate });
+                }
+        
+                if (file) {
+                    this.setState({ form: 'details' })
+                }
             }
         }
     }

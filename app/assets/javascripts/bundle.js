@@ -2056,7 +2056,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session_signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../session/signup_form_container */ "./frontend/components/session/signup_form_container.jsx");
 /* harmony import */ var _video_create_video_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../video/create_video_form_container */ "./frontend/components/video/create_video_form_container.js");
 /* harmony import */ var _profile_profile_picture_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../profile/profile_picture_container */ "./frontend/components/profile/profile_picture_container.js");
-/* harmony import */ var _video_update_video_form_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../video/update_video_form_container */ "./frontend/components/video/update_video_form_container.jsx");
+/* harmony import */ var _video_update_video_form_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../video/update_video_form_container */ "./frontend/components/video/update_video_form_container.js");
 /* harmony import */ var _sidenav_sidenav_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../sidenav/sidenav_container */ "./frontend/components/sidenav/sidenav_container.js");
 
 
@@ -2233,29 +2233,37 @@ function (_React$Component) {
       var file = e.currentTarget.files[0];
       var newuserstate = Object.assign({}, this.state.user);
 
-      reader.onloadend = function () {
-        newuserstate.photoFile = file;
-        newuserstate.photoUrl = reader.result;
-
-        _this2.setState({
-          user: newuserstate
-        });
-      };
-
       if (file) {
-        reader.readAsDataURL(file);
-      } else {
-        newuserstate.photoFile = null;
-        newuserstate.photoUrl = '';
-        this.setState({
-          user: newuserstate
-        });
-      }
+        if (file.name.split(".")[file.name.split(".").length - 1] === "svg") {
+          alert("Sorry, svg image files are not supported yet!");
+        }
 
-      if (file) {
-        this.setState({
-          form: 'details'
-        });
+        if (file.type.split("/")[0] === "image" && file.name.split(".")[file.name.split(".").length - 1] !== "svg") {
+          reader.onloadend = function () {
+            newuserstate.photoFile = file;
+            newuserstate.photoUrl = reader.result;
+
+            _this2.setState({
+              user: newuserstate
+            });
+          };
+
+          if (file) {
+            reader.readAsDataURL(file);
+          } else {
+            newuserstate.photoFile = null;
+            newuserstate.photoUrl = '';
+            this.setState({
+              user: newuserstate
+            });
+          }
+
+          if (file) {
+            this.setState({
+              form: 'details'
+            });
+          }
+        }
       }
     }
   }, {
@@ -2268,33 +2276,35 @@ function (_React$Component) {
       var dt = e.dataTransfer;
       var file = dt.files[0];
 
-      if (file.type.split("/")[0] === "image") {
-        var reader = new FileReader();
-        var newuserstate = Object.assign({}, this.state.user);
+      if (file) {
+        if (file.type.split("/")[0] === "image" && file.name.split(".")[file.name.split(".").length - 1] !== "svg") {
+          var reader = new FileReader();
+          var newuserstate = Object.assign({}, this.state.user);
 
-        reader.onloadend = function () {
-          newuserstate.photoFile = file;
-          newuserstate.photoUrl = reader.result;
+          reader.onloadend = function () {
+            newuserstate.photoFile = file;
+            newuserstate.photoUrl = reader.result;
 
-          _this3.setState({
-            user: newuserstate
-          });
-        };
+            _this3.setState({
+              user: newuserstate
+            });
+          };
 
-        if (file) {
-          reader.readAsDataURL(file);
-        } else {
-          newuserstate.photoFile = null;
-          newuserstate.photoUrl = '';
-          this.setState({
-            user: newuserstate
-          });
-        }
+          if (file) {
+            reader.readAsDataURL(file);
+          } else {
+            newuserstate.photoFile = null;
+            newuserstate.photoUrl = '';
+            this.setState({
+              user: newuserstate
+            });
+          }
 
-        if (file) {
-          this.setState({
-            form: 'details'
-          });
+          if (file) {
+            this.setState({
+              form: 'details'
+            });
+          }
         }
       }
     }
@@ -2391,6 +2401,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var preview = !!this.state.user.photoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        onClick: this.handleInputFile,
         className: "profile-pic-preview",
         src: this.state.user.photoUrl,
         alt: "Photo"
@@ -2435,7 +2446,14 @@ function (_React$Component) {
         name: "video-file-data"
       })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "photo-file-preview"
-      }, preview)), this.state.form === 'details' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, preview, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        onChange: this.handlePhoto,
+        accept: "image/*",
+        id: "photo-file-holder",
+        className: "hidden video-file-holder",
+        type: "file",
+        name: "video-file-data"
+      }))), this.state.form === 'details' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-file-upload-button-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "inner-button-area"
@@ -2645,8 +2663,9 @@ function (_React$Component) {
         className: "primary-search"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-contents"
-      }, Object.values(this.props.videos).map(function (video) {
+      }, Object.values(this.props.videos).map(function (video, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_index_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: "search-".concat(i),
           video: video
         });
       }))))))));
@@ -2713,6 +2732,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2723,13 +2743,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2739,9 +2760,14 @@ function (_React$Component) {
   _inherits(SearchIndexItem, _React$Component);
 
   function SearchIndexItem(props) {
+    var _this;
+
     _classCallCheck(this, SearchIndexItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SearchIndexItem).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchIndexItem).call(this, props));
+    _this.createViewsString = _this.createViewsString.bind(_assertThisInitialized(_this));
+    _this.createUploadedString = _this.createUploadedString.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(SearchIndexItem, [{
@@ -2826,9 +2852,7 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-index-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "search-index-item-thumbnail"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Link, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "search-thumbnail-link",
         to: "/watch/".concat(this.props.video.id)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2837,7 +2861,8 @@ function (_React$Component) {
         className: "search-thumbnail",
         src: this.props.video.thumbnail,
         alt: "thumbnail"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Link, {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "search-item-text-container",
         to: "/watch/".concat(this.props.video.id)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-item-text-container"
@@ -2852,14 +2877,22 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "search-item-username"
       }, this.props.video.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-item-views-and-upload"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "search-item-views"
-      }, this.props.video.views), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, this.createViewsString()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "search-item-uploaded"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, this.createUploadedString())))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "search-item-description"
-      }, this.props.video.description)))));
+      }, this.props.video.description))));
     }
   }]);
 
@@ -2948,7 +2981,10 @@ function (_React$Component) {
       var query = document.getElementsByClassName('searchbar')[0].value.split('%').map(function (part) {
         return encodeURIComponent(part);
       }).join('+');
-      this.props.history.push("/search/".concat(query));
+
+      if (!!query) {
+        this.props.history.push("/search/".concat(query));
+      }
     }
   }, {
     key: "handleSearchFocus",
@@ -3818,6 +3854,9 @@ function (_React$Component) {
     _this.redirectLogin = _this.redirectLogin.bind(_assertThisInitialized(_this));
     _this.handleLike = _this.handleLike.bind(_assertThisInitialized(_this));
     _this.handleDislike = _this.handleDislike.bind(_assertThisInitialized(_this));
+    _this.handleVideoDelete = _this.handleVideoDelete.bind(_assertThisInitialized(_this));
+    _this.handleVideoEdit = _this.handleVideoEdit.bind(_assertThisInitialized(_this));
+    _this.handleVideoMenu = _this.handleVideoMenu.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3911,6 +3950,18 @@ function (_React$Component) {
       var _this4 = this;
 
       this.props.fetchVideo(this.props.match.params.id).then(function () {
+        if (document.getElementsByClassName("video-dropdown")[0]) {
+          var $menu = $(".video-dropdown");
+          $(document).mouseup(function (e) {
+            if (document.getElementById("video-edit")) {
+              if (!$menu.is(e.target) && $menu.has(e.target).length === 0) {
+                document.getElementById("video-edit").classList.add("hidden");
+              }
+            } // if (!document.getElementById(`edit-${this.props.comment.id}`)) return
+
+          });
+        }
+
         if (_this4.props.like) {
           if (_this4.props.like.liked) {
             document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
@@ -4015,6 +4066,23 @@ function (_React$Component) {
       var collapserContent = document.getElementsByClassName("collapser-content2")[0];
       collapserContent.classList.toggle("collapser-content");
       document.getElementsByClassName("show-more-string")[0].innerHTML === "Show less" ? document.getElementsByClassName("show-more-string")[0].innerHTML = "Show more" : document.getElementsByClassName("show-more-string")[0].innerHTML = "Show less";
+    }
+  }, {
+    key: "handleVideoMenu",
+    value: function handleVideoMenu(e) {
+      e.preventDefault();
+      document.getElementById("video-edit").classList.toggle("hidden");
+    }
+  }, {
+    key: "handleVideoEdit",
+    value: function handleVideoEdit(e) {
+      e.preventDefault();
+      this.props.openModal("update-video");
+    }
+  }, {
+    key: "handleVideoDelete",
+    value: function handleVideoDelete(e) {
+      e.preventDefault();
     }
   }, {
     key: "render",
@@ -4156,6 +4224,7 @@ function (_React$Component) {
       }, this.props.video.dislikes))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleVideoMenu,
         className: "video-dropdown-button"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "center-self"
@@ -4163,7 +4232,31 @@ function (_React$Component) {
         className: "video-dropdown-button-icon fa"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-ellipsis-h"
-      })))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: function onClick(e) {
+          e.stopPropagation();
+        },
+        id: "video-edit",
+        className: "comment-edit-dropdown hidden"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "inside-dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleVideoEdit,
+        id: "video-edit-button",
+        className: "comment-edit-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa fa-pen-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-edit"
+      })), "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.handleVideoDelete,
+        id: "video-delete-button",
+        className: "comment-delete-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "fa fa-pen-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-trash"
+      })), "Delete")))))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "likes-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "likes-visualizer"
@@ -4560,21 +4653,20 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/video/update_video_form_container.jsx":
-/*!*******************************************************************!*\
-  !*** ./frontend/components/video/update_video_form_container.jsx ***!
-  \*******************************************************************/
+/***/ "./frontend/components/video/update_video_form_container.js":
+/*!******************************************************************!*\
+  !*** ./frontend/components/video/update_video_form_container.js ***!
+  \******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _update_video_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./update_video_form */ "./frontend/components/video/update_video_form.jsx");
-/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _update_video_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./update_video_form */ "./frontend/components/video/update_video_form.jsx");
+/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 
 
@@ -4590,18 +4682,21 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchVideo: function fetchVideo(videoId) {
-      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_3__["fetchVideo"])(videoId));
+      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["fetchVideo"])(videoId));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
     },
     closeModal: function closeModal() {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__["closeModal"])());
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
     },
     processForm: function processForm(video) {
-      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_3__["updateVideo"])(video));
+      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_2__["updateVideo"])(video));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_update_video_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_update_video_form__WEBPACK_IMPORTED_MODULE_1__["default"])));
 
 /***/ }),
 
@@ -4724,30 +4819,32 @@ function (_React$Component) {
       var file = e.currentTarget.files[0];
       var newvideostate = Object.assign({}, this.state.video);
 
-      if (file.type.split("/")[0] === "video") {
-        reader.onloadend = function () {
-          newvideostate.videoFile = file;
-          newvideostate.videoUrl = reader.result;
+      if (file) {
+        if (file.type.split("/")[0] === "video") {
+          reader.onloadend = function () {
+            newvideostate.videoFile = file;
+            newvideostate.videoUrl = reader.result;
 
-          _this2.setState({
-            video: newvideostate
-          });
-        };
+            _this2.setState({
+              video: newvideostate
+            });
+          };
 
-        if (file) {
-          reader.readAsDataURL(file);
-        } else {
-          newvideostate.videoFile = null;
-          newvideostate.videoUrl = '';
-          this.setState({
-            video: newvideostate
-          });
-        }
+          if (file) {
+            reader.readAsDataURL(file);
+          } else {
+            newvideostate.videoFile = null;
+            newvideostate.videoUrl = '';
+            this.setState({
+              video: newvideostate
+            });
+          }
 
-        if (file) {
-          this.setState({
-            form: 'details'
-          });
+          if (file) {
+            this.setState({
+              form: 'details'
+            });
+          }
         }
       }
     }
@@ -4761,35 +4858,41 @@ function (_React$Component) {
       var file = e.currentTarget.files[0];
       var newvideostate = Object.assign({}, this.state.video);
 
-      if (file.type.split("/")[0] === "image") {
-        reader.onloadend = function () {
-          newvideostate.photoFile = file;
-          newvideostate.photoUrl = reader.result;
+      if (file) {
+        if (file.name.split(".")[file.name.split(".").length - 1] === "svg") {
+          alert("Sorry, svg image files are not supported yet!");
+        }
 
-          _this3.setState({
-            video: newvideostate
-          });
-        };
+        if (file.type.split("/")[0] === "image" && file.name.split(".")[file.name.split(".").length - 1] !== "svg") {
+          reader.onloadend = function () {
+            newvideostate.photoFile = file;
+            newvideostate.photoUrl = reader.result;
 
-        if (file) {
-          reader.readAsDataURL(file);
-        } // else {
-        //     newvideostate.photoFile = null;
-        //     newvideostate.photoUrl = '';
-        //     this.setState({ video: newvideostate });
-        //     document.getElementsByClassName("select-files-button")[0].disabled = true;
-        // }
+            _this3.setState({
+              video: newvideostate
+            });
+          };
+
+          if (file) {
+            reader.readAsDataURL(file);
+          } // else {
+          //     newvideostate.photoFile = null;
+          //     newvideostate.photoUrl = '';
+          //     this.setState({ video: newvideostate });
+          //     document.getElementsByClassName("select-files-button")[0].disabled = true;
+          // }
 
 
-        if (file) {
-          this.setState({
-            thumbnailUploaded: true,
-            uploadable: true
-          });
+          if (file) {
+            this.setState({
+              thumbnailUploaded: true,
+              uploadable: true
+            });
 
-          if (this.state.video.title !== '' && this.state.video.description !== '') {
-            document.getElementsByClassName("select-files-button")[0].disabled = false;
-            document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+            if (this.state.video.title !== '' && this.state.video.description !== '') {
+              document.getElementsByClassName("select-files-button")[0].disabled = false;
+              document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+            }
           }
         }
       }
@@ -4902,38 +5005,40 @@ function (_React$Component) {
       var dt = e.dataTransfer;
       var file = dt.files[0];
 
-      if (file.type.split("/")[0] === "image") {
-        var reader = new FileReader();
-        var newvideostate = Object.assign({}, this.state.video);
+      if (file) {
+        if (file.type.split("/")[0] === "image" && file.name.split("/")[file.name.split("/").length - 1] !== "svg") {
+          var reader = new FileReader();
+          var newvideostate = Object.assign({}, this.state.video);
 
-        reader.onloadend = function () {
-          newvideostate.photoFile = file;
-          newvideostate.photoUrl = reader.result;
+          reader.onloadend = function () {
+            newvideostate.photoFile = file;
+            newvideostate.photoUrl = reader.result;
 
-          _this5.setState({
-            video: newvideostate
-          });
-        };
+            _this5.setState({
+              video: newvideostate
+            });
+          };
 
-        if (file) {
-          reader.readAsDataURL(file);
-        } else {
-          newvideostate.photoFile = null;
-          newvideostate.photoUrl = '';
-          this.setState({
-            video: newvideostate
-          });
-          document.getElementsByClassName("select-files-button")[0].disabled = true;
-        }
+          if (file) {
+            reader.readAsDataURL(file);
+          } else {
+            newvideostate.photoFile = null;
+            newvideostate.photoUrl = '';
+            this.setState({
+              video: newvideostate
+            });
+            document.getElementsByClassName("select-files-button")[0].disabled = true;
+          }
 
-        if (file) {
-          this.setState({
-            thumbnailUploaded: true
-          });
+          if (file) {
+            this.setState({
+              thumbnailUploaded: true
+            });
 
-          if (this.state.video.title !== '' && this.state.video.description !== '') {
-            document.getElementsByClassName("select-files-button")[0].disabled = false;
-            document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+            if (this.state.video.title !== '' && this.state.video.description !== '') {
+              document.getElementsByClassName("select-files-button")[0].disabled = false;
+              document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false);
+            }
           }
         }
       }
@@ -4948,33 +5053,35 @@ function (_React$Component) {
       var dt = e.dataTransfer;
       var file = dt.files[0];
 
-      if (file.type.split("/")[0] === "video") {
-        var reader = new FileReader();
-        var newvideostate = Object.assign({}, this.state.video);
+      if (file) {
+        if (file.type.split("/")[0] === "video") {
+          var reader = new FileReader();
+          var newvideostate = Object.assign({}, this.state.video);
 
-        reader.onloadend = function () {
-          newvideostate.videoFile = file;
-          newvideostate.videoUrl = reader.result;
+          reader.onloadend = function () {
+            newvideostate.videoFile = file;
+            newvideostate.videoUrl = reader.result;
 
-          _this6.setState({
-            video: newvideostate
-          });
-        };
+            _this6.setState({
+              video: newvideostate
+            });
+          };
 
-        if (file) {
-          reader.readAsDataURL(file);
-        } else {
-          newvideostate.videoFile = null;
-          newvideostate.videoUrl = '';
-          this.setState({
-            video: newvideostate
-          });
-        }
+          if (file) {
+            reader.readAsDataURL(file);
+          } else {
+            newvideostate.videoFile = null;
+            newvideostate.videoUrl = '';
+            this.setState({
+              video: newvideostate
+            });
+          }
 
-        if (file) {
-          this.setState({
-            form: 'details'
-          });
+          if (file) {
+            this.setState({
+              form: 'details'
+            });
+          }
         }
       }
     }
