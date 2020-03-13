@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updateVideo } from '../../actions/video_actions'
+import { updateVideoViews } from '../../actions/video_actions'
 import VideoIndexItem from './video_index_item';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    incrementViews: video => dispatch(updateVideo(video))
+    incrementViews: video => dispatch(updateVideoViews(video))
 });
 
 export default connect(

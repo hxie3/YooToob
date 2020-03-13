@@ -25,18 +25,17 @@ class Api::VideosController < ApplicationController
 
     def update
         @video = Video.find_by(id: params[:id])
-        if(video_params[:views] != @video[:views])
-            # video_params[:views] is based on the state, a diff user could have updated views so current views count is inaccurate
-            # Test adding 1 to @video[:views] to make a more accurate view count rather than using state alone
-            @video.update({views: video_params[:views]})
+        if @video.update(video_params)
             render :update
         else
-            if @video.update(video_params)
-                render :update
-            else
-                render json: @video.errors.full_messages, status: 404
-            end
+            render json: @video.errors.full_messages, status: 404
         end
+    end
+
+    def updateViews
+        @video = Video.find_by(id: video_params[:id])
+        @video.update({views: (@video[:views] + 1)})
+        render :update
     end
 
     def destroy

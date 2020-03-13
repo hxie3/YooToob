@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :videos, only: [:index, :create, :show, :update, :destroy] do 
       collection do
         get 'search'
+        put 'updateViews'
       end
     end
     resources :comments, only: [:index, :create, :show, :update, :destroy]

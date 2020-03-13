@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ShowVideo from './show_video';
-import { fetchVideo, fetchVideos, updateVideo } from '../../actions/video_actions';
+import { fetchVideo, fetchVideos, updateVideoViews, deleteVideo } from '../../actions/video_actions';
 import { createLike, updateLike, deleteLike } from '../../actions/like_actions';
 import { fetchComments } from '../../actions/comment_actions';
 import { withRouter } from 'react-router-dom';
@@ -27,12 +27,13 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => ({
     fetchVideo: (videoId) => dispatch(fetchVideo(videoId)),
     fetchVideos: () => dispatch(fetchVideos()),
+    deleteVideo: (videoId) => dispatch(deleteVideo(videoId)),
     fetchComments: () => dispatch(fetchComments()),
-    incrementViews: video => dispatch(updateVideo(video)),
+    incrementViews: video => dispatch(updateVideoViews(video)),
     createLike: like => dispatch(createLike(like)),
     updateLike: like => dispatch(updateLike(like)),
     deleteLike: likeId => dispatch(deleteLike(likeId)),
-    openModal: str => dispatch(openModal(str)),
+    openModal: (str, video) => dispatch(openModal(str, video)),
 })
 
 export default withRouter(connect(

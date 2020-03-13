@@ -97,6 +97,12 @@
     white-space: normal;
     line-height: 24px;
     font-family: 'Roboto', 'Arial', sans-serif;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-line-clamp: 2;
 }
 
 .search-item-header-2 {
@@ -144,10 +150,14 @@
     color: #606060;
     padding-top: 8px;
     margin-bottom: 8px;
-    display: block;
     max-height: 36px;
-    overflow: hidden;
     font-size: 13px;
     line-height: 18px;
     text-transform: none;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-line-clamp: 2;
 }

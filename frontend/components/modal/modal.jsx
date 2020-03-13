@@ -13,7 +13,7 @@ function Modal({ modal, closeModal }) {
         return null;
     }
     let component;
-    switch (modal) {
+    switch (modal.modal) {
         case 'signup':
             component = <SignupFormContainer />;
             break;
@@ -39,8 +39,14 @@ function Modal({ modal, closeModal }) {
                 </div>
             )
         case 'update-video':
-            component = <UpdateVideoFormContainer />;
-            break;
+            component = <UpdateVideoFormContainer video={modal.video}/>;
+            return (
+                <div className="modal-background">
+                    <div className="modal-child" onClick={e => e.stopPropagation()}>
+                        {component}
+                    </div>
+                </div>
+            )
         case 'sidenav':
             component = <SideNavContainer/>;
             return (

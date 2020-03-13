@@ -53,7 +53,7 @@ class SideNav extends React.Component {
                 sidenav2.classList.add('hidden')
             }
         }
-        if (this.props.modal === 'sidenav') {
+        if (this.props.modal && this.props.modal.modal === 'sidenav') {
             sidenav3.classList.remove('hidden')
         }
     }

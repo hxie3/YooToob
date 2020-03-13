@@ -28,9 +28,9 @@ class VideoForm extends React.Component {
         let newvideostate = Object.assign({}, this.state.video);
         newvideostate.title = e.currentTarget.value;
         this.setState({ video: newvideostate })
-        if (e.currentTarget.value === '') {
+        if (e.currentTarget.value.trim() === '') {
             document.getElementsByClassName("select-files-button")[0].disabled = true;
-        } else if (this.state.video.description !== '' && this.state.video.photoUrl) {
+        } else if (this.state.video.description.trim() !== '' && this.state.video.photoUrl) {
             document.getElementsByClassName("select-files-button")[0].disabled = false;
             document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
         }
@@ -40,9 +40,9 @@ class VideoForm extends React.Component {
         let newvideostate = Object.assign({}, this.state.video);
         newvideostate.description = e.currentTarget.value;
         this.setState({ video: newvideostate })
-        if (e.currentTarget.value === '') {
+        if (e.currentTarget.value.trim() === '') {
             document.getElementsByClassName("select-files-button")[0].disabled = true;
-        } else if (this.state.video.title !== '' && this.state.video.photoUrl) {
+        } else if (this.state.video.title.trim() !== '' && this.state.video.photoUrl) {
             document.getElementsByClassName("select-files-button")[0].disabled = false;
             document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
         }
@@ -115,7 +115,7 @@ class VideoForm extends React.Component {
     
                 if (file) {
                     this.setState({ thumbnailUploaded: true, uploadable: true });
-                    if(this.state.video.title !== '' && this.state.video.description !== '') {
+                    if(this.state.video.title.trim() !== '' && this.state.video.description.trim() !== '') {
                         document.getElementsByClassName("select-files-button")[0].disabled = false;
                         document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
                     }
@@ -216,7 +216,7 @@ class VideoForm extends React.Component {
     
                 if (file) {
                     this.setState({ thumbnailUploaded: true })
-                    if (this.state.video.title !== '' && this.state.video.description !== '') {
+                    if (this.state.video.title.trim() !== '' && this.state.video.description.trim() !== '') {
                         document.getElementsByClassName("select-files-button")[0].disabled = false;
                         document.getElementsByClassName("select-files-button")[0].addEventListener("click", this.handleUpload, false)
                     }

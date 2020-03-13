@@ -68,8 +68,16 @@ export const createVideo = (video) => dispatch => {
     )
 };
 
-export const updateVideo = (video) => dispatch => (
-    VideoAPIUtil.updateVideo(video).then(video => (
+export const updateVideo = (video, videoId) => dispatch => (
+    VideoAPIUtil.updateVideo(video, videoId).then(video => (
+        dispatch(receiveVideo(video))
+    ), err => (
+        dispatch(receiveErrors(err.responseJSON))
+    ))
+);
+
+export const updateVideoViews = (video) => dispatch => (
+    VideoAPIUtil.updateVideoViews(video).then(video => (
         dispatch(receiveVideo(video))
     ), err => (
         dispatch(receiveErrors(err.responseJSON))

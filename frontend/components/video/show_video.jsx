@@ -1,7 +1,5 @@
 import React from 'react';
-import { library, icon, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import CommentFormContainer from '../comment/create_comment_form_container';
 import CommentIndexItemContainer from '../comment/comment_index_item_container'
 
@@ -106,6 +104,7 @@ class ShowVideo extends React.Component {
                             document.getElementById("video-edit").classList.add("hidden");
                         }
                     }
+                    e.stopPropagation();
                     // if (!document.getElementById(`edit-${this.props.comment.id}`)) return
                 });
             }
@@ -127,9 +126,7 @@ class ShowVideo extends React.Component {
         e.preventDefault();
         if (this.props.video) {
             if(this.state.incrementViews) {
-                let newvideo = Object.assign({}, this.props.video)
-                newvideo.views += 1;
-                this.props.incrementViews(newvideo);
+                this.props.incrementViews(this.props.video);
                 this.setState({ incrementViews: false })
             }
         }
@@ -215,11 +212,15 @@ class ShowVideo extends React.Component {
 
     handleVideoEdit(e) {
         e.preventDefault();
-        this.props.openModal("update-video");
+        this.props.openModal("update-video", this.props.video);
     }
 
     handleVideoDelete(e) {
         e.preventDefault();
+        this.props.deleteVideo(this.props.video.id)
+            .then(() => {
+                this.props.history.push("/");
+            })
     }
 
     render() {
@@ -333,31 +334,35 @@ class ShowVideo extends React.Component {
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div className='video-dropdown'>
-                                                                    <div onClick={this.handleVideoMenu} className='video-dropdown-button'>
-                                                                        <div className="center-self">
-                                                                            <div className='video-dropdown-button-icon fa'>
-                                                                                <i className="fas fa-ellipsis-h"></i>
-                                                                                <div onClick={(e) => { e.stopPropagation() }} id="video-edit" className="comment-edit-dropdown hidden">
-                                                                                    <div className="inside-dropdown">
-                                                                                        <div onClick={this.handleVideoEdit} id={`video-edit-button`} className="comment-edit-button">
-                                                                                            <div className="fa fa-pen-container">
-                                                                                                <i className="fas fa-edit"></i>
+                                                                {this.props.currentUser.id === this.props.video.userId ? (
+                                                                    <div className='video-dropdown'>
+                                                                        <div onClick={this.handleVideoMenu} className='video-dropdown-button'>
+                                                                            <div className="center-self">
+                                                                                <div className='video-dropdown-button-icon fa'>
+                                                                                    <i className="fas fa-ellipsis-h"></i>
+                                                                                    <div onClick={(e) => { e.stopPropagation() }} id="video-edit" className="comment-edit-dropdown hidden">
+                                                                                        <div className="inside-dropdown">
+                                                                                            <div onClick={this.handleVideoEdit} id={`video-edit-button`} className="comment-edit-button">
+                                                                                                <div className="fa fa-pen-container">
+                                                                                                    <i className="fas fa-edit"></i>
+                                                                                                </div>
+                                                                                                Edit
                                                                                             </div>
-                                                                                            Edit
-                                                                                        </div>
-                                                                                        <div onClick={this.handleVideoDelete} id={`video-delete-button`} className="comment-delete-button">
-                                                                                            <div className="fa fa-pen-container">
-                                                                                                <i className="fas fa-trash"></i>
+                                                                                            <div onClick={this.handleVideoDelete} id={`video-delete-button`} className="comment-delete-button">
+                                                                                                <div className="fa fa-pen-container">
+                                                                                                    <i className="fas fa-trash"></i>
+                                                                                                </div>
+                                                                                                Delete
                                                                                             </div>
-                                                                                            Delete
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                ) : (
+                                                                    null
+                                                                )} 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -483,4 +488,4 @@ class ShowVideo extends React.Component {
     }
 }
 
-export default ShowVideo
+export default withRouter(ShowVideo);

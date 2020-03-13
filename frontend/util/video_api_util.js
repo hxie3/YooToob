@@ -30,11 +30,23 @@ export const fetchVideo = (videoId) => (
     })
 )
 
-export const updateVideo = (video) => {
+export const updateVideo = (formData, videoId) => {
     return (
         $.ajax({
-            url: `/api/videos/${video.id}`,
+            url: `/api/videos/${videoId}`,
             method: 'PATCH',
+            data: formData,
+            contentType: false,
+            processData: false,
+        })
+    )
+}
+
+export const updateVideoViews = (video) => {
+    return (
+        $.ajax({
+            url: `api/videos/updateViews`,
+            method: 'PUT',
             data: { video }
         })
     )

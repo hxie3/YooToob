@@ -102,6 +102,7 @@
 }
 
 .comment-edit-dropdown {
+    z-index: 2020;
     cursor: default;
     position: relative;
     top: 13px;
