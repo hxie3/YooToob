@@ -334,7 +334,7 @@ class ShowVideo extends React.Component {
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                {this.props.currentUser.id === this.props.video.userId ? (
+                                                                {this.props.currentUser === this.props.video.userId ? (
                                                                     <div className='video-dropdown'>
                                                                         <div onClick={this.handleVideoMenu} className='video-dropdown-button'>
                                                                             <div className="center-self">

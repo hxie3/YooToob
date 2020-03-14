@@ -4243,7 +4243,7 @@ function (_React$Component) {
         className: "fas fa-thumbs-down video-thumbs-down"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "video-dislikes-string"
-      }, this.props.video.dislikes))), this.props.currentUser.id === this.props.video.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.video.dislikes))), this.props.currentUser === this.props.video.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: this.handleVideoMenu,
@@ -4443,7 +4443,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     video: state.entities.videos[ownProps.match.params.id],
     videos: state.entities.videos,
     videoId: ownProps.match.params.id,
-    currentUser: state.entities.users[state.session.id],
+    currentUser: state.session.id,
     like: like,
     comments: comments
   };
