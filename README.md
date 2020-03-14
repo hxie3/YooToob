@@ -125,8 +125,9 @@ handleSubmit(e) {
 When the `formType` changes to `"password"`, the form rerenders to take in a password. Once the password is submitted the form is submitted with the combined state to pass into the user create/session create.
 
 ## Future Features
-* Add a loadstate
-* Allow users to comment on videos
-* Implement likes on videos and comments
 * Subscriptions and channels
-* Increment views when video is played
+* Filter search results and comments
+* Like/dislike visualizer
+* Autoplay
+* Custom video controls overlay
+* Infinite scroll/loading
