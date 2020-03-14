@@ -10,9 +10,13 @@ This app was built using a Rails backend with React/Redux frontend.
 
 * User authentication using BCrypt encrypted passwords.
 * Video upload and playback through storing and fetching from AWS.
-* Any user can use the page, the only feature locked out for user not signed in is video upload.
+* Any user can use video playback, locked features include commenting, uploading, editing, deleting, and liking.
 * There is a demo login for quick access to a signed in user.
 * Header and NavBar that allows for smooth navigation through the site.
+* Video views are incremented on video play once each mount and updated component lifecycle.
+* Users can comment on videos.
+* Users can like or dislike both videos and comments.
+* Users can search for videos that query for a match in video title, video owner, or video description.
 
 ## Video Upload
 
@@ -22,8 +26,11 @@ The default state when the modal opens is:
 ```javascript
 this.state = {
    video: this.props.video,
-   formData: null,
-   form: 'file'
+   form: 'file',
+   uploading: false,
+   thumbnailUploaded: false,
+   setupDrop: true,
+   uploadable: false,
 }
 ```
 With mapped state and dispatch of:
@@ -36,12 +43,14 @@ const mapStateToProps = (state) => ({
         videoUrl: '',
         videoFile: null,
     },
+    errors: state.errors.videos,
     formType: 'Create Video'
 })
 
 const mapDispatchToProps = dispatch => ({
     processForm : (video) => dispatch(createVideo(video)),
     closeModal: () => dispatch(closeModal()),
+    clearErrors: () => dispatch(clearErrors())
 })
 ```
 ![Upload Form](https://github.com/hxie3/YooToob/blob/master/app/assets/images/upload.png)
