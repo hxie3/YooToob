@@ -10,9 +10,13 @@ This app was built using a Rails backend with React/Redux frontend.
 
 * User authentication using BCrypt encrypted passwords.
 * Video upload and playback through storing and fetching from AWS.
-* Any user can use the page, the only feature locked out for user not signed in is video upload.
+* Any user can use video playback, locked features include commenting, uploading, editing, deleting, and liking.
 * There is a demo login for quick access to a signed in user.
 * Header and NavBar that allows for smooth navigation through the site.
+* Video views are incremented on video play once each mount and updated component lifecycle.
+* Users can comment on videos.
+* Users can like or dislike both videos and comments.
+* Users can search for videos that query for a match in video title, video owner, or video description.
 
 ## Video Upload
 
@@ -22,8 +26,11 @@ The default state when the modal opens is:
 ```javascript
 this.state = {
    video: this.props.video,
-   formData: null,
-   form: 'file'
+   form: 'file',
+   uploading: false,
+   thumbnailUploaded: false,
+   setupDrop: true,
+   uploadable: false,
 }
 ```
 With mapped state and dispatch of:
@@ -36,12 +43,14 @@ const mapStateToProps = (state) => ({
         videoUrl: '',
         videoFile: null,
     },
+    errors: state.errors.videos,
     formType: 'Create Video'
 })
 
 const mapDispatchToProps = dispatch => ({
     processForm : (video) => dispatch(createVideo(video)),
     closeModal: () => dispatch(closeModal()),
+    clearErrors: () => dispatch(clearErrors())
 })
 ```
 ![Upload Form](https://github.com/hxie3/YooToob/blob/master/app/assets/images/upload.png)
@@ -116,8 +125,9 @@ handleSubmit(e) {
 When the `formType` changes to `"password"`, the form rerenders to take in a password. Once the password is submitted the form is submitted with the combined state to pass into the user create/session create.
 
 ## Future Features
-* Add a loadstate
-* Allow users to comment on videos
-* Implement likes on videos and comments
 * Subscriptions and channels
-* Increment views when video is played
+* Filter search results and comments
+* Like/dislike visualizer
+* Autoplay
+* Custom video controls overlay
+* Infinite scroll/loading
