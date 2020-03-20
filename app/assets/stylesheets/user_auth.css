@@ -35,34 +35,34 @@
 }
 
 .link-demo-login {
-    color: blue;
+    color: #1A73E8;
     font-weight: bold;
 }
 
 .link-demo-login:visited {
     font-weight: bold;
-    color: blue;
+    color: #1A73E8;
 }
 
 .login-link {
     cursor: pointer;
     font-weight: bold;
-    color: blue;
+    color: #1A73E8;
 }
 
 .login-link:visited {
     font-weight: bold;
-    color: blue;
+    color: #1A73E8;
 }
 
 .create-account {
     font-weight: bold;
-    color: blue;
+    color: #1A73E8;
 }
 
 .create-account:visited {
     font-weight: bold;
-    color: blue;
+    color: #1A73E8;
 }
 
 .session-form {
@@ -175,7 +175,7 @@
 
 .create-account-or-next {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     margin-top: 32px;
     min-height: 48px;
@@ -217,6 +217,33 @@
     font-weight: bold;
     text-transform: uppercase;
     box-sizing: inherit;
+}
+
+.next {
+    background-color: #1a73e8;
+    color: #fff;
+    border-radius: 4px;
+    min-width: 88px;
+    line-height: 20px;
+    letter-spacing: .25px;
+    box-shadow: none;
+    cursor: pointer;
+    text-align: center;
+    min-height: 36px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-style: none;
+}
+
+.back {
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.next:hover {
+    opacity: 0.9;
 }
 
 .profile-pic {

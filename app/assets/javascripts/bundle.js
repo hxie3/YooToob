@@ -3242,11 +3242,11 @@ function (_React$Component) {
       e.persist();
 
       if (this.props.errors.length !== 0) {
-        $('form').addClass('ahashakeheartache');
+        $('.session-form-form').addClass('ahashakeheartache');
       }
 
       $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
-        $('form').delay(200).removeClass('ahashakeheartache');
+        $('.session-form-form').delay(200).removeClass('ahashakeheartache');
       });
     }
   }, {
@@ -3311,14 +3311,8 @@ function (_React$Component) {
       this.props.clearErrors();
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      document.getElementsByClassName("header")[0].classList.add("hidden");
-    }
-  }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      document.getElementsByClassName("header")[0].classList.remove("hidden");
       this.props.clearErrors();
     }
   }, {

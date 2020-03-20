@@ -36,10 +36,10 @@ class SessionForm extends React.Component {
     handleShake(e) {
         e.persist();
         if (this.props.errors.length !== 0) {
-            $('form').addClass('ahashakeheartache');
+            $('.session-form-form').addClass('ahashakeheartache');
         }
         $('form').on('webkitAnimationEnd oanimationend msAnimationEnd animationend', e => {
-            $('form').delay(200).removeClass('ahashakeheartache');
+            $('.session-form-form').delay(200).removeClass('ahashakeheartache');
         });
     }
 
@@ -85,12 +85,7 @@ class SessionForm extends React.Component {
         this.props.clearErrors();
     }
 
-    componentDidMount(){
-        document.getElementsByClassName("header")[0].classList.add("hidden")
-    }
-
     componentWillUnmount(){
-        document.getElementsByClassName("header")[0].classList.remove("hidden")
         this.props.clearErrors()
     }
 
