@@ -2357,6 +2357,8 @@ function (_React$Component) {
             });
 
             _this4.props.closeModal();
+
+            _this4.props.fetchComments();
           }
         }, function () {
           var ele = document.getElementsByClassName("select-files-button")[0];
@@ -2511,7 +2513,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _profile_picture__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile_picture */ "./frontend/components/profile/profile_picture.jsx");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _actions_video_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/video_actions */ "./frontend/actions/video_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
+
 
 
 
@@ -2529,8 +2535,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["updateUser"])(user));
     },
+    fetchVideos: function fetchVideos() {
+      return dispatch(Object(_actions_video_actions__WEBPACK_IMPORTED_MODULE_3__["fetchVideos"])());
+    },
+    fetchComments: function fetchComments() {
+      return dispatch(Object(_actions_comment_actions__WEBPACK_IMPORTED_MODULE_4__["fetchComments"])());
+    },
     closeModal: function closeModal() {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__["closeModal"])());
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_5__["closeModal"])());
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["clearErrors"])());
@@ -3892,7 +3904,7 @@ function (_React$Component) {
 
       if (!this.props.like) {
         this.props.createLike({
-          user_id: this.props.currentUser.id,
+          user_id: this.props.currentUser,
           likeable_type: 'Video',
           likeable_id: this.props.video.id,
           liked: true
@@ -3997,11 +4009,15 @@ function (_React$Component) {
   }, {
     key: "incrementViews",
     value: function incrementViews(e) {
+      var _this5 = this;
+
       e.preventDefault();
 
       if (this.props.video) {
         if (this.state.incrementViews) {
-          this.props.incrementViews(this.props.video);
+          this.props.incrementViews(this.props.video).then(function () {
+            return _this5.props.fetchVideo(_this5.props.video.id);
+          });
           this.setState({
             incrementViews: false
           });
@@ -4011,13 +4027,13 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.props.video) {
         if (prevProps.currentUser !== this.props.currentUser) {
           this.props.fetchVideo(this.props.videoId).then(function () {
-            if (_this5.props.like) {
-              if (_this5.props.like.liked) {
+            if (_this6.props.like) {
+              if (_this6.props.like.liked) {
                 document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
                 document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
                 document.getElementsByClassName("dislike-button-toggle")[0].classList.remove("toggled");
@@ -4041,8 +4057,8 @@ function (_React$Component) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
           //Perform some operation here
           this.props.fetchVideo(this.props.videoId).then(function () {
-            if (_this5.props.like) {
-              if (_this5.props.like.liked) {
+            if (_this6.props.like) {
+              if (_this6.props.like.liked) {
                 document.getElementsByClassName("like-button-toggle")[0].classList.add("toggled");
                 document.getElementsByClassName("like-button-button")[0].classList.add("toggled");
               } else {
@@ -4099,17 +4115,17 @@ function (_React$Component) {
   }, {
     key: "handleVideoDelete",
     value: function handleVideoDelete(e) {
-      var _this6 = this;
+      var _this7 = this;
 
       e.preventDefault();
       this.props.deleteVideo(this.props.video.id).then(function () {
-        _this6.props.history.push("/");
+        _this7.props.history.push("/");
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
+      var _this8 = this;
 
       var months = {
         1: "Jan",
@@ -4350,7 +4366,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "items"
       }, Object.values(videos).map(function (videoItem, index) {
-        if (videoItem.id === parseInt(_this7.state.videoId)) return;
+        if (videoItem.id === parseInt(_this8.state.videoId)) return;
         var viewsVideoItem = videoItem.views;
         var viewsVideoItemRender;
 

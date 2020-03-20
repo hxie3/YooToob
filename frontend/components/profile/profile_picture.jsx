@@ -102,6 +102,7 @@ class ProfilePicture extends React.Component {
                         ele.disabled = false;
                         this.setState({ loading: false })
                         this.props.closeModal();
+                        this.props.fetchComments();
                     }
                 }, () => {
                     let ele = document.getElementsByClassName("select-files-button")[0];

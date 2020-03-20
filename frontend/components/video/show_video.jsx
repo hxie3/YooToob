@@ -31,7 +31,7 @@ class ShowVideo extends React.Component {
             return;
         }
         if (!this.props.like) {
-            this.props.createLike({ user_id: this.props.currentUser.id, likeable_type: 'Video', likeable_id: this.props.video.id, liked: true })
+            this.props.createLike({ user_id: this.props.currentUser, likeable_type: 'Video', likeable_id: this.props.video.id, liked: true })
                 .then(() => {
                     this.props.fetchVideo(this.props.match.params.id);
                 })
@@ -126,7 +126,8 @@ class ShowVideo extends React.Component {
         e.preventDefault();
         if (this.props.video) {
             if(this.state.incrementViews) {
-                this.props.incrementViews(this.props.video);
+                this.props.incrementViews(this.props.video)
+                    .then(() => this.props.fetchVideo(this.props.video.id))
                 this.setState({ incrementViews: false })
             }
         }
