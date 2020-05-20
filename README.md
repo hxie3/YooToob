@@ -6,6 +6,8 @@ Check out the [live](https://aayootoob.herokuapp.com/#/) link.
 
 This app was built using a Rails backend with React/Redux frontend.
 
+![yootoob](https://github.com/hxie3/YooToob/blob/master/app/assets/images/yootoob.gif)
+
 ## Features
 
 * User authentication using BCrypt encrypted passwords.
