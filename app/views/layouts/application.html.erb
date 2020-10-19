@@ -5,6 +5,11 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <meta property="og:title" content="YooToob"/>
+    <meta property='og:image' content="<%= image_url('YooToobPreview.png') %>"/>
+    <meta property="og:description" content="A React/Redux frontend and Ruby on Rails backend YouTube clone"/>
+    <meta property="og:url" content="http://aayootoob.herokuapp.com/"/>
+
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
