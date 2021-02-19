@@ -80,6 +80,7 @@
     padding-left: 24px;
     padding-right: 24px;
     align-items: center;
+    color: black;
 }
 
 .hamburger-icon-text-container {
@@ -92,7 +93,7 @@
     cursor: pointer;
 }
 
-.home-icon-text-container:visited, .home-icon-text-container2, .github-icon-text-container:visited, .github-icon-text-container2:visited {
+.home-icon-text-container:visited, .home-icon-text-container2:visited, .github-icon-text-container:visited, .github-icon-text-container2:visited {
     color: black;
 }
 
